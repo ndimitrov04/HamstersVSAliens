@@ -2,9 +2,12 @@ extends Node3D
 
 #Enemies
 @onready var UFO = preload("res://Scenes/Enemies/ufo.tscn")
+@onready var SPACESHIP3 = preload("res://Scenes/Enemies/spaceship3.tscn")
 
 @onready var enemies = $Enemies
 @onready var level_data = $HUD/LevelData
+
+@onready var player = $Player
 
 const MAPRADIUS = 512
 const SKYBOUNDS = [20,35]
@@ -27,7 +30,7 @@ func _process(delta):
 func newWave():
 	currentWave += 1
 	for i in range(0, currentWave * 5):
-		var enemy = UFO.instantiate()
+		var enemy = SPACESHIP3.instantiate()
 		enemies.add_child(enemy)
 		enemy.global_position = Vector3(
 			randf_range(-MAPRADIUS,MAPRADIUS),

@@ -111,12 +111,12 @@ func _unhandled_input(event: InputEvent):
 			twist_input = -event.relative.x * mouse_sensitivity
 			pitch_input = -event.relative.y * mouse_sensitivity
 
-func homingAttack(homingRepeat : int = 25, homingRefresh : float = 0.05):
+func homingAttack(homingRepeat : int = 35, homingRefresh : float = 0.05):
 	var enemy = enemy_detector.get_collider()
 	for i in range(0,homingRepeat):
 		var enemyPosition = enemy.global_position
 		linear_velocity = Vector3(0,0,0)
-		linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 2)
+		linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 3)
 		linear_velocity.y = move_toward(linear_velocity.y, position.y - enemyPosition.y, -abs(position.y - enemyPosition.y) * 3)
-		linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 2)
+		linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 3)
 		await get_tree().create_timer(homingRefresh).timeout

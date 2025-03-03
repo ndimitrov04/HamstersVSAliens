@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bmsn7elnqj675"]
 
-[ext_resource type="Script" path="res://Scripts/Enemies/ufo.gd" id="1_b5jsb"]
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_b5jsb"]
 [ext_resource type="PackedScene" uid="uid://0l8puhefj486" path="res://Scenes/ModelScenes/ufo_model.tscn" id="1_yquw7"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="2_didkb"]
 

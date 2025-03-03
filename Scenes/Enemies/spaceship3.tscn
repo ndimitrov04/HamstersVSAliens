@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://drga6qose7alq"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_kvc8t"]
+[ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="2_fixds"]
+[ext_resource type="PackedScene" uid="uid://cajm4trx1i6li" path="res://ImportedModels/Spaceships/S3/Spaceship-u105mYHLHU.glb" id="3_2te1y"]
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="4_wq2h1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fn527"]
+absorbent = true
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_r6bti"]
+points = PackedVector3Array(0.769169, -0.0948477, 1.23445, -0.769169, -0.0948477, -6.97645, -1.28275, -0.0948477, -6.84785, 2.21, 0.883731, -1.59179, -2.55201, 0.882435, -2.52356, 4.10545, -0.0948477, -3.64017, -3.97685, -0.0948477, -1.58825, 1.15827, 0.881714, -5.18682, -1.38854, 0.881302, -0.672533, -3.46327, 0.161843, -5.17931, -1.15827, 0.881714, -5.18682, 3.33548, 0.0336485, -0.305497, 2.5655, 0.0336485, -6.20648, -2.30911, 0.161843, 0.592268, 0.347434, 0.882427, -0.319029, 2.31643, 0.881693, -4.02922, 4.10545, 0.161843, -2.48682, 1.15415, 0.161843, -6.84785, -3.97685, 0.161843, -1.71685, 2.30911, 0.161843, 0.592268, -0.384182, 0.161843, 1.23445, -3.84825, -0.0948477, -4.53874, 3.46327, 0.161843, -5.17931, -1.53914, 0.161843, -6.71925, -2.18052, -0.0948477, 0.720865, 3.84825, -0.0948477, -1.20326, 2.5655, -0.0948477, -6.20648, -4.10545, 0.161843, -2.871, -2.31643, 0.881693, -4.02922, -3.07909, 0.161843, -0.1769, -2.21, 0.883731, -1.59179, 2.55805, 0.883532, -2.871)
+
+[node name="Spaceship3" type="RigidBody3D"]
+axis_lock_linear_y = true
+mass = 150.0
+physics_material_override = SubResource("PhysicsMaterial_fn527")
+gravity_scale = 1.5
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_kvc8t")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.87002)
+shape = SubResource("ConvexPolygonShape3D_r6bti")
+
+[node name="LockMarker" type="Sprite3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+texture = ExtResource("2_fixds")
+
+[node name="LockTimeout" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="Spaceship" parent="." instance=ExtResource("3_2te1y")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="FloatingSeeker" type="Node3D" parent="."]
+script = ExtResource("4_wq2h1")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
