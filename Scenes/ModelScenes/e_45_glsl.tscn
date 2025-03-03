@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://c84b0k33quocj"]
+
+[ext_resource type="PackedScene" uid="uid://0hx5sj2isa6p" path="res://ImportedModels/E45/E 45 Aircraft_Export_Ready.blend" id="1_dkjm6"]
+[ext_resource type="Texture2D" uid="uid://dxapfli8oi86r" path="res://ImportedModels/E45/textures/E-45_glass_nor_.jpg" id="2_76ydv"]
+[ext_resource type="Texture2D" uid="uid://cs6df11cvsd5m" path="res://ImportedModels/E45/textures/E-45_REF 1.jpg" id="2_qskfl"]
+[ext_resource type="Texture2D" uid="uid://by584g5teegjy" path="res://ImportedModels/E45/textures/E-45 _col_3.jpg" id="3_dxaia"]
+[ext_resource type="Texture2D" uid="uid://c8s4bp307dvoq" path="res://ImportedModels/E45/textures/E-45-nor_1.jpg" id="4_uuo6f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vtqdq"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.168627)
+albedo_texture = ExtResource("2_qskfl")
+albedo_texture_force_srgb = true
+metallic = 0.1
+roughness = 0.2
+normal_enabled = true
+normal_texture = ExtResource("2_76ydv")
+clearcoat_enabled = true
+subsurf_scatter_strength = 0.91
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_20p0f"]
+albedo_texture = ExtResource("3_dxaia")
+emission_enabled = true
+emission = Color(0.722687, 0.815274, 1, 1)
+emission_energy_multiplier = 0.05
+normal_enabled = true
+normal_texture = ExtResource("4_uuo6f")
+anisotropy_enabled = true
+anisotropy = 0.5
+
+[node name="E-45_GLSL" instance=ExtResource("1_dkjm6")]
+
+[node name="Cube_004" parent="Armature/Skeleton3D" index="0"]
+transform = Transform3D(1, -7.18181e-12, 6.11955e-12, 5.5671e-12, 1, -4.17233e-07, -5.99076e-12, 5.96046e-08, 1, 1.60122e-08, 1.5256, 0.101453)
+
+[node name="Cube_004" parent="Armature/Skeleton3D/Cube_004" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_vtqdq")
+
+[node name="Cube_021" parent="Armature/Skeleton3D" index="1"]
+transform = Transform3D(1, 0, 0, -1.81899e-12, 1, 0, 0, 0, 1, -9.09402e-13, 5.96046e-08, 0)
+
+[node name="Cube_021" parent="Armature/Skeleton3D/Cube_021" index="0"]
+surface_material_override/0 = SubResource("ORMMaterial3D_20p0f")

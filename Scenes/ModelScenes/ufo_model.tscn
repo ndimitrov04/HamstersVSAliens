@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://0l8puhefj486"]
+
+[ext_resource type="PackedScene" uid="uid://l25s7pk6785q" path="res://ImportedModels/UFO/flare Hub.blend" id="1_g84re"]
+
+[node name="UFO" instance=ExtResource("1_g84re")]
+
+[node name="Point" parent="." index="2"]
+light_energy = 4.0
+light_indirect_energy = 4.0
+shadow_enabled = true

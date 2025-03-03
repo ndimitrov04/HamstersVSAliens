@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmddgxrpyrq4e"]
+
+[ext_resource type="PackedScene" uid="uid://dhw65526i2sfw" path="res://ImportedModels/Hamster/space_humster.blend" id="1_kai07"]
+
+[node name="space_humster" instance=ExtResource("1_kai07")]
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.17779)
+bones/0/scale = Vector3(1, 1, 1)
+bones/1/rotation = Quaternion(0.498858, 0.50114, -0.498857, 0.50114)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/rotation = Quaternion(0.0022824, -1.19209e-07, 3.02082e-10, 0.999997)
+bones/3/rotation = Quaternion(-0.0162447, -7.10359e-15, -1.43178e-16, 0.999868)
+bones/4/rotation = Quaternion(-0.679336, -0.00104578, -0.00309554, 0.73382)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/rotation = Quaternion(0.495827, 0.00031879, 0.00325184, 0.868415)
+bones/6/rotation = Quaternion(-2.52353, 0.000474975, 0.000474975, 0.970475)
+bones/7/rotation = Quaternion(-0.0728503, 1.18893e-07, -8.68442e-09, 0.997343)
+bones/7/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(0.76726, -7.64532e-08, 9.14645e-08, 0.641336)
+bones/11/rotation = Quaternion(0.495827, -0.000318997, -0.00325172, 0.868415)
+bones/11/scale = Vector3(1, 1, 1)
+bones/12/rotation = Quaternion(0.241895, 8.49589e-10, 1.5569e-08, 0.970303)
+bones/13/rotation = Quaternion(-0.464972, 0.625096, -0.404023, -0.479396)
+bones/15/rotation = Quaternion(0.0484754, 0.700283, 0.097996, 0.705443)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(0.709055, 0.0192023, -0.0174835, 0.704675)
+bones/17/rotation = Quaternion(0.0284062, -0.000397386, 0.0259663, 0.999259)
+bones/19/rotation = Quaternion(-0.415236, 0.577963, -0.46821, 0.523753)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(-0.097996, 0.705443, -0.0484755, 0.700283)
+bones/22/rotation = Quaternion(0.0284457, -0.00112463, -0.025923, 0.999259)

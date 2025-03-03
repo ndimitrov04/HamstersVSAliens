@@ -1,0 +1,152 @@
+[gd_scene load_steps=21 format=3 uid="uid://bi7s0yriu1mso"]
+
+[ext_resource type="Texture2D" uid="uid://84yl1ew7nhab" path="res://Textures/Skyboxes/SkySkybox.png" id="1_7o4ip"]
+[ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
+[ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_qe4bh"]
+[ext_resource type="Resource" path="res://TerrainData/data.hterrain" id="4_gra8q"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_vld6k"]
+[ext_resource type="Texture2D" uid="uid://cv4dhypx5e5h6" path="res://Textures/Terrain/TerrainTextures/main_slot0_albedo_bump.png" id="6_7bisy"]
+[ext_resource type="Texture2D" uid="uid://ciy53rbxcjpue" path="res://Textures/Terrain/green.jpg" id="7_ulr6h"]
+[ext_resource type="Texture2D" uid="uid://c3vmhecg0ki5k" path="res://Textures/Terrain/TerrainTextures/main_slot0_normal_roughness.png" id="8_nu4qe"]
+[ext_resource type="AudioStream" uid="uid://com0mloe5wxnu" path="res://Music/wuthering_tights.mp3" id="12_ejmyd"]
+[ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="14_j2f1x"]
+[ext_resource type="PackedScene" uid="uid://bmsn7elnqj675" path="res://Scenes/Enemies/ufo.tscn" id="14_qqokl"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_id3pn"]
+panorama = ExtResource("1_7o4ip")
+
+[sub_resource type="Sky" id="Sky_i2hom"]
+sky_material = SubResource("PanoramaSkyMaterial_id3pn")
+
+[sub_resource type="Environment" id="Environment_3wlby"]
+background_mode = 2
+background_color = Color(0.321728, 0.321728, 0.321728, 1)
+sky = SubResource("Sky_i2hom")
+tonemap_mode = 2
+ssao_enabled = true
+ssao_light_affect = 0.11
+ssao_ao_channel_affect = 0.09
+volumetric_fog_enabled = true
+volumetric_fog_length = 3.0
+
+[sub_resource type="Resource" id="Resource_ukbfh"]
+script = ExtResource("5_vld6k")
+mode = 0
+textures = [[ExtResource("6_7bisy"), ExtResource("7_ulr6h")], [ExtResource("8_nu4qe"), null]]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kq1ef"]
+lightmap_size_hint = Vector2i(52, 52)
+size = Vector2(10, 10)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m43an"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1kjnp"]
+albedo_texture = SubResource("CompressedTexture2D_m43an")
+metallic = 1.0
+rim = 0.0
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_07wow"]
+data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_u31re")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3wlby")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+light_color = Color(1, 1, 0.996078, 1)
+shadow_enabled = true
+
+[node name="HTerrain" type="Node3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("3_qe4bh")
+centered = true
+_terrain_data = ExtResource("4_gra8q")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_ukbfh")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale_per_texture = Vector4(20, 20, 20, 20)
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = Vector4(1, 1, 1, 1)
+shader_params/u_globalmap_blend_start = null
+shader_params/u_globalmap_blend_distance = null
+shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35.645, 0)
+mesh = SubResource("PlaneMesh_kq1ef")
+surface_material_override/0 = SubResource("StandardMaterial3D_1kjnp")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_07wow")
+
+[node name="Player" parent="." instance=ExtResource("2_3iewc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+
+[node name="Enemies" type="Node3D" parent="."]
+
+[node name="UFO" parent="Enemies" instance=ExtResource("14_qqokl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2415, 37.9303, 0.422714)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="PlayerData" type="Label" parent="HUD"]
+offset_right = 96.0
+offset_bottom = 72.0
+text = "Player :3"
+metadata/_edit_use_anchors_ = true
+
+[node name="LevelData" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.204
+anchor_right = 0.204
+offset_left = 0.319977
+offset_right = 58.32
+offset_bottom = 23.0
+text = "Level :3"
+
+[node name="DebugData" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_top = 0.472
+anchor_bottom = 0.472
+offset_top = 10.24
+offset_right = 40.0
+offset_bottom = 33.24
+text = "Debug :3"
+
+[node name="TextureRect" type="TextureRect" parent="HUD"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 502.0
+offset_bottom = 502.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.04, 0.04)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("14_j2f1x")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_ejmyd")
+volume_db = -15.0
+autoplay = true
+bus = &"Music"

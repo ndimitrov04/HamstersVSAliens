@@ -1,0 +1,122 @@
+extends RigidBody3D
+
+@onready var twist_pivot := $TwistPivot
+@onready var pitch_pivot := $TwistPivot/PitchPivot
+@onready var camera = $TwistPivot/PitchPivot/Camera
+@onready var floor_detector = $FloorDetector
+@onready var enemy_detector = $Ship/EnemyDetector
+@onready var floor_marker = $FloorMarker
+@onready var hover_decal = $FloorMarker/HoverDecal
+@onready var ship = $Ship
+
+@onready var hud = $"../HUD"
+@onready var player_data = $"../HUD/PlayerData"
+
+const MAXVELOCITY = 25
+const INERTIAJUMPMULTIPLIER = 0.2
+
+var mouse_sensitivity : float = 0.002
+var twist_input : float = 0.0
+var pitch_input : float = 0.0
+var thrust_power : float = 60000
+var jump_power : float = 60000
+var floor_power : float = 120000
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	#Capture mouse
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
+	var input = Vector3.ZERO
+	input.x = Input.get_axis("move_left","move_right")
+	input.z = Input.get_axis("move_forward","move_backward")
+	#Move on axes via keyboard input, relative to camera twist
+	apply_central_force(twist_pivot.basis * input * thrust_power * delta)
+
+	#Set maximum speed
+	if linear_velocity.x > MAXVELOCITY:
+		linear_velocity.x = MAXVELOCITY
+	elif linear_velocity.x < -MAXVELOCITY:
+		linear_velocity.x = -MAXVELOCITY
+	if linear_velocity.y > MAXVELOCITY * 3:
+		linear_velocity.y = MAXVELOCITY * 3
+	elif linear_velocity.y < -MAXVELOCITY:
+		linear_velocity.y = -MAXVELOCITY
+	if linear_velocity.z > MAXVELOCITY:
+		linear_velocity.z = MAXVELOCITY
+	elif linear_velocity.z < -MAXVELOCITY:
+		linear_velocity.z = -MAXVELOCITY
+
+	#Stick to ground if on ground
+	if Input.is_action_pressed("floorslide") and floor_detector.is_colliding():
+		apply_central_force(Vector3(0,-1,0) * floor_power * delta)
+		
+	#Jump if on ground
+	if Input.is_action_just_pressed("jump") and floor_detector.is_colliding():
+		var jumpInertia = max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)) * INERTIAJUMPMULTIPLIER
+		print(jumpInertia)
+		print((jump_power * jumpInertia))
+		apply_central_impulse(Vector3(0,1,0) * (jump_power * jumpInertia) * delta)
+
+	#Lock on if looking at enemy and homing attack on right click
+	if enemy_detector.is_colliding():
+		var object = enemy_detector.get_collider()
+		if "type" in object:
+			if object.type == ObjectTypes.TYPE.ENEMY:
+				object.lock_marker.visible = true
+				if Input.is_action_just_pressed("homing"):
+					homingAttack()
+		
+	#if floor_marker.is_colliding():
+	hover_decal.position.y = floor_marker.get_collision_point().y
+		
+	#Toggle mouse focus
+	if Input.is_action_just_pressed("ui_cancel"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if Input.is_action_just_pressed("ui_accept"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		
+	#Control camera
+	twist_pivot.rotate_y(twist_input)
+	pitch_pivot.rotate_x(pitch_input)
+	#Prevent pitch from turning camera upside down (0.5 Rad)
+	pitch_pivot.rotation.x = clamp(pitch_pivot.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+	#Reset twist and pitch to 0 when mouse is not moving
+	twist_input = 0
+	pitch_input = 0
+	#Have camera, floor detection raycast and spaceship
+	#follow player sphere manually
+	twist_pivot.position = position
+	floor_detector.position = position
+	floor_marker.position = position
+	hover_decal.position.x = position.x
+	hover_decal.position.z = position.z
+	ship.position = position + Vector3(0,-0.12,-0.045)
+	#Rotate ship to face the focus point of the camera
+	ship.rotation = camera.global_rotation
+	
+	player_data.text = (
+		"HamstersVSAliens Pre-Alpha Ver 0.01" + "\n" +
+		"Linear Velocity: " + str(linear_velocity) + "\n" +
+		"Angluar Velocity: " + str(angular_velocity) + "\n" +
+		"Input: " + str(twist_pivot.basis * input * thrust_power * delta) + "\n" +
+		"OnFloor?: " + str(floor_detector.is_colliding())
+		)
+
+func _unhandled_input(event: InputEvent):
+	if event is InputEventMouseMotion:
+		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+			twist_input = -event.relative.x * mouse_sensitivity
+			pitch_input = -event.relative.y * mouse_sensitivity
+
+func homingAttack(homingRepeat : int = 25, homingRefresh : float = 0.05):
+	var enemy = enemy_detector.get_collider()
+	for i in range(0,homingRepeat):
+		var enemyPosition = enemy.global_position
+		linear_velocity = Vector3(0,0,0)
+		linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 2)
+		linear_velocity.y = move_toward(linear_velocity.y, position.y - enemyPosition.y, -abs(position.y - enemyPosition.y) * 3)
+		linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 2)
+		await get_tree().create_timer(homingRefresh).timeout
