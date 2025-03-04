@@ -9,29 +9,25 @@ var thrust_power : float = 60000
 var jump_power : float = 60000
 var floor_power : float = 120000
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	#Capture mouse
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+var input = Vector3.ZERO
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	var input = Vector3.ZERO
-	if global_position.x > player.global_position.x:
+	if get_parent().global_position.x > player.global_position.x:
 		input.x = -1
-	elif global_position.x < player.global_position.x:
+	elif get_parent().global_position.x < player.global_position.x:
 		input.x = 1
 	else:
 		input.x = 0
-	if global_position.z > player.global_position.z:
+	if get_parent().global_position.z > player.global_position.z:
 		input.z = -1
-	elif global_position.z < player.global_position.z:
+	elif get_parent().global_position.z < player.global_position.z:
 		input.z = 1
 	else:
 		input.z = 0
-	#Move on axes via keyboard input, relative to camera twist
-	get_parent().apply_central_force(input * thrust_power * delta)
-	get_parent().look_at(player.global_position)
+
+	if get_parent().alive:
+		get_parent().apply_central_force(input * thrust_power * delta)
 
 	#Set maximum speed
 	if get_parent().linear_velocity.x > MAXVELOCITY:

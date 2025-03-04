@@ -18,10 +18,14 @@ gravity_scale = 1.5
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_b5jsb")
+metadata/hp = 100
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.87002)
 shape = SubResource("ConvexPolygonShape3D_r6bti")
+
+[node name="Model" parent="." instance=ExtResource("1_yquw7")]
+metadata/hp = 300
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false
@@ -33,9 +37,7 @@ texture = ExtResource("2_didkb")
 wait_time = 0.1
 autostart = true
 
-[node name="UFO" parent="." instance=ExtResource("1_yquw7")]
-
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
 
-[editable path="UFO"]
+[editable path="Model"]

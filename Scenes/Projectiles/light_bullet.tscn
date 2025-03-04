@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://f6fuvx7c2ywn"]
+
+[ext_resource type="Script" path="res://Scripts/Projectiles/light_bullet.gd" id="1_e2pc3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hoq7w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sh2uq"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.803922, 0, 0, 1)
+rim_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_bwhyd"]
+material = SubResource("StandardMaterial3D_sh2uq")
+radial_segments = 6
+rings = 3
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fwimi"]
+points = PackedVector3Array(-0.00229712, -0.00600681, -0.0961843, 0.00070158, 0.00606292, 0.0970827, 0.00369173, 0.0119794, 0.092906, 0.0609441, -0.0692638, 0.0361418, -0.0600264, -0.0698409, 0.036433, -0.00537333, 0.0974275, -0.00303269, 0.0702936, 0.0453883, -0.0393403, -0.0844174, 0.00607517, -0.0486394, -0.0844174, 0.00607517, 0.0486394, 0.00370308, -0.0691899, -0.0691899, 0.0609444, 0.0692641, 0.0361419, 0.085516, -0.00301723, -0.0484464, -0.060026, 0.0698405, 0.0364327, -0.00232431, 0.0697522, -0.0697522, 0.085516, 0.00301723, 0.0484464, -0.060026, -0.0698405, -0.0364327, -0.00537333, -0.0974275, -0.00303269, -0.00232431, -0.0697522, 0.0697522, 0.0609444, -0.0692641, -0.0361419, -0.0600264, 0.0698409, -0.036433, -0.00232429, 0.0697517, 0.0697517, 0.0609441, 0.0692638, -0.0361418, 0.00070158, 0.00606289, -0.0970823, -0.0844174, -0.00607517, 0.0486394, 0.00070158, -0.00606289, 0.0970823, -0.0844174, -0.00607517, -0.0486394, 0.00371441, 0.0966188, 0.00601621, 0.00371361, -0.0966118, 0.00603351, 0.085516, -0.00301723, 0.0484464, -0.00232429, -0.0697517, -0.0697517, 0.085516, 0.00301723, -0.0484464, 0.00371358, -0.00300728, -0.0966111)
+
+[node name="LightBullet" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 2
+input_ray_pickable = false
+mass = 0.01
+physics_material_override = SubResource("PhysicsMaterial_hoq7w")
+gravity_scale = 0.1
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_e2pc3")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_bwhyd")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_fwimi")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

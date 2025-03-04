@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=25 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Texture2D" uid="uid://84yl1ew7nhab" path="res://Textures/Skyboxes/SkySkybox.png" id="1_7o4ip"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
@@ -35,6 +35,18 @@ script = ExtResource("5_vld6k")
 mode = 0
 textures = [[ExtResource("6_7bisy"), ExtResource("7_ulr6h")], [ExtResource("8_nu4qe"), null]]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_s66cy"]
+size = Vector3(1, 1024, 1024)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bdaa3"]
+size = Vector3(1, 1024, 1024)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bnimd"]
+size = Vector3(1024, 1024, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y638d"]
+size = Vector3(1024, 1024, 1)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_kq1ef"]
 lightmap_size_hint = Vector2i(52, 52)
 size = Vector2(10, 10)
@@ -66,7 +78,7 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("3_qe4bh")
 centered = true
 _terrain_data = ExtResource("4_gra8q")
-chunk_size = 32
+chunk_size = 16
 collision_enabled = true
 collision_layer = 1
 collision_mask = 1
@@ -84,14 +96,40 @@ shader_params/u_globalmap_blend_start = null
 shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
 
+[node name="WorldBorder" type="Node3D" parent="."]
+
+[node name="Border1" type="StaticBody3D" parent="WorldBorder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 512, 0, 0)
+
+[node name="Hitbox" type="CollisionShape3D" parent="WorldBorder/Border1"]
+shape = SubResource("BoxShape3D_s66cy")
+
+[node name="Border2" type="StaticBody3D" parent="WorldBorder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -512, 0, 0)
+
+[node name="Hitbox" type="CollisionShape3D" parent="WorldBorder/Border2"]
+shape = SubResource("BoxShape3D_bdaa3")
+
+[node name="Border3" type="StaticBody3D" parent="WorldBorder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 512)
+
+[node name="Hitbox" type="CollisionShape3D" parent="WorldBorder/Border3"]
+shape = SubResource("BoxShape3D_bnimd")
+
+[node name="Border4" type="StaticBody3D" parent="WorldBorder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -512)
+
+[node name="Hitbox" type="CollisionShape3D" parent="WorldBorder/Border4"]
+shape = SubResource("BoxShape3D_y638d")
+
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35.645, 0)
 mesh = SubResource("PlaneMesh_kq1ef")
 surface_material_override/0 = SubResource("StandardMaterial3D_1kjnp")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+[node name="Border" type="StaticBody3D" parent="Floor"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+[node name="Hitbox" type="CollisionShape3D" parent="Floor/Border"]
 shape = SubResource("ConcavePolygonShape3D_07wow")
 
 [node name="Player" parent="." instance=ExtResource("2_3iewc")]
@@ -100,7 +138,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 [node name="Enemies" type="Node3D" parent="."]
 
 [node name="UFO" parent="Enemies" instance=ExtResource("14_qqokl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2415, 37.9303, 0.422714)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.901638, 37.658, -24.1525)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -126,7 +164,11 @@ anchor_bottom = 0.472
 offset_top = 10.24
 offset_right = 40.0
 offset_bottom = 33.24
-text = "Debug :3"
+text = "Controls:
+Use WASD to move
+Space to jump
+Right click while looking at 
+an enemy to homing attack"
 
 [node name="TextureRect" type="TextureRect" parent="HUD"]
 anchors_preset = 8

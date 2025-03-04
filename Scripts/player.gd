@@ -7,6 +7,7 @@ extends RigidBody3D
 @onready var enemy_detector = $Ship/EnemyDetector
 @onready var floor_marker = $FloorMarker
 @onready var hover_decal = $FloorMarker/HoverDecal
+@onready var sphere = $Sphere
 @onready var ship = $Ship
 
 @onready var hud = $"../HUD"
@@ -22,6 +23,11 @@ var thrust_power : float = 60000
 var jump_power : float = 60000
 var floor_power : float = 120000
 
+var homingTarget = null
+var targetHit : bool = false
+
+var hp = 100
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#Capture mouse
@@ -29,6 +35,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	
+	#Detect death
+	if hp <= 0:
+		pass #die here
+	
 	var input = Vector3.ZERO
 	input.x = Input.get_axis("move_left","move_right")
 	input.z = Input.get_axis("move_forward","move_backward")
@@ -62,12 +73,12 @@ func _physics_process(delta):
 
 	#Lock on if looking at enemy and homing attack on right click
 	if enemy_detector.is_colliding():
-		var object = enemy_detector.get_collider()
+		var object = enemy_detector.get_collider(0)
 		if "type" in object:
-			if object.type == ObjectTypes.TYPE.ENEMY:
+			if object.type == ObjectTypes.TYPE.ENEMY and object.alive:
 				object.lock_marker.visible = true
 				if Input.is_action_just_pressed("homing"):
-					homingAttack()
+					homing_attack()
 		
 	#if floor_marker.is_colliding():
 	hover_decal.position.y = floor_marker.get_collision_point().y
@@ -111,12 +122,40 @@ func _unhandled_input(event: InputEvent):
 			twist_input = -event.relative.x * mouse_sensitivity
 			pitch_input = -event.relative.y * mouse_sensitivity
 
-func homingAttack(homingRepeat : int = 35, homingRefresh : float = 0.05):
-	var enemy = enemy_detector.get_collider()
+func homing_attack(homingRepeat : int = 175, homingRefresh : float = 0.01):
+	homingTarget = enemy_detector.get_collider(0)
 	for i in range(0,homingRepeat):
-		var enemyPosition = enemy.global_position
+		if targetHit:
+			break
+		var enemyPosition = homingTarget.global_position
 		linear_velocity = Vector3(0,0,0)
-		linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 3)
-		linear_velocity.y = move_toward(linear_velocity.y, position.y - enemyPosition.y, -abs(position.y - enemyPosition.y) * 3)
-		linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 3)
+		var distance = abs(position.x - enemyPosition.x) + abs(position.y - enemyPosition.y) + abs(position.z - enemyPosition.z)
+		print(distance)
+		if distance >= 6:
+			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 6)
+			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemyPosition.y, -abs(position.y - enemyPosition.y) * 6)
+			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 6)
+		else:
+			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 16)
+			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemyPosition.y, -abs(position.y - enemyPosition.y) * 16)
+			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 16)
 		await get_tree().create_timer(homingRefresh).timeout
+	homingTarget = null
+	targetHit = false
+	
+func take_damage(damage : int):
+	sphere.get_surface_override_material(0).albedo_color = Color(1.0, 0.0, 0.0, 0.6)
+	hp -= damage
+	await get_tree().create_timer(0.5).timeout
+	sphere.get_surface_override_material(0).albedo_color = Color(1.0, 1.0, 1.0, 0.6)
+	
+	
+func _on_body_entered(body):
+	if homingTarget != null:
+		if body == homingTarget:
+			targetHit = true
+			linear_velocity = Vector3(0,0,0)
+			linear_velocity.x = move_toward(linear_velocity.x, -position.x + body.global_position.x, -abs(position.x - body.global_position.x)*3)
+			linear_velocity.y = move_toward(linear_velocity.y, -position.y + body.global_position.y, -abs(position.y - body.global_position.y)*3)
+			linear_velocity.z = move_toward(linear_velocity.z, -position.z + body.global_position.z, -abs(position.z - body.global_position.z)*3)
+			print("Target hit")

@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://crnnckis2lj5s"]
+
+[ext_resource type="PackedScene" uid="uid://cajm4trx1i6li" path="res://ImportedModels/Spaceships/S3/Spaceship-u105mYHLHU.glb" id="1_5whrw"]
+
+[node name="Root Scene" instance=ExtResource("1_5whrw")]
