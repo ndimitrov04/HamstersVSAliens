@@ -19,7 +19,7 @@ func _ready():
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	level_data.text = (
 		"Current Wave: " + str(currentWave) + "\n" +
 		"Enemies Left: " + str(enemies.get_child_count())

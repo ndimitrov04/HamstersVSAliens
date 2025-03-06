@@ -12,7 +12,7 @@ func _ready():
 	shoot_timer.wait_time = randf_range(get_parent().get_meta("shoot_time")-0.5,get_parent().get_meta("shoot_time")+0.5)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(_delta):
 	if get_parent().alive:
 		get_parent().look_at(player.global_position)
 

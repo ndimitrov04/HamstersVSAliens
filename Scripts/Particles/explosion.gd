@@ -9,8 +9,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	omni_light_3d.omni_range -= 0.08
-	omni_light_3d.light_energy -= 0.08
+	omni_light_3d.omni_range -= 0.8 * delta
+	omni_light_3d.light_energy -= 0.8 * delta
 
 
 func _on_finished():

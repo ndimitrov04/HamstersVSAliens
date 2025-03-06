@@ -16,7 +16,7 @@ func _ready():
 	shoot_timer.wait_time = randf_range(get_meta("shoot_time")-0.5,get_meta("shoot_time")+0.5)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(_delta):
 	if alive and targeted_enemy != null:
 		turret.look_at(targeted_enemy.global_position)
 		gun_model.look_at(targeted_enemy.global_position,Vector3.UP,true)

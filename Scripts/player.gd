@@ -15,8 +15,8 @@ extends RigidBody3D
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
-const MAXVELOCITY = 25
-const INERTIAJUMPMULTIPLIER = 0.2
+var MAXVELOCITY : int = 25
+const INERTIAJUMPMULTIPLIER : float = 0.2
 
 var mouse_sensitivity : float = 0.002
 var twist_input : float = 0.0
@@ -24,6 +24,8 @@ var pitch_input : float = 0.0
 var thrust_power : float = 60000
 var jump_power : float = 60000
 var floor_power : float = 120000
+
+var speedboost : float = 1
 
 var homing_target = null
 var target_hit : bool = false
@@ -42,11 +44,14 @@ func _physics_process(delta):
 	if hp <= 0:
 		pass #die here
 	
+	hud.hp_bar.value = lerp(hud.hp_bar.value, float(hp), 0.1)
+	hud.hp_label.text = str(int(lerp(hud.hp_bar.value, float(hp), 0.1)))
+	
 	var input = Vector3.ZERO
 	input.x = Input.get_axis("move_left","move_right")
 	input.z = Input.get_axis("move_forward","move_backward")
 	#Move on axes via keyboard input, relative to camera twist
-	apply_central_force(twist_pivot.basis * input * thrust_power * delta)
+	apply_central_force(twist_pivot.basis * input * thrust_power * delta * speedboost)
 
 	#Set maximum speed
 	if linear_velocity.x > MAXVELOCITY:

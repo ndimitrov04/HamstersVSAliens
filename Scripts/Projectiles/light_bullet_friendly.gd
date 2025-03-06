@@ -9,10 +9,6 @@ func _ready():
 	await get_tree().create_timer(0.1).timeout
 	apply_central_impulse(global_transform.basis * Vector3(0,0,-speed))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
-	pass
-
 func _on_body_entered(body):
 	if "type" in body:
 		if body.type == ObjectTypes.TYPE.ENEMY:

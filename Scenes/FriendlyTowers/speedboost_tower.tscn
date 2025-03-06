@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://cd38ytne4dlvk"]
+
+[ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/speedboost_area.gd" id="1_1aggo"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_paopn"]
+rough = true
+absorbent = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mor4m"]
+height = 6.0
+radial_segments = 16
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6ok6e"]
+points = PackedVector3Array(0.499832, 3.04702, 0.309468, -0.547507, -3.04702, -0.261849, -0.547507, -3.04702, 0.214174, 0.595126, -3.04702, -0.0713727, -0.261849, 3.04702, -0.547507, -0.452213, 3.04702, 0.40465, 0.0238095, -3.04702, 0.595126, 0.40465, -3.04702, -0.452213, 0.499832, 3.04702, -0.357031, -0.547507, 3.04702, -0.261849, 0.0238095, 3.04702, 0.595126, -0.261849, -3.04702, -0.547507, 0.309468, -3.04702, 0.499832, 0.214174, 3.04702, -0.547507, -0.357031, -3.04702, 0.499832, 0.595126, 3.04702, -0.0713727, 0.499832, -3.04702, 0.309468, -0.547507, 3.04702, 0.214174, 0.214174, -3.04702, -0.547507, 0.309468, 3.04702, 0.499832, -0.0713727, 3.04702, 0.595126, 0.595126, -3.04702, 0.0238095, 0.499832, -3.04702, -0.357031, -0.357031, 3.04702, 0.499832, -0.0713727, -3.04702, 0.595126, 0.595126, 3.04702, 0.0238095, 0.40465, 3.04702, -0.452213, -0.452213, -3.04702, 0.40465)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_co83g"]
+radius = 500.0
+
+[node name="SpeedboostTower" type="RigidBody3D"]
+mass = 100.0
+physics_material_override = SubResource("PhysicsMaterial_paopn")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -1, 0)
+
+[node name="Model" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_mor4m")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_6ok6e")
+
+[node name="BoostArea" type="Area3D" parent="."]
+script = ExtResource("1_1aggo")
+
+[node name="Supportbox" type="CollisionShape3D" parent="BoostArea"]
+shape = SubResource("SphereShape3D_co83g")
+
+[connection signal="body_entered" from="BoostArea" to="BoostArea" method="_on_body_entered"]
+[connection signal="body_exited" from="BoostArea" to="BoostArea" method="_on_body_exited"]
