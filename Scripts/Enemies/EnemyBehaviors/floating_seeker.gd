@@ -1,6 +1,9 @@
 extends Node3D
 
 @onready var player = get_tree().root.get_child(get_tree().root.get_child_count()-1).player
+@onready var pause_time = get_parent().get_meta("pause_time")
+@onready var pause_interval = get_parent().get_meta("pause_interval")
+@onready var pause_timer = $PauseTimer
 
 const MAXVELOCITY = 25
 const INERTIAJUMPMULTIPLIER = 0.2
@@ -9,7 +12,11 @@ var thrust_power : float = 60000
 var jump_power : float = 60000
 var floor_power : float = 120000
 
-var input = Vector3.ZERO
+var input : Vector3 = Vector3.ZERO
+var paused : bool = false
+
+func _ready():
+	randf_range(pause_interval-0.5,pause_interval+0.5)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -26,7 +33,7 @@ func _physics_process(delta):
 	else:
 		input.z = 0
 
-	if get_parent().alive:
+	if get_parent().alive and not paused:
 		get_parent().apply_central_force(input * thrust_power * delta)
 
 	#Set maximum speed
@@ -42,3 +49,11 @@ func _physics_process(delta):
 		get_parent().linear_velocity.z = MAXVELOCITY
 	elif get_parent().linear_velocity.z < -MAXVELOCITY:
 		get_parent().linear_velocity.z = -MAXVELOCITY
+
+func pause_movement(internal_pause_time : float):
+	paused = true
+	await get_tree().create_timer(internal_pause_time).timeout
+	paused = false
+
+func _on_pause_timer_timeout():
+	pause_movement(pause_time)

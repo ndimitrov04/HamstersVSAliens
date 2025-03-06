@@ -22,6 +22,6 @@ func _on_shoot_timer_timeout():
 
 func shoot():
 	var bullet = BULLET.instantiate()
-	get_parent().add_sibling(bullet)
+	get_parent().add_child(bullet)
 	bullet.global_position = shoot_point.global_position
 	bullet.global_rotation = get_parent().global_rotation

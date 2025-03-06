@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwyq1ro8qs0gr"]
+
+[ext_resource type="Script" path="res://Scripts/Friendlies/ShootTurret/non_predictive_turret.gd" id="1_ny64m"]
+[ext_resource type="PackedScene" uid="uid://blul2ix751h0k" path="res://Scenes/Projectiles/light_bullet_friendly.tscn" id="2_t3s4a"]
+[ext_resource type="PackedScene" uid="uid://b0tvm6rfqqyky" path="res://Scenes/ModelScenes/fast_turret.tscn" id="3_1wlcd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2y3yx"]
+size = Vector3(0.55, 0.642, 0.55)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v8jgc"]
+
+[node name="FastTurret" type="RigidBody3D"]
+script = ExtResource("1_ny64m")
+metadata/turret_node = NodePath("Turret")
+metadata/hp = 100
+metadata/shoot_time = 0.6
+metadata/bullet = ExtResource("2_t3s4a")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.0602805, 0.922619, -0.0883215)
+shape = SubResource("BoxShape3D_2y3yx")
+
+[node name="Model" parent="." instance=ExtResource("3_1wlcd")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="turret_single" parent="Model/RootNode" index="0"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Turret" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85614, 0)
+visible = false
+mesh = SubResource("BoxMesh_v8jgc")
+
+[node name="ShootPoint" type="Node3D" parent="Turret"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0192559, -0.0452056, -2.16527)
+
+[node name="ShootTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+
+[editable path="Model"]

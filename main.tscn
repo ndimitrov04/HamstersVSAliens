@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=26 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Texture2D" uid="uid://84yl1ew7nhab" path="res://Textures/Skyboxes/SkySkybox.png" id="1_7o4ip"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cv4dhypx5e5h6" path="res://Textures/Terrain/TerrainTextures/main_slot0_albedo_bump.png" id="6_7bisy"]
 [ext_resource type="Texture2D" uid="uid://ciy53rbxcjpue" path="res://Textures/Terrain/green.jpg" id="7_ulr6h"]
 [ext_resource type="Texture2D" uid="uid://c3vmhecg0ki5k" path="res://Textures/Terrain/TerrainTextures/main_slot0_normal_roughness.png" id="8_nu4qe"]
+[ext_resource type="PackedScene" uid="uid://bwyq1ro8qs0gr" path="res://Scenes/FriendlyTowers/fast_turret.tscn" id="9_7yake"]
 [ext_resource type="AudioStream" uid="uid://com0mloe5wxnu" path="res://Music/wuthering_tights.mp3" id="12_ejmyd"]
 [ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="14_j2f1x"]
 [ext_resource type="PackedScene" uid="uid://bmsn7elnqj675" path="res://Scenes/Enemies/ufo.tscn" id="14_qqokl"]
@@ -131,6 +132,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_1kjnp")
 
 [node name="Hitbox" type="CollisionShape3D" parent="Floor/Border"]
 shape = SubResource("ConcavePolygonShape3D_07wow")
+
+[node name="FastTurret" parent="." instance=ExtResource("9_7yake")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.85323, 36.3655, 0)
 
 [node name="Player" parent="." instance=ExtResource("2_3iewc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)

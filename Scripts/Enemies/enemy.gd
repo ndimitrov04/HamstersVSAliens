@@ -9,7 +9,7 @@ extends RigidBody3D
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
 var alive : bool = true
-var hitGround : bool = false
+var hit_ground : bool = false
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.ENEMY
 
 @onready var hp = get_meta("hp")
@@ -25,10 +25,10 @@ func _physics_process(delta):
 	#	"HitGround: " + str(hitGround)
 	#)
 	
-	#if hp <= 0:
-		#die()
+	if hp <= 0:
+		die()
 	
-	if not alive and hitGround:
+	if not alive and hit_ground:
 		await get_tree().create_timer(0.5).timeout
 		queue_free()
 
@@ -39,9 +39,9 @@ func _on_body_entered(body):
 		die()
 	
 	if body.name == "HTerrain":
-		hitGround = true
+		hit_ground = true
 		explosion = EXPLOSION.instantiate()
-		add_sibling(explosion)
+		add_child(explosion)
 		explosion.global_position = global_position
 		explosion.amount = 4096
 		explosion.explosiveness = 0.9
@@ -50,9 +50,16 @@ func _on_body_entered(body):
 func _on_lock_timeout_timeout():
 	lock_marker.visible = false
 
+func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
+	add_child(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
+	hp -= damage
+
 func die(explosion = EXPLOSION.instantiate()):
 	alive = false
-	add_sibling(explosion)
+	add_child(explosion)
 	explosion.global_position = global_position
 	explosion.amount = 256
 	explosion.emitting = true

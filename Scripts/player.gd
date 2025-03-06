@@ -13,6 +13,8 @@ extends RigidBody3D
 @onready var hud = $"../HUD"
 @onready var player_data = $"../HUD/PlayerData"
 
+@onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
+
 const MAXVELOCITY = 25
 const INERTIAJUMPMULTIPLIER = 0.2
 
@@ -23,8 +25,8 @@ var thrust_power : float = 60000
 var jump_power : float = 60000
 var floor_power : float = 120000
 
-var homingTarget = null
-var targetHit : bool = false
+var homing_target = null
+var target_hit : bool = false
 
 var hp = 100
 
@@ -123,37 +125,41 @@ func _unhandled_input(event: InputEvent):
 			pitch_input = -event.relative.y * mouse_sensitivity
 
 func homing_attack(homingRepeat : int = 175, homingRefresh : float = 0.01):
-	homingTarget = enemy_detector.get_collider(0)
+	homing_target = enemy_detector.get_collider(0)
 	for i in range(0,homingRepeat):
-		if targetHit:
+		if target_hit:
 			break
-		var enemyPosition = homingTarget.global_position
+		var enemy_position = homing_target.global_position
 		linear_velocity = Vector3(0,0,0)
-		var distance = abs(position.x - enemyPosition.x) + abs(position.y - enemyPosition.y) + abs(position.z - enemyPosition.z)
+		var distance = abs(position.x - enemy_position.x) + abs(position.y - enemy_position.y) + abs(position.z - enemy_position.z)
 		print(distance)
-		if distance >= 6:
-			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 6)
-			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemyPosition.y, -abs(position.y - enemyPosition.y) * 6)
-			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 6)
+		if distance >= 10:
+			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 6)
+			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 6)
+			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 6)
 		else:
-			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemyPosition.x, -abs(position.x - enemyPosition.x) * 16)
-			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemyPosition.y, -abs(position.y - enemyPosition.y) * 16)
-			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemyPosition.z, -abs(position.z - enemyPosition.z) * 16)
+			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 30)
+			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 30)
+			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 30)
 		await get_tree().create_timer(homingRefresh).timeout
-	homingTarget = null
-	targetHit = false
+	homing_target = null
+	target_hit = false
 	
 func take_damage(damage : int):
 	sphere.get_surface_override_material(0).albedo_color = Color(1.0, 0.0, 0.0, 0.6)
+	var explosion = EXPLOSION.instantiate()
+	add_sibling(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
 	hp -= damage
 	await get_tree().create_timer(0.5).timeout
 	sphere.get_surface_override_material(0).albedo_color = Color(1.0, 1.0, 1.0, 0.6)
 	
-	
 func _on_body_entered(body):
-	if homingTarget != null:
-		if body == homingTarget:
-			targetHit = true
+	if homing_target != null:
+		if body == homing_target:
+			target_hit = true
 			linear_velocity = Vector3(0,0,0)
 			linear_velocity.x = move_toward(linear_velocity.x, -position.x + body.global_position.x, -abs(position.x - body.global_position.x)*3)
 			linear_velocity.y = move_toward(linear_velocity.y, -position.y + body.global_position.y, -abs(position.y - body.global_position.y)*3)
