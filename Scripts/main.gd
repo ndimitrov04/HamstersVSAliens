@@ -9,7 +9,7 @@ extends Node3D
 
 @onready var player = $Player
 
-const MAPRADIUS = 512
+const MAPRADIUS = 500
 const SKYBOUNDS = [20,35]
 
 var currentWave : int = 0

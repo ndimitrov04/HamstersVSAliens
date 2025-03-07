@@ -1,15 +1,20 @@
 extends RigidBody3D
 
 @onready var BULLET = get_meta("bullet")
+@onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
 @onready var turret = get_node(get_meta("turret_node"))
 @onready var gun_model = $Model/RootNode/turret_single/turret
 @onready var shoot_timer = $ShootTimer
 @onready var shoot_point = $Turret/ShootPoint
 
+@onready var hp_bar = $HPProjector/HPBar
+
 @onready var targeted_enemy = null
-@onready var hp = get_meta("hp")
-@onready var alive = true
+@onready var hp : int = get_meta("hp")
+@onready var alive : bool = true
+
+var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +22,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
+	hp_bar.texture.width = int(lerp(float(hp_bar.texture.width), float(hp), 0.1))/4
+	
+	if hp <= 0:
+		die()
+	
 	if alive and targeted_enemy != null:
 		turret.look_at(targeted_enemy.global_position)
 		gun_model.look_at(targeted_enemy.global_position,Vector3.UP,true)
@@ -41,3 +51,19 @@ func retarget():
 			closest_enemy_distance = distance_to_enemy
 			closest_enemy = enemy
 	targeted_enemy = closest_enemy
+
+func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
+	add_child(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
+	hp -= damage
+
+func die(explosion = EXPLOSION.instantiate()):
+	alive = false
+	add_child(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
+	await get_tree().create_timer(0.5).timeout
+	queue_free()

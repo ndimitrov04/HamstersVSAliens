@@ -1,17 +1,40 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwyq1ro8qs0gr"]
+[gd_scene load_steps=11 format=3 uid="uid://bwyq1ro8qs0gr"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/ShootTurret/non_predictive_turret.gd" id="1_ny64m"]
 [ext_resource type="PackedScene" uid="uid://blul2ix751h0k" path="res://Scenes/Projectiles/light_bullet_friendly.tscn" id="2_t3s4a"]
 [ext_resource type="PackedScene" uid="uid://b0tvm6rfqqyky" path="res://Scenes/ModelScenes/fast_turret.tscn" id="3_1wlcd"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_72t4m"]
+rough = true
+absorbent = true
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_2y3yx"]
-size = Vector3(0.55, 0.642, 0.55)
+size = Vector3(0.55, 0.563576, 0.55)
 
 [sub_resource type="BoxMesh" id="BoxMesh_v8jgc"]
 
+[sub_resource type="Gradient" id="Gradient_qsc3r"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0674j"]
+gradient = SubResource("Gradient_qsc3r")
+width = 25
+height = 1
+
+[sub_resource type="Gradient" id="Gradient_wm43g"]
+colors = PackedColorArray(0, 0.670588, 0.341176, 1, 0, 0.670588, 0.341176, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r17se"]
+gradient = SubResource("Gradient_wm43g")
+width = 25
+height = 1
+
 [node name="FastTurret" type="RigidBody3D"]
-center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.113436, 0)
+collision_layer = 3
+collision_mask = 3
+mass = 100.0
+physics_material_override = SubResource("PhysicsMaterial_72t4m")
 script = ExtResource("1_ny64m")
 metadata/turret_node = NodePath("Turret")
 metadata/hp = 100
@@ -19,11 +42,11 @@ metadata/shoot_time = 0.6
 metadata/bullet = ExtResource("2_t3s4a")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.0602805, 0.922619, -0.0883215)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.0602805, 1.04025, -0.0883215)
 shape = SubResource("BoxShape3D_2y3yx")
 
 [node name="Model" parent="." instance=ExtResource("3_1wlcd")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.183709, 0)
 
 [node name="turret_single" parent="Model/RootNode" index="0"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -35,6 +58,25 @@ mesh = SubResource("BoxMesh_v8jgc")
 
 [node name="ShootPoint" type="Node3D" parent="Turret"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0192559, -0.0452056, -2.16527)
+
+[node name="HPProjector" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.333475, 0)
+
+[node name="HPBackground" type="Sprite3D" parent="HPProjector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46403, 0)
+billboard = 1
+transparent = false
+no_depth_test = true
+texture = SubResource("GradientTexture2D_0674j")
+
+[node name="HPBar" type="Sprite3D" parent="HPProjector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46403, 0)
+sorting_offset = 1.0
+billboard = 1
+transparent = false
+no_depth_test = true
+fixed_size = true
+texture = SubResource("GradientTexture2D_r17se")
 
 [node name="ShootTimer" type="Timer" parent="."]
 autostart = true

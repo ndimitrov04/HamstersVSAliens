@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://do61aq0und06o"]
+
+[ext_resource type="Script" path="res://Scripts/Friendlies/Towers/tower.gd" id="1_vjfje"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nec7y"]
+rough = true
+absorbent = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_bp3sq"]
+size = Vector3(2, 0.13, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bygfm"]
+points = PackedVector3Array(1.01587, 0.0778571, 1.01587, -1.01587, -0.080873, -1.01587, -1.01587, -0.080873, 1.01587, -1.01587, 0.0778571, -1.01587, 1.01587, -0.080873, -1.01587, -1.01587, 0.0778571, 1.01587, 1.01587, -0.080873, 1.01587, 1.01587, 0.0778571, -1.01587)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_30vin"]
+top_radius = 1.5
+bottom_radius = 1.5
+height = 16.0
+radial_segments = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gpenl"]
+points = PackedVector3Array(1.71429, 7.61905, 0.285155, -1.61905, -7.61905, -0.428432, -1.61905, -7.61905, 0.523343, -1.61905, 7.61905, -0.428432, 0.523343, -7.61905, -1.61905, 0.285155, -7.61905, 1.71429, -0.190243, 7.61905, 1.71429, -0.428432, 7.61905, -1.61905, 1.71429, -7.61905, 0.285155, 1.23758, 7.61905, -1.14234, 1.23758, 7.61905, 1.23758, -1.38086, 7.61905, 0.999394, -0.904482, -7.61905, -1.38086, -1.14234, -7.61905, 1.23758, 1.4761, -7.61905, -0.66662, 1.23758, -7.61905, 1.23758, 0.523343, 7.61905, -1.61905, -1.38086, 7.61905, -0.904482, 1.71429, 7.61905, -0.190243, 0.999394, -7.61905, -1.38086, -1.61905, 7.61905, 0.523343, -0.428432, -7.61905, -1.61905, 0.285155, 7.61905, 1.71429, -0.190243, -7.61905, 1.71429, -1.38086, -7.61905, -0.904482, -0.904482, 7.61905, -1.38086, 1.71429, -7.61905, -0.190243, -1.14234, 7.61905, 1.23758, 0.999394, 7.61905, -1.38086, -1.38086, -7.61905, 0.999394, 1.23758, -7.61905, -1.14234)
+
+[node name="Tower" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.312196, 0)
+top_level = true
+collision_layer = 3
+collision_mask = 3
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 250.0
+physics_material_override = SubResource("PhysicsMaterial_nec7y")
+script = ExtResource("1_vjfje")
+
+[node name="Platform" type="StaticBody3D" parent="."]
+
+[node name="Model" type="MeshInstance3D" parent="Platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.234131, 0)
+mesh = SubResource("BoxMesh_bp3sq")
+
+[node name="Hitbox" type="CollisionShape3D" parent="Platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.234131, 0)
+shape = SubResource("ConvexPolygonShape3D_bygfm")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.85579, 0)
+mesh = SubResource("CylinderMesh_30vin")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.49799, 0)
+shape = SubResource("ConvexPolygonShape3D_gpenl")

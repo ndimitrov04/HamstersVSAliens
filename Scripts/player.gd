@@ -9,11 +9,13 @@ extends RigidBody3D
 @onready var hover_decal = $FloorMarker/HoverDecal
 @onready var sphere = $Sphere
 @onready var ship = $Ship
+@onready var shoot_point = $Ship/ShootPoint
 
 @onready var hud = $"../HUD"
 @onready var player_data = $"../HUD/PlayerData"
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
+@onready var BULLET = preload("res://Scenes/Projectiles/light_bullet_friendly.tscn")
 
 var MAXVELOCITY : int = 25
 const INERTIAJUMPMULTIPLIER : float = 0.2
@@ -30,7 +32,8 @@ var speedboost : float = 1
 var homing_target = null
 var target_hit : bool = false
 
-var hp = 100
+var hp : int = 100
+var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -77,6 +80,9 @@ func _physics_process(delta):
 		print(jumpInertia)
 		print((jump_power * jumpInertia))
 		apply_central_impulse(Vector3(0,1,0) * (jump_power * jumpInertia) * delta)
+
+	if Input.is_action_just_pressed("shoot"):
+		shoot()
 
 	#Lock on if looking at enemy and homing attack on right click
 	if enemy_detector.is_colliding():
@@ -160,7 +166,13 @@ func take_damage(damage : int):
 	hp -= damage
 	await get_tree().create_timer(0.5).timeout
 	sphere.get_surface_override_material(0).albedo_color = Color(1.0, 1.0, 1.0, 0.6)
-	
+
+func shoot():
+	var bullet = BULLET.instantiate()
+	add_child(bullet)
+	bullet.global_position = shoot_point.global_position
+	bullet.global_rotation = camera.global_rotation
+
 func _on_body_entered(body):
 	if homing_target != null:
 		if body == homing_target:

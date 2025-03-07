@@ -64,6 +64,9 @@ shape = SubResource("SphereShape3D_i3mnr")
 target_position = Vector3(0, 0, -250)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
+[node name="ShootPoint" type="Node3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.26126)
+
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256213, -0.0454212)
 light_color = Color(0, 1, 1, 1)

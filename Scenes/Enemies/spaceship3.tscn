@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="2_fixds"]
 [ext_resource type="PackedScene" uid="uid://crnnckis2lj5s" path="res://Scenes/ModelScenes/spaceship3_model.tscn" id="2_q77wl"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="4_wq2h1"]
-[ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/non_predictive_shooting.tscn" id="6_wjl2q"]
+[ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_wjl2q"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fn527"]
 bounce = 0.5
