@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cd38ytne4dlvk"]
+[gd_scene load_steps=9 format=3 uid="uid://cd38ytne4dlvk"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/speedboost_area.gd" id="1_1aggo"]
 
@@ -6,7 +6,17 @@
 rough = true
 absorbent = true
 
+[sub_resource type="Gradient" id="Gradient_7y4pg"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_67joj"]
+gradient = SubResource("Gradient_7y4pg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f0ape"]
+albedo_color = Color(0, 1, 1, 1)
+albedo_texture = SubResource("GradientTexture1D_67joj")
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_mor4m"]
+material = SubResource("StandardMaterial3D_f0ape")
 height = 6.0
 radial_segments = 16
 
@@ -21,8 +31,8 @@ collision_layer = 3
 collision_mask = 3
 mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_paopn")
-center_of_mass_mode = 1
-center_of_mass = Vector3(0, -1, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
 
 [node name="Model" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_mor4m")

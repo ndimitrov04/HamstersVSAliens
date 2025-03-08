@@ -7,7 +7,7 @@ extends RigidBody3D
 @onready var gun_model = $Model/RootNode/turret_single/turret
 @onready var shoot_timer = $ShootTimer
 @onready var shoot_point = $Turret/ShootPoint
-
+@onready var hp_projector = $HPProjector
 @onready var hp_bar = $HPProjector/HPBar
 
 @onready var targeted_enemy = null
@@ -23,6 +23,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	hp_bar.texture.width = int(lerp(float(hp_bar.texture.width), float(hp), 0.1))/4
+	hp_projector.global_position = global_position + Vector3(0,0.25,0)
 	
 	if hp <= 0:
 		die()

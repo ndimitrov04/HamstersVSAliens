@@ -18,7 +18,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0674j"]
 gradient = SubResource("Gradient_qsc3r")
-width = 25
+width = 2
 height = 1
 
 [sub_resource type="Gradient" id="Gradient_wm43g"]
@@ -60,13 +60,15 @@ mesh = SubResource("BoxMesh_v8jgc")
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0192559, -0.0452056, -2.16527)
 
 [node name="HPProjector" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.333475, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.220039, 0)
+top_level = true
 
 [node name="HPBackground" type="Sprite3D" parent="HPProjector"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46403, 0)
 billboard = 1
 transparent = false
 no_depth_test = true
+fixed_size = true
 texture = SubResource("GradientTexture2D_0674j")
 
 [node name="HPBar" type="Sprite3D" parent="HPProjector"]

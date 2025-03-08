@@ -11,8 +11,8 @@ extends RigidBody3D
 @onready var ship = $Ship
 @onready var shoot_point = $Ship/ShootPoint
 
-@onready var hud = $"../HUD"
-@onready var player_data = $"../HUD/PlayerData"
+@onready var hud = $"../../HUD"
+@onready var player_data = $"../../HUD/PlayerData"
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 @onready var BULLET = preload("res://Scenes/Projectiles/light_bullet_friendly.tscn")
@@ -135,7 +135,7 @@ func _unhandled_input(event: InputEvent):
 			twist_input = -event.relative.x * mouse_sensitivity
 			pitch_input = -event.relative.y * mouse_sensitivity
 
-func homing_attack(homingRepeat : int = 175, homingRefresh : float = 0.01):
+func homing_attack(homingRepeat : int = 175, homing_refresh : float = 0.01):
 	homing_target = enemy_detector.get_collider(0)
 	for i in range(0,homingRepeat):
 		if target_hit:
@@ -152,7 +152,7 @@ func homing_attack(homingRepeat : int = 175, homingRefresh : float = 0.01):
 			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 30)
 			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 30)
 			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 30)
-		await get_tree().create_timer(homingRefresh).timeout
+		await get_tree().create_timer(homing_refresh).timeout
 	homing_target = null
 	target_hit = false
 	

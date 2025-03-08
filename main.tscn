@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=34 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Texture2D" uid="uid://84yl1ew7nhab" path="res://Textures/Skyboxes/SkySkybox.png" id="1_7o4ip"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
@@ -7,9 +7,12 @@
 [ext_resource type="Resource" path="res://TerrainData/data.hterrain" id="4_gra8q"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_vld6k"]
 [ext_resource type="Texture2D" uid="uid://cv4dhypx5e5h6" path="res://Textures/Terrain/TerrainTextures/main_slot0_albedo_bump.png" id="6_7bisy"]
-[ext_resource type="Texture2D" uid="uid://ciy53rbxcjpue" path="res://Textures/Terrain/green.jpg" id="7_ulr6h"]
+[ext_resource type="Texture2D" uid="uid://cljf22e7es47q" path="res://Textures/Terrain/tiny_treats_grass_texture.png" id="7_grkdp"]
 [ext_resource type="Texture2D" uid="uid://c3vmhecg0ki5k" path="res://Textures/Terrain/TerrainTextures/main_slot0_normal_roughness.png" id="8_nu4qe"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="9_0hr8h"]
 [ext_resource type="PackedScene" uid="uid://bwyq1ro8qs0gr" path="res://Scenes/FriendlyTowers/fast_turret.tscn" id="9_7yake"]
+[ext_resource type="Texture2D" uid="uid://bo7j0h6gor4bu" path="res://ImportedModels/Terrain/GrassLow/grass_noaa.png" id="10_y7bhy"]
+[ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="11_27fkr"]
 [ext_resource type="PackedScene" uid="uid://cd38ytne4dlvk" path="res://Scenes/FriendlyTowers/speedboost_tower.tscn" id="11_g3av2"]
 [ext_resource type="AudioStream" uid="uid://com0mloe5wxnu" path="res://Music/wuthering_tights.mp3" id="12_ejmyd"]
 [ext_resource type="Script" path="res://Scripts/hud.gd" id="13_ypdc3"]
@@ -29,17 +32,22 @@ sky_material = SubResource("PanoramaSkyMaterial_id3pn")
 background_mode = 2
 background_color = Color(0.321728, 0.321728, 0.321728, 1)
 sky = SubResource("Sky_i2hom")
+ambient_light_sky_contribution = 0.5
 tonemap_mode = 2
-ssao_enabled = true
+tonemap_exposure = 0.8
 ssao_light_affect = 0.11
 ssao_ao_channel_affect = 0.09
-volumetric_fog_enabled = true
+sdfgi_use_occlusion = true
+fog_mode = 1
+fog_density = 0.1
+fog_aerial_perspective = 0.2
+fog_sky_affect = 0.0
 volumetric_fog_length = 3.0
 
 [sub_resource type="Resource" id="Resource_ukbfh"]
 script = ExtResource("5_vld6k")
 mode = 0
-textures = [[ExtResource("6_7bisy"), ExtResource("7_ulr6h")], [ExtResource("8_nu4qe"), null]]
+textures = [[ExtResource("6_7bisy"), ExtResource("7_grkdp")], [ExtResource("8_nu4qe"), null]]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s66cy"]
 size = Vector3(1, 1024, 1024)
@@ -76,31 +84,43 @@ environment = SubResource("Environment_3wlby")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-light_color = Color(1, 1, 0.996078, 1)
+light_color = Color(1, 1, 0.964706, 1)
 shadow_enabled = true
 
 [node name="HTerrain" type="Node3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("3_qe4bh")
+ambient_wind = 0.1
 centered = true
 _terrain_data = ExtResource("4_gra8q")
 chunk_size = 16
 collision_enabled = true
-collision_layer = 1
-collision_mask = 1
+collision_layer = 7
+collision_mask = 7
 shader_type = "Classic4"
 custom_shader = null
 custom_globalmap_shader = null
 texture_set = SubResource("Resource_ukbfh")
 render_layers = 1
 cast_shadow = 1
-shader_params/u_ground_uv_scale_per_texture = Vector4(20, 20, 20, 20)
-shader_params/u_depth_blending = true
-shader_params/u_triplanar = null
+shader_params/u_ground_uv_scale_per_texture = Vector4(20, 20, 20, 2)
+shader_params/u_depth_blending = false
+shader_params/u_triplanar = false
 shader_params/u_tile_reduction = Vector4(1, 1, 1, 1)
-shader_params/u_globalmap_blend_start = null
-shader_params/u_globalmap_blend_distance = null
+shader_params/u_globalmap_blend_start = 0.0
+shader_params/u_globalmap_blend_distance = 0.0
 shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
+
+[node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
+script = ExtResource("9_0hr8h")
+texture = ExtResource("10_y7bhy")
+view_distance = 120.0
+shader_params/u_globalmap_tint_bottom = 0.484
+shader_params/u_globalmap_tint_top = 1.0
+shader_params/u_bottom_ao = 0.548
+shader_params/u_instance_scale = Vector3(0.5, 0.5, 0.5)
+shader_params/u_roughness = 0.0
+metadata/_editor_icon = ExtResource("11_27fkr")
 
 [node name="WorldBorder" type="Node3D" parent="."]
 
@@ -138,12 +158,20 @@ surface_material_override/0 = SubResource("StandardMaterial3D_1kjnp")
 [node name="Hitbox" type="CollisionShape3D" parent="Floor/Border"]
 shape = SubResource("ConcavePolygonShape3D_07wow")
 
-[node name="Player" parent="." instance=ExtResource("2_3iewc")]
+[node name="Friendlies" type="Node3D" parent="."]
+
+[node name="Player" parent="Friendlies" instance=ExtResource("2_3iewc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
-[node name="SpeedboostTower" parent="." instance=ExtResource("11_g3av2")]
+[node name="SpeedboostTower" parent="Friendlies" instance=ExtResource("11_g3av2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27389, 39.5422, 0)
-center_of_mass = Vector3(0, -10, 0)
+
+[node name="FastTurret" parent="Friendlies" instance=ExtResource("9_7yake")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.416, 3.47621, -14.125)
+metadata/target = NodePath("")
+
+[node name="Tower" parent="Friendlies" instance=ExtResource("18_1xe6f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.374, 3.24075, -14.1515)
 
 [node name="Enemies" type="Node3D" parent="."]
 
@@ -230,9 +258,3 @@ stream = ExtResource("12_ejmyd")
 volume_db = -15.0
 autoplay = true
 bus = &"Music"
-
-[node name="FastTurret" parent="." instance=ExtResource("9_7yake")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.416, 3.47621, -14.125)
-
-[node name="Tower" parent="." instance=ExtResource("18_1xe6f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.374, 3.24075, -14.1515)

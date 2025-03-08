@@ -1,6 +1,8 @@
 extends RigidBody3D
 
-@onready var player = get_tree().root.get_child(get_tree().root.get_child_count()-1).player
+@onready var targets = $"../../Friendlies"
+@onready var target
+@onready var target_player : bool = get_meta("target_player")
 
 @onready var hitbox = $Hitbox
 @onready var lock_marker = $LockMarker
@@ -16,7 +18,8 @@ var type : ObjectTypes.TYPE = ObjectTypes.TYPE.ENEMY
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	if target_player:
+		target = $"../../Friendlies/Player"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
@@ -24,6 +27,8 @@ func _physics_process(_delta):
 	#	"Alive?: " + str(alive) + "\n" +
 	#	"HitGround: " + str(hitGround)
 	#)
+	if not target_player:
+		retarget()
 	
 	if hp <= 0:
 		die()
@@ -64,3 +69,13 @@ func die(explosion = EXPLOSION.instantiate()):
 	explosion.amount = 256
 	explosion.emitting = true
 	axis_lock_linear_y = false
+
+func retarget():
+	var closest_enemy_distance = 9999
+	var closest_enemy = null
+	for enemy in targets.get_children():
+		var distance_to_enemy = abs(position.x - enemy.global_position.x) + abs(position.y - enemy.global_position.y) + abs(position.z - enemy.global_position.z)
+		if distance_to_enemy < closest_enemy_distance:
+			closest_enemy_distance = distance_to_enemy
+			closest_enemy = enemy
+	target = closest_enemy

@@ -19,6 +19,8 @@ contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_b5jsb")
 metadata/hp = 100
+metadata/target = NodePath("")
+metadata/target_player = false
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.87002)

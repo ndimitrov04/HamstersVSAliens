@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 @onready var damage = 50
-@onready var speed = 1.1
+@onready var speed = 1.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +16,7 @@ func _on_body_entered(body):
 			body.take_damage(damage)
 			print(body)
 			print("Took Hit")
-			queue_free()
+	queue_free()
 
 func _on_timer_timeout():
 	queue_free()

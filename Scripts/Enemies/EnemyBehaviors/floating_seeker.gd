@@ -1,6 +1,5 @@
 extends Node3D
 
-@onready var player = get_tree().root.get_child(get_tree().root.get_child_count()-1).player
 @onready var pause_time = get_parent().get_meta("pause_time")
 @onready var pause_interval = get_parent().get_meta("pause_interval")
 @onready var pause_timer = $PauseTimer
@@ -20,15 +19,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if get_parent().global_position.x > player.global_position.x:
+	if get_parent().global_position.x > get_parent().target.global_position.x:
 		input.x = -1
-	elif get_parent().global_position.x < player.global_position.x:
+	elif get_parent().global_position.x < get_parent().target.global_position.x:
 		input.x = 1
 	else:
 		input.x = 0
-	if get_parent().global_position.z > player.global_position.z:
+	if get_parent().global_position.z > get_parent().target.global_position.z:
 		input.z = -1
-	elif get_parent().global_position.z < player.global_position.z:
+	elif get_parent().global_position.z < get_parent().target.global_position.z:
 		input.z = 1
 	else:
 		input.z = 0

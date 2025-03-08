@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://shogtswgpswm"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_xi10l"]
+[ext_resource type="PackedScene" uid="uid://bshg5dxiarc82" path="res://Scenes/Projectiles/destroyer_bullet.tscn" id="2_d1qin"]
+[ext_resource type="PackedScene" uid="uid://bp1uey4204u3h" path="res://ImportedModels/Spaceships/S1/Spaceship-VSxUAFhzbA.glb" id="3_clpdu"]
+[ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_wnlla"]
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="5_6d0ob"]
+[ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_1gmj3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fn527"]
+bounce = 0.5
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vyynd"]
+points = PackedVector3Array(-0.0109, 0.00202164, -0.0189243, -0.0109, -0.00265227, -0.0173602, 0.0590222, -0.00933044, -0.014839, -0.0147556, -0.0111763, 0.0202, -0.0590222, -0.00933044, -0.014839, -0.00183722, 0.0201778, -0.0203702, -0.0442667, 0.0146434, -0.00377254, 0.0442667, 0.0146434, -0.00377254, 0.0147556, -0.0111763, 0.0202, -0.0184416, 0.0127975, 0.0146647, -0.0571734, -0.00564192, -0.00192882, -0.0239763, 0.0201778, -8.92498e-05, 0.0571734, -0.00564192, -0.00192882, 0.0184416, 0.0127975, 0.0146647, -0.0461039, 0.0146434, -0.0129953, 0.0461039, 0.0146434, -0.0129953, 0.0239763, 0.0201778, -8.92498e-05, 0.00183722, 0.0183319, -0.0222222, -0.0147556, -0.00379928, 0.0202, -0.0128481, -0.0108764, 0.00300236, 0.0184416, 0.00173514, 0.0183521, 0.0571734, -0.00933044, -0.00192882, -0.0571734, -0.00933044, -0.00192882, 0.0239763, 0.0201778, -0.0111474, -0.0221276, 0.0183319, 0.00544192, -0.0590222, -0.00564192, -0.014839, -0.0239763, 0.0201778, -0.0111474, 0.0590222, -0.00564192, -0.014839, -0.00183722, 0.0183319, -0.0222222, -0.0184416, 0.00173514, 0.0183521, 0.0221276, 0.0183319, 0.00544192, -0.0590222, -0.00564192, -0.00377254)
+
+[node name="Destroyer" type="RigidBody3D"]
+collision_layer = 5
+collision_mask = 5
+axis_lock_linear_y = true
+mass = 150.0
+physics_material_override = SubResource("PhysicsMaterial_fn527")
+gravity_scale = 1.5
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_xi10l")
+metadata/hp = 100
+metadata/bullet = ExtResource("2_d1qin")
+metadata/shoot_time = 8.0
+metadata/pause_time = 2.0
+metadata/pause_interval = 8.0
+metadata/target_player = false
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 100, -4.37114e-06, 0, 4.37114e-06, 100, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_vyynd")
+
+[node name="Model" parent="." instance=ExtResource("3_clpdu")]
+
+[node name="LockMarker" type="Sprite3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+texture = ExtResource("4_wnlla")
+
+[node name="LockTimeout" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="FloatingSeeker" type="Node3D" parent="."]
+script = ExtResource("5_6d0ob")
+
+[node name="PauseTimer" type="Timer" parent="FloatingSeeker"]
+
+[node name="NonPredictiveShooting" parent="." instance=ExtResource("6_1gmj3")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
+[connection signal="timeout" from="FloatingSeeker/PauseTimer" to="FloatingSeeker" method="_on_pause_timer_timeout"]
+
+[editable path="Model"]

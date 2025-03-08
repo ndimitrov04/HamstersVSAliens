@@ -23,6 +23,7 @@ metallic_specular = 1.0
 metallic_texture = ExtResource("3_vhms8")
 roughness = 0.1
 roughness_texture = ExtResource("5_xt6ph")
+emission_energy_multiplier = 0.2
 normal_enabled = true
 normal_texture = ExtResource("3_ihcyi")
 rim_enabled = true
