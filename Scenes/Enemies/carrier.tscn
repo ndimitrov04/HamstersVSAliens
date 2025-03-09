@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://b8bnvg37tfgo2"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_vj3ff"]
+[ext_resource type="PackedScene" uid="uid://ch7l4a7iegb8w" path="res://Scenes/Enemies/carrier_minion.tscn" id="2_yf5xf"]
+[ext_resource type="PackedScene" uid="uid://cyhkr0ws7ha0l" path="res://Scenes/ModelScenes/carrier_model.tscn" id="3_f0spg"]
+[ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_4wgiv"]
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="5_vjcwl"]
+[ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_5yrh6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fn527"]
+bounce = 0.5
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vcvwm"]
+points = PackedVector3Array(0.00529507, -0.00237305, 0.0563199, -0.0565841, -0.000604964, -0.0320755, -0.00706748, -0.00767729, -0.0285365, 0.00706748, 0.0135397, -0.0161633, 0.0565841, -0.000604964, -0.0320755, -0.0120218, -0.0109926, 0.00912207, -0.00706748, 0.00469668, 0.0510159, -0.00529507, -0.00767729, 0.0563199, 0.00706748, 0.0135397, 0.00682681, 0.0124248, -0.0113705, -0.000295893, -0.0565841, 0.0029286, -0.0320755, 0.0565841, 0.0029286, -0.0320755, 0.00706748, 0.00469668, 0.0510159, -0.00706748, 0.0135397, 0.00682681, 0.00706748, -0.00767729, 0.0545461, -0.00529507, 0.011769, -0.0285365, -0.0565841, -0.00237305, -0.0267714, 0.0565841, -0.00237305, -0.0267714, 0.0565841, 0.0029286, -0.0267714, -0.0565841, 0.0029286, -0.0267714, -0.0124248, -0.0113705, -0.000295893, -0.00706748, 0.0135397, -0.0161633, 0.00706748, -0.00767729, -0.0285365, -0.00706748, 0.00115792, 0.0545461, 0.00706748, 0.00115792, 0.0545461, 0.0120218, -0.0109926, 0.00912207, 0.00529507, 0.011769, -0.0285365, -0.00706748, -0.00767729, 0.0545461, 0.0565841, -0.00237305, -0.0303017, -0.0565841, -0.00237305, -0.0303017, 0.00529507, -0.00767729, 0.0563199, -0.00529507, -0.00237305, 0.0563199)
+
+[node name="Carrier" type="RigidBody3D"]
+collision_layer = 5
+collision_mask = 5
+axis_lock_linear_y = true
+mass = 150.0
+physics_material_override = SubResource("PhysicsMaterial_fn527")
+gravity_scale = 1.5
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_vj3ff")
+metadata/hp = 400
+metadata/bullet = ExtResource("2_yf5xf")
+metadata/shoot_time = 10.0
+metadata/pause_time = 3.0
+metadata/pause_interval = 10.0
+metadata/target_player = false
+metadata/bullet_siblings = true
+metadata/track_player = false
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(-150, 0, -1.31134e-05, 0, 150, 0, 1.31134e-05, 0, -150, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_vcvwm")
+
+[node name="Model" parent="." instance=ExtResource("3_f0spg")]
+
+[node name="Spaceship_FernandoTheFlamingo" parent="Model/RootNode" index="0"]
+transform = Transform3D(-150, 0, -1.31134e-05, 0, 150, 0, 1.31134e-05, 0, -150, 0, 0, 0)
+
+[node name="LockMarker" type="Sprite3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+texture = ExtResource("4_4wgiv")
+
+[node name="LockTimeout" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="FloatingSeeker" type="Node3D" parent="."]
+script = ExtResource("5_vjcwl")
+
+[node name="PauseTimer" type="Timer" parent="FloatingSeeker"]
+
+[node name="NonPredictiveShooting" parent="." instance=ExtResource("6_5yrh6")]
+
+[node name="ShootPoint" parent="NonPredictiveShooting" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.51861, -0.0139613)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
+[connection signal="timeout" from="FloatingSeeker/PauseTimer" to="FloatingSeeker" method="_on_pause_timer_timeout"]
+
+[editable path="Model"]
+[editable path="NonPredictiveShooting"]

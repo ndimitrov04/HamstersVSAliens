@@ -27,14 +27,17 @@ metadata/hp = 100
 metadata/bullet = ExtResource("2_d1qin")
 metadata/shoot_time = 8.0
 metadata/pause_time = 2.0
-metadata/pause_interval = 8.0
+metadata/pause_interval = 4.0
 metadata/target_player = false
+metadata/bullet_siblings = false
+metadata/track_player = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, 100, -4.37114e-06, 0, 4.37114e-06, 100, 0, 0, 0)
+transform = Transform3D(-100, 0, -8.74228e-06, 0, 100, 0, 8.74228e-06, 0, -100, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_vyynd")
 
 [node name="Model" parent="." instance=ExtResource("3_clpdu")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false
@@ -53,8 +56,12 @@ script = ExtResource("5_6d0ob")
 
 [node name="NonPredictiveShooting" parent="." instance=ExtResource("6_1gmj3")]
 
+[node name="ShootPoint" parent="NonPredictiveShooting" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.73916)
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
 [connection signal="timeout" from="FloatingSeeker/PauseTimer" to="FloatingSeeker" method="_on_pause_timer_timeout"]
 
 [editable path="Model"]
+[editable path="NonPredictiveShooting"]

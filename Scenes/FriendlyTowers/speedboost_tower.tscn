@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cd38ytne4dlvk"]
+[gd_scene load_steps=10 format=3 uid="uid://cd38ytne4dlvk"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/speedboost_area.gd" id="1_1aggo"]
+[ext_resource type="Script" path="res://Scripts/Friendlies/Towers/tower.gd" id="1_6cxvg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_paopn"]
 rough = true
@@ -29,8 +30,15 @@ radius = 500.0
 [node name="SpeedboostTower" type="RigidBody3D"]
 collision_layer = 3
 collision_mask = 3
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
 mass = 100.0
 physics_material_override = SubResource("PhysicsMaterial_paopn")
+script = ExtResource("1_6cxvg")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 

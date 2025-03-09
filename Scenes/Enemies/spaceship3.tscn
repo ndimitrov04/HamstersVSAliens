@@ -29,13 +29,15 @@ metadata/shoot_time = 5.0
 metadata/pause_time = 2.0
 metadata/pause_interval = 3.0
 metadata/target_player = true
+metadata/bullet_siblings = false
+metadata/track_player = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, -100, -1.50996e-05, 0, 1.50996e-05, -100, 0, 0, 0)
+transform = Transform3D(-100, 0, -8.74228e-06, 0, 100, 0, 8.74228e-06, 0, -100, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_jf6ft")
 
 [node name="Model" parent="." instance=ExtResource("2_q77wl")]
-transform = Transform3D(1, 0, 0, 0, -1, -1.50996e-07, 0, 1.50996e-07, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Spaceship_BarbaraTheBee" parent="Model/RootNode" index="0"]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
@@ -57,8 +59,12 @@ script = ExtResource("4_wq2h1")
 
 [node name="NonPredictiveShooting" parent="." instance=ExtResource("6_wjl2q")]
 
+[node name="ShootPoint" parent="NonPredictiveShooting" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.87267)
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
 [connection signal="timeout" from="FloatingSeeker/PauseTimer" to="FloatingSeeker" method="_on_pause_timer_timeout"]
 
 [editable path="Model"]
+[editable path="NonPredictiveShooting"]

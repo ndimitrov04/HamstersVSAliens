@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyhkr0ws7ha0l"]
+
+[ext_resource type="PackedScene" uid="uid://dpqgi8np3b02q" path="res://ImportedModels/Spaceships/S4/Spaceship-Jqfed124pQ.glb" id="1_l7qge"]
+
+[node name="Carrier" instance=ExtResource("1_l7qge")]

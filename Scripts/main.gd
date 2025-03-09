@@ -4,6 +4,7 @@ extends Node3D
 @onready var UFO = preload("res://Scenes/Enemies/ufo.tscn")
 @onready var SEEKER = preload("res://Scenes/Enemies/spaceship3.tscn")
 @onready var DESTROYER = preload("res://Scenes/Enemies/spaceship1.tscn")
+@onready var CARRIER = preload("res://Scenes/Enemies/carrier.tscn")
 
 @onready var enemies = $Enemies
 @onready var level_data = $HUD/LevelData
@@ -19,7 +20,7 @@ var enemy_pool
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	await get_tree().create_timer(1).timeout
-	enemy_pool = [UFO, SEEKER, DESTROYER]
+	enemy_pool = [UFO, SEEKER, DESTROYER, CARRIER]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

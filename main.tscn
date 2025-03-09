@@ -114,12 +114,12 @@ shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
 [node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
 script = ExtResource("9_0hr8h")
 texture = ExtResource("10_y7bhy")
-view_distance = 120.0
+view_distance = 150.0
 shader_params/u_globalmap_tint_bottom = 0.484
 shader_params/u_globalmap_tint_top = 1.0
 shader_params/u_bottom_ao = 0.548
 shader_params/u_instance_scale = Vector3(0.5, 0.5, 0.5)
-shader_params/u_roughness = 0.0
+shader_params/u_roughness = 1.0
 metadata/_editor_icon = ExtResource("11_27fkr")
 
 [node name="WorldBorder" type="Node3D" parent="."]
