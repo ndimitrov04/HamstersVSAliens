@@ -32,24 +32,27 @@ axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 250.0
+mass = 2500.0
 physics_material_override = SubResource("PhysicsMaterial_nec7y")
 script = ExtResource("1_vjfje")
+metadata/hp = 100
+metadata/fallpoint = 35
 
 [node name="Platform" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.0914, 0)
 
 [node name="Model" type="MeshInstance3D" parent="Platform"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.234131, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.234131, 0)
 mesh = SubResource("BoxMesh_bp3sq")
 
 [node name="Hitbox" type="CollisionShape3D" parent="Platform"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.234131, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.234131, 0)
 shape = SubResource("ConvexPolygonShape3D_bygfm")
 
 [node name="Model" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.85579, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -7.85579, 0)
 mesh = SubResource("CylinderMesh_30vin")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.49799, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -7.49799, 0)
 shape = SubResource("ConvexPolygonShape3D_gpenl")

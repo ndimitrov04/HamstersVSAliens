@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=37 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Texture2D" uid="uid://84yl1ew7nhab" path="res://Textures/Skyboxes/SkySkybox.png" id="1_7o4ip"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
@@ -20,7 +20,9 @@
 [ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="14_j2f1x"]
 [ext_resource type="PackedScene" uid="uid://bmsn7elnqj675" path="res://Scenes/Enemies/ufo.tscn" id="14_qqokl"]
 [ext_resource type="Texture2D" uid="uid://cqifkij713en5" path="res://Textures/HUD/circle.png" id="15_qn8vp"]
+[ext_resource type="PackedScene" uid="uid://cv5b22ejhfc0d" path="res://Scenes/FriendlyTowers/regeneration_tower.tscn" id="16_w841i"]
 [ext_resource type="PackedScene" uid="uid://do61aq0und06o" path="res://Scenes/FriendlyTowers/tower.tscn" id="18_1xe6f"]
+[ext_resource type="PackedScene" uid="uid://8k3ba2pswgye" path="res://Scenes/ModelScenes/ground_bump.tscn" id="18_ecjty"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_id3pn"]
 panorama = ExtResource("1_7o4ip")
@@ -61,20 +63,22 @@ size = Vector3(1024, 1024, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_y638d"]
 size = Vector3(1024, 1024, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_kq1ef"]
-lightmap_size_hint = Vector2i(52, 52)
-size = Vector2(10, 10)
+[sub_resource type="Gradient" id="Gradient_x83lq"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m43an"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_utlep"]
+gradient = SubResource("Gradient_x83lq")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1kjnp"]
-albedo_texture = SubResource("CompressedTexture2D_m43an")
-metallic = 1.0
-rim = 0.0
-uv1_scale = Vector3(10, 10, 10)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_453sd"]
+albedo_color = Color(0, 0.235294, 1, 1)
+albedo_texture = SubResource("GradientTexture1D_utlep")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_07wow"]
-data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
+[sub_resource type="BoxMesh" id="BoxMesh_r2pmk"]
+material = SubResource("StandardMaterial3D_453sd")
+size = Vector3(10, 2, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ob41k"]
+points = PackedVector3Array(5.07837, 1.14286, 5.07738, -4.71563, -1, -4.71471, -4.71563, -1, 4.71471, -5.07837, 1.14286, -5.07738, 4.71563, -1, -4.71471, -5.07837, 1.14286, 5.07738, 5.07837, 1.14286, -5.07738, 4.71563, -1, 4.71471)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_u31re")
@@ -150,13 +154,12 @@ shape = SubResource("BoxShape3D_y638d")
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35.645, 0)
-mesh = SubResource("PlaneMesh_kq1ef")
-surface_material_override/0 = SubResource("StandardMaterial3D_1kjnp")
+mesh = SubResource("BoxMesh_r2pmk")
 
 [node name="Border" type="StaticBody3D" parent="Floor"]
 
 [node name="Hitbox" type="CollisionShape3D" parent="Floor/Border"]
-shape = SubResource("ConcavePolygonShape3D_07wow")
+shape = SubResource("ConvexPolygonShape3D_ob41k")
 
 [node name="Friendlies" type="Node3D" parent="."]
 
@@ -164,19 +167,36 @@ shape = SubResource("ConcavePolygonShape3D_07wow")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
 [node name="SpeedboostTower" parent="Friendlies" instance=ExtResource("11_g3av2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27389, 39.5422, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7654, -15.7442, 0)
 
 [node name="FastTurret" parent="Friendlies" instance=ExtResource("9_7yake")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.416, 3.47621, -14.125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.416, 33.8324, -14.125)
 metadata/target = NodePath("")
 
 [node name="Tower" parent="Friendlies" instance=ExtResource("18_1xe6f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.374, 3.24075, -14.1515)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.374, 17.2764, -14.1515)
+
+[node name="RegenerationTower" parent="Friendlies" instance=ExtResource("16_w841i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.1399, -12.2113, -72.4554)
 
 [node name="Enemies" type="Node3D" parent="."]
 
 [node name="UFO" parent="Enemies" instance=ExtResource("14_qqokl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.901638, 37.658, -24.1525)
+
+[node name="Scenery" type="Node3D" parent="."]
+
+[node name="GroundBump" parent="Scenery" instance=ExtResource("18_ecjty")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -57.034, -44.8971, 1.68137)
+skeleton = NodePath("../..")
+
+[node name="GroundBump2" parent="Scenery" instance=ExtResource("18_ecjty")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 173.851, -17.633, -13.4567)
+skeleton = NodePath("../..")
+
+[node name="GroundBump3" parent="Scenery" instance=ExtResource("18_ecjty")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 84.1482, -39.5381, -71.5317)
+skeleton = NodePath("../..")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("13_ypdc3")
@@ -258,3 +278,5 @@ stream = ExtResource("12_ejmyd")
 volume_db = -15.0
 autoplay = true
 bus = &"Music"
+
+[editable path="Friendlies/RegenerationTower"]

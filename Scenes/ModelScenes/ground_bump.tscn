@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://8k3ba2pswgye"]
+
+[ext_resource type="Texture2D" uid="uid://cljf22e7es47q" path="res://Textures/Terrain/tiny_treats_grass_texture.png" id="1_nx3gm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yxf1c"]
+albedo_texture = ExtResource("1_nx3gm")
+
+[sub_resource type="SphereMesh" id="SphereMesh_4mtex"]
+material = SubResource("StandardMaterial3D_yxf1c")
+height = 0.5
+radial_segments = 16
+rings = 8
+is_hemisphere = true
+
+[node name="GroundBump" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_4mtex")

@@ -1,0 +1,112 @@
+[gd_scene load_steps=10 format=3 uid="uid://cv5b22ejhfc0d"]
+
+[ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/regeneration_area.gd" id="1_e04d0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r5ov4"]
+rough = true
+absorbent = true
+
+[sub_resource type="GDScript" id="GDScript_toa1k"]
+script/source = "extends RigidBody3D
+
+@onready var EXPLOSION = preload(\"res://Scenes/Particles/explosion.tscn\")
+
+@onready var hp : int = get_meta(\"hp\")
+@onready var fallpoint : int = get_meta(\"fallpoint\")
+
+@onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(_delta):
+	if hp <= fallpoint:
+		axis_lock_linear_x = false
+		axis_lock_linear_y = false
+		axis_lock_linear_z = false
+		axis_lock_angular_x = false
+		axis_lock_angular_y = false
+		axis_lock_angular_z = false
+	if hp <= 0:
+		queue_free()
+
+func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
+	add_child(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
+	hp -= damage
+"
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_6k73x"]
+points = PackedVector3Array(-2.12698, -8.12698, -0.856596, -2.12698, -8.12698, 0.666517, -1.61858, 8.12698, -0.856596, 1.68249, -8.12698, -1.61858, 0.412524, -8.12698, 2.19048, -0.602603, 8.12698, 1.68249, 0.666517, 8.12698, -1.61858, -0.856596, -8.12698, -2.12698, 1.68249, 7.87242, 0.666517, 1.93648, -8.12698, 1.1745, -1.61858, -8.12698, 1.68249, -1.61858, 7.11032, 0.92051, 1.1745, 7.61785, 1.4285, 1.68249, 8.12698, -0.602603, 2.19048, -6.34821, -0.34861, -0.856596, 8.12698, -1.61858, 0.666517, -6.34821, -2.12698, -1.61858, -5.58611, -1.61858, -0.34861, -6.34821, 2.19048, 1.1745, -6.09524, 1.93648, 0.666517, 7.87242, 1.68249, 0.92051, 7.11032, -1.61858, 2.19048, -8.12698, 0.412524, -2.12698, -6.34821, 0.666517, -1.11059, 8.12698, 1.4285, -1.11059, -5.07857, 1.93648, 1.68249, 6.34821, -0.856596, 1.93648, -6.09524, 1.1745, 1.93648, -5.07857, -1.11059, -1.61858, 8.12698, 0.666517, 1.4285, 8.12698, -1.11059, 0.666517, -8.12698, -2.12698)
+
+[sub_resource type="Gradient" id="Gradient_7y4pg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_67joj"]
+gradient = SubResource("Gradient_7y4pg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f0ape"]
+albedo_color = Color(0, 1, 0, 1)
+albedo_texture = SubResource("GradientTexture1D_67joj")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mor4m"]
+material = SubResource("StandardMaterial3D_f0ape")
+top_radius = 1.5
+bottom_radius = 2.0
+height = 16.0
+radial_segments = 16
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_co83g"]
+radius = 500.0
+
+[node name="RegenerationTower" type="RigidBody3D"]
+collision_layer = 3
+collision_mask = 3
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 2500.0
+physics_material_override = SubResource("PhysicsMaterial_r5ov4")
+script = SubResource("GDScript_toa1k")
+metadata/hp = 100
+metadata/fallpoint = 35
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_6k73x")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mor4m")
+
+[node name="BoostArea" type="Area3D" parent="."]
+script = ExtResource("1_e04d0")
+metadata/regen_amount = 10
+metadata/regen_wait_time = 5
+
+[node name="RegenTimer" type="Timer" parent="BoostArea"]
+autostart = true
+
+[node name="Supportbox" type="CollisionShape3D" parent="BoostArea"]
+shape = SubResource("SphereShape3D_co83g")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28.0819, 0)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "Regeneration Tower"
+
+[connection signal="body_entered" from="BoostArea" to="BoostArea" method="_on_body_entered"]
+[connection signal="body_exited" from="BoostArea" to="BoostArea" method="_on_body_exited"]
+[connection signal="timeout" from="BoostArea/RegenTimer" to="BoostArea" method="_on_regen_timer_timeout"]

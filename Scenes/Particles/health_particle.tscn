@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8wgjgetywnya"]
+
+[ext_resource type="Script" path="res://Scripts/Particles/health_particle.gd" id="1_xp34k"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wulhj"]
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+angular_velocity_min = -360.0
+angular_velocity_max = 360.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ame4y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h42sq"]
+albedo_color = Color(0, 1, 0, 1)
+albedo_texture = SubResource("CompressedTexture2D_ame4y")
+emission_enabled = true
+emission = Color(0, 1, 0, 1)
+emission_energy_multiplier = 16.0
+rim_enabled = true
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xtpc"]
+material = SubResource("StandardMaterial3D_h42sq")
+
+[node name="HealthParticle" type="GPUParticles3D"]
+top_level = true
+emitting = false
+amount = 1
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_wulhj")
+draw_pass_1 = SubResource("BoxMesh_0xtpc")
+script = ExtResource("1_xp34k")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.339262, 0.774418, 0, 1)
+light_energy = 16.0
+distance_fade_begin = 10.0
+omni_range = 32.0
+
+[connection signal="finished" from="." to="." method="_on_finished"]

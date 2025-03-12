@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bwyq1ro8qs0gr"]
+[gd_scene load_steps=12 format=3 uid="uid://bwyq1ro8qs0gr"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/ShootTurret/non_predictive_turret.gd" id="1_ny64m"]
 [ext_resource type="PackedScene" uid="uid://blul2ix751h0k" path="res://Scenes/Projectiles/light_bullet_friendly.tscn" id="2_t3s4a"]
 [ext_resource type="PackedScene" uid="uid://b0tvm6rfqqyky" path="res://Scenes/ModelScenes/fast_turret.tscn" id="3_1wlcd"]
+[ext_resource type="Script" path="res://Scripts/UniversalBehaviors/hp_projector.gd" id="4_31lci"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_72t4m"]
 rough = true
@@ -18,7 +19,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0674j"]
 gradient = SubResource("Gradient_qsc3r")
-width = 2
+width = 3
 height = 1
 
 [sub_resource type="Gradient" id="Gradient_wm43g"]
@@ -33,7 +34,7 @@ height = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.113436, 0)
 collision_layer = 3
 collision_mask = 3
-mass = 100.0
+mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_72t4m")
 script = ExtResource("1_ny64m")
 metadata/turret_node = NodePath("Turret")
@@ -42,11 +43,11 @@ metadata/shoot_time = 0.6
 metadata/bullet = ExtResource("2_t3s4a")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.0602805, 1.04025, -0.0883215)
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, -0.0602805, 2.68335, -0.0883215)
 shape = SubResource("BoxShape3D_2y3yx")
 
 [node name="Model" parent="." instance=ExtResource("3_1wlcd")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.183709, 0)
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, 0, 0.183709, 0)
 
 [node name="turret_single" parent="Model/RootNode" index="0"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
@@ -57,11 +58,12 @@ visible = false
 mesh = SubResource("BoxMesh_v8jgc")
 
 [node name="ShootPoint" type="Node3D" parent="Turret"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0192559, -0.0452056, -2.16527)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0192559, 2.60993, -5.8993)
 
 [node name="HPProjector" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.220039, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.94293, 0)
 top_level = true
+script = ExtResource("4_31lci")
 
 [node name="HPBackground" type="Sprite3D" parent="HPProjector"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46403, 0)

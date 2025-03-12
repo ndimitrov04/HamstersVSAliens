@@ -16,6 +16,7 @@ extends RigidBody3D
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 @onready var BULLET = preload("res://Scenes/Projectiles/light_bullet_friendly.tscn")
+@onready var DEBUG_ENEMY_BULLET = preload("res://Scenes/Projectiles/light_bullet.tscn")
 
 var MAXVELOCITY : int = 25
 const INERTIAJUMPMULTIPLIER : float = 0.2
@@ -82,7 +83,9 @@ func _physics_process(delta):
 		apply_central_impulse(Vector3(0,1,0) * (jump_power * jumpInertia) * delta)
 
 	if Input.is_action_just_pressed("shoot"):
-		shoot()
+		shoot(BULLET)
+	if Input.is_action_just_pressed("debug_shoot"):
+		shoot(DEBUG_ENEMY_BULLET)
 
 	#Lock on if looking at enemy and homing attack on right click
 	if enemy_detector.is_colliding():
@@ -140,18 +143,19 @@ func homing_attack(homingRepeat : int = 175, homing_refresh : float = 0.01):
 	for i in range(0,homingRepeat):
 		if target_hit:
 			break
-		var enemy_position = homing_target.global_position
-		linear_velocity = Vector3(0,0,0)
-		var distance = abs(position.x - enemy_position.x) + abs(position.y - enemy_position.y) + abs(position.z - enemy_position.z)
-		print(distance)
-		if distance >= 10:
-			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 6)
-			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 6)
-			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 6)
-		else:
-			linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 30)
-			linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 30)
-			linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 30)
+		if homing_target:
+			var enemy_position = homing_target.global_position
+			linear_velocity = Vector3(0,0,0)
+			var distance = abs(position.x - enemy_position.x) + abs(position.y - enemy_position.y) + abs(position.z - enemy_position.z)
+			print(distance)
+			if distance >= 10:
+				linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 6)
+				linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 6)
+				linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 6)
+			else:
+				linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 30)
+				linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 30)
+				linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 30)
 		await get_tree().create_timer(homing_refresh).timeout
 	homing_target = null
 	target_hit = false
@@ -167,8 +171,8 @@ func take_damage(damage : int):
 	await get_tree().create_timer(0.5).timeout
 	sphere.get_surface_override_material(0).albedo_color = Color(1.0, 1.0, 1.0, 0.6)
 
-func shoot():
-	var bullet = BULLET.instantiate()
+func shoot(object):
+	var bullet = object.instantiate()
 	add_child(bullet)
 	bullet.global_position = shoot_point.global_position
 	bullet.global_rotation = camera.global_rotation

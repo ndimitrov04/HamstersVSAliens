@@ -39,6 +39,14 @@ texture = ExtResource("2_didkb")
 wait_time = 0.1
 autostart = true
 
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.52566, 0)
+pixel_size = 0.001
+billboard = 1
+no_depth_test = true
+fixed_size = true
+text = "Right Click me to start"
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
 
