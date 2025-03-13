@@ -13,4 +13,5 @@ rings = 8
 is_hemisphere = true
 
 [node name="GroundBump" type="MeshInstance3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 mesh = SubResource("SphereMesh_4mtex")

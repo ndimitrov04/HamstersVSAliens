@@ -14,7 +14,8 @@ extends RigidBody3D
 @onready var hp : int = get_meta("hp")
 @onready var alive : bool = true
 
-var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
+@onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
+@onready var build_spot = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -64,4 +65,5 @@ func die(explosion = EXPLOSION.instantiate()):
 	explosion.amount = 256
 	explosion.emitting = true
 	await get_tree().create_timer(0.5).timeout
+	build_spot.building = null
 	queue_free()

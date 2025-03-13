@@ -6,6 +6,7 @@ extends RigidBody3D
 @onready var fallpoint : int = get_meta("fallpoint")
 
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
+@onready var build_spot = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,6 +22,7 @@ func _physics_process(_delta):
 		axis_lock_angular_y = false
 		axis_lock_angular_z = false
 	if hp <= 0:
+		build_spot.building = null
 		queue_free()
 
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):

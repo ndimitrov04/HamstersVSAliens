@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=38 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Texture2D" uid="uid://84yl1ew7nhab" path="res://Textures/Skyboxes/SkySkybox.png" id="1_7o4ip"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
@@ -10,19 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://cljf22e7es47q" path="res://Textures/Terrain/tiny_treats_grass_texture.png" id="7_grkdp"]
 [ext_resource type="Texture2D" uid="uid://c3vmhecg0ki5k" path="res://Textures/Terrain/TerrainTextures/main_slot0_normal_roughness.png" id="8_nu4qe"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="9_0hr8h"]
-[ext_resource type="PackedScene" uid="uid://bwyq1ro8qs0gr" path="res://Scenes/FriendlyTowers/fast_turret.tscn" id="9_7yake"]
 [ext_resource type="Texture2D" uid="uid://bo7j0h6gor4bu" path="res://ImportedModels/Terrain/GrassLow/grass_noaa.png" id="10_y7bhy"]
 [ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="11_27fkr"]
-[ext_resource type="PackedScene" uid="uid://cd38ytne4dlvk" path="res://Scenes/FriendlyTowers/speedboost_tower.tscn" id="11_g3av2"]
 [ext_resource type="AudioStream" uid="uid://com0mloe5wxnu" path="res://Music/wuthering_tights.mp3" id="12_ejmyd"]
 [ext_resource type="Script" path="res://Scripts/hud.gd" id="13_ypdc3"]
 [ext_resource type="Texture2D" uid="uid://b6ernbohn8gpf" path="res://Textures/HUD/circle2.png" id="14_0c7be"]
 [ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="14_j2f1x"]
 [ext_resource type="PackedScene" uid="uid://bmsn7elnqj675" path="res://Scenes/Enemies/ufo.tscn" id="14_qqokl"]
 [ext_resource type="Texture2D" uid="uid://cqifkij713en5" path="res://Textures/HUD/circle.png" id="15_qn8vp"]
-[ext_resource type="PackedScene" uid="uid://cv5b22ejhfc0d" path="res://Scenes/FriendlyTowers/regeneration_tower.tscn" id="16_w841i"]
-[ext_resource type="PackedScene" uid="uid://do61aq0und06o" path="res://Scenes/FriendlyTowers/tower.tscn" id="18_1xe6f"]
-[ext_resource type="PackedScene" uid="uid://8k3ba2pswgye" path="res://Scenes/ModelScenes/ground_bump.tscn" id="18_ecjty"]
+[ext_resource type="PackedScene" uid="uid://cimcivaj14iob" path="res://Scenes/build_spot.tscn" id="18_kf77m"]
+[ext_resource type="Script" path="res://Scripts/buy_menu.gd" id="19_dhi7y"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_id3pn"]
 panorama = ExtResource("1_7o4ip")
@@ -79,6 +76,18 @@ size = Vector3(10, 2, 10)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ob41k"]
 points = PackedVector3Array(5.07837, 1.14286, 5.07738, -4.71563, -1, -4.71471, -4.71563, -1, 4.71471, -5.07837, 1.14286, -5.07738, 4.71563, -1, -4.71471, -5.07837, 1.14286, 5.07738, 5.07837, 1.14286, -5.07738, 4.71563, -1, 4.71471)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wd501"]
+size = Vector2(64, 64)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nvllr"]
+size = Vector2(64, 64)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_128ub"]
+size = Vector2(64, 64)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w3usg"]
+size = Vector2(64, 64)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_u31re")
@@ -166,37 +175,36 @@ shape = SubResource("ConvexPolygonShape3D_ob41k")
 [node name="Player" parent="Friendlies" instance=ExtResource("2_3iewc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
-[node name="SpeedboostTower" parent="Friendlies" instance=ExtResource("11_g3av2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7654, -15.7442, 0)
-
-[node name="FastTurret" parent="Friendlies" instance=ExtResource("9_7yake")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.416, 33.8324, -14.125)
-metadata/target = NodePath("")
-
-[node name="Tower" parent="Friendlies" instance=ExtResource("18_1xe6f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 172.374, 17.2764, -14.1515)
-
-[node name="RegenerationTower" parent="Friendlies" instance=ExtResource("16_w841i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.1399, -12.2113, -72.4554)
-
 [node name="Enemies" type="Node3D" parent="."]
 
 [node name="UFO" parent="Enemies" instance=ExtResource("14_qqokl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.901638, 37.658, -24.1525)
 
-[node name="Scenery" type="Node3D" parent="."]
+[node name="BuySpots" type="Node3D" parent="."]
 
-[node name="GroundBump" parent="Scenery" instance=ExtResource("18_ecjty")]
+[node name="BuildSpot" parent="BuySpots" instance=ExtResource("18_kf77m")]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -57.034, -44.8971, 1.68137)
-skeleton = NodePath("../..")
 
-[node name="GroundBump2" parent="Scenery" instance=ExtResource("18_ecjty")]
+[node name="BuildSpot2" parent="BuySpots" instance=ExtResource("18_kf77m")]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 173.851, -17.633, -13.4567)
-skeleton = NodePath("../..")
 
-[node name="GroundBump3" parent="Scenery" instance=ExtResource("18_ecjty")]
+[node name="BuildSpot3" parent="BuySpots" instance=ExtResource("18_kf77m")]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 84.1482, -39.5381, -71.5317)
-skeleton = NodePath("../..")
+
+[node name="BuildSpot4" parent="BuySpots" instance=ExtResource("18_kf77m")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 84.1482, -43.0071, 151.202)
+
+[node name="BuildSpot5" parent="BuySpots" instance=ExtResource("18_kf77m")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 267.473, -7.7945, 228.511)
+
+[node name="BuildSpot6" parent="BuySpots" instance=ExtResource("18_kf77m")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -311.847, -27.3944, -5.39233)
+
+[node name="BuildSpot7" parent="BuySpots" instance=ExtResource("18_kf77m")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 201.051, -34.2834, -224.091)
+
+[node name="BuildSpot8" parent="BuySpots" instance=ExtResource("18_kf77m")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -204.247, 11.362, 344.397)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("13_ypdc3")
@@ -226,7 +234,8 @@ text = "Controls:
 Use WASD to move
 Space to jump
 Right click while looking at 
-an enemy to homing attack"
+an enemy to homing attack
+Hold ALT to unfocus mouse"
 
 [node name="Crosshair" type="TextureRect" parent="HUD"]
 anchors_preset = 8
@@ -267,11 +276,54 @@ anchor_left = 0.914
 anchor_top = 0.111
 anchor_right = 0.914
 anchor_bottom = 0.111
-offset_left = 1.11987
-offset_top = -0.880013
-offset_right = 31.1199
+offset_left = -2.88
+offset_top = -0.880005
+offset_right = 31.12
 offset_bottom = 22.12
 text = "HP"
+
+[node name="BuyMenu" type="Control" parent="HUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("19_dhi7y")
+
+[node name="Label" type="Label" parent="HUD/BuyMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 39.6
+anchor_top = 17.3
+anchor_right = 39.6
+anchor_bottom = 17.3
+offset_left = -0.00012207
+offset_top = -12.0001
+offset_right = 248.0
+offset_bottom = 11.9999
+text = "Build Menu"
+
+[node name="ItemList" type="ItemList" parent="HUD/BuyMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 39.2
+anchor_top = 18.0
+anchor_right = 39.2
+anchor_bottom = 18.0
+offset_top = -6.10352e-05
+offset_right = 280.0
+offset_bottom = 288.0
+allow_search = false
+item_count = 4
+item_0/text = "Fast Turret"
+item_0/icon = SubResource("PlaceholderTexture2D_wd501")
+item_0/selectable = false
+item_1/text = "Basic Tower"
+item_1/icon = SubResource("PlaceholderTexture2D_nvllr")
+item_2/text = "Speedboost Tower"
+item_2/icon = SubResource("PlaceholderTexture2D_128ub")
+item_3/text = "Regeneration Tower"
+item_3/icon = SubResource("PlaceholderTexture2D_w3usg")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_ejmyd")
@@ -279,4 +331,4 @@ volume_db = -15.0
 autoplay = true
 bus = &"Music"
 
-[editable path="Friendlies/RegenerationTower"]
+[connection signal="item_clicked" from="HUD/BuyMenu/ItemList" to="HUD/BuyMenu" method="_on_item_list_item_clicked"]

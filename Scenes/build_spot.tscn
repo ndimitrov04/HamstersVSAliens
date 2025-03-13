@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cimcivaj14iob"]
+
+[ext_resource type="Script" path="res://Scripts/build_spot.gd" id="1_h28ts"]
+[ext_resource type="PackedScene" uid="uid://8k3ba2pswgye" path="res://Scenes/ModelScenes/ground_bump.tscn" id="2_duelw"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q1eas"]
+radius = 1.5
+
+[node name="BuildSpot" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00770503, 0)
+script = ExtResource("1_h28ts")
+
+[node name="BuyArea" type="Area3D" parent="."]
+
+[node name="Hitbox" type="CollisionShape3D" parent="BuyArea"]
+shape = SubResource("SphereShape3D_q1eas")
+
+[node name="GroundBump" parent="." instance=ExtResource("2_duelw")]
+
+[node name="BuildText" type="Label3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.24933, 0)
+pixel_size = 0.0001
+billboard = 1
+fixed_size = true
+text = "Empty"
+
+[connection signal="body_entered" from="BuyArea" to="." method="_on_buy_area_body_entered"]
+[connection signal="body_exited" from="BuyArea" to="." method="_on_buy_area_body_exited"]

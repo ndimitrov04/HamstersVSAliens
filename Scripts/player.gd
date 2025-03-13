@@ -35,6 +35,7 @@ var target_hit : bool = false
 
 var hp : int = 100
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
+var build_spot = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -104,6 +105,10 @@ func _physics_process(delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if Input.is_action_just_pressed("ui_accept"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if Input.is_action_pressed("unfocus"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if Input.is_action_just_released("unfocus"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		
 	#Control camera
 	twist_pivot.rotate_y(twist_input)
@@ -125,7 +130,7 @@ func _physics_process(delta):
 	ship.rotation = camera.global_rotation
 	
 	player_data.text = (
-		"HamstersVSAliens Pre-Alpha Ver 0.01" + "\n" +
+		"HamstersVSAliens Pre-Alpha Ver " + ProjectSettings.get_setting("application/config/version") + "\n" +
 		"Linear Velocity: " + str(linear_velocity) + "\n" +
 		"Angluar Velocity: " + str(angular_velocity) + "\n" +
 		"Input: " + str(twist_pivot.basis * input * thrust_power * delta) + "\n" +
