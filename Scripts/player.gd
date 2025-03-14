@@ -34,6 +34,7 @@ var homing_target = null
 var target_hit : bool = false
 
 var hp : int = 100
+var gold : int = 0
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 var build_spot = null
 
@@ -136,6 +137,7 @@ func _physics_process(delta):
 		"Input: " + str(twist_pivot.basis * input * thrust_power * delta) + "\n" +
 		"OnFloor?: " + str(floor_detector.is_colliding())
 		)
+	hud.gold.text = "HamsterCoins: " + str(gold)
 
 func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseMotion:

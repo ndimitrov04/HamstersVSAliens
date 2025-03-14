@@ -9,7 +9,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-	pass
+	if building == null:
+		build_text.show()
+	else:
+		build_text.hide()
 
 func _on_buy_area_body_entered(body):
 	if body.name == "Player":

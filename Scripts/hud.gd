@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var crosshair = $Crosshair
 @onready var hp_bar = $HPBar
 @onready var hp_label = $HPLabel
+@onready var gold = $Gold
 @onready var buy_menu = $BuyMenu
 
 # Called when the node enters the scene tree for the first time.

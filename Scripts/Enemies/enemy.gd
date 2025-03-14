@@ -3,6 +3,7 @@ extends RigidBody3D
 @onready var targets = $"../../Friendlies"
 @onready var target
 @onready var target_player : bool = get_meta("target_player")
+@onready var player = $"../../Friendlies/Player"
 
 @onready var hitbox = $Hitbox
 @onready var lock_marker = $LockMarker
@@ -35,6 +36,7 @@ func _physics_process(_delta):
 	
 	if not alive and hit_ground:
 		await get_tree().create_timer(0.5).timeout
+		player.gold += get_meta("gold")
 		queue_free()
 
 func _on_body_entered(body):
@@ -46,9 +48,9 @@ func _on_body_entered(body):
 	if body.name == "HTerrain":
 		hit_ground = true
 		explosion = EXPLOSION.instantiate()
-		add_child(explosion)
+		add_sibling(explosion)
 		explosion.global_position = global_position
-		explosion.amount = 4096
+		explosion.amount = 512
 		explosion.explosiveness = 0.9
 		explosion.emitting = true
 
@@ -56,7 +58,7 @@ func _on_lock_timeout_timeout():
 	lock_marker.visible = false
 
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
-	add_child(explosion)
+	add_sibling(explosion)
 	explosion.global_position = global_position
 	explosion.amount = 256
 	explosion.emitting = true
@@ -64,7 +66,7 @@ func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 
 func die(explosion = EXPLOSION.instantiate()):
 	alive = false
-	add_child(explosion)
+	add_sibling(explosion)
 	explosion.global_position = global_position
 	explosion.amount = 256
 	explosion.emitting = true

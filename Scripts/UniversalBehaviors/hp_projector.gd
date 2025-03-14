@@ -10,5 +10,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-	hp_bar.texture.width = int(lerp(float(hp_bar.texture.width), float(get_parent().hp), 0.1))/4
+	hp_bar.texture.width = max(int(lerp(float(hp_bar.texture.width), float(get_parent().hp), 0.1))/4,1)
 	global_position = get_parent().global_position + Vector3(0,5,0)

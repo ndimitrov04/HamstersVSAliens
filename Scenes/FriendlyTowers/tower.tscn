@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://do61aq0und06o"]
+[gd_scene load_steps=8 format=3 uid="uid://do61aq0und06o"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/Towers/tower.gd" id="1_vjfje"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nec7y"]
+rough = true
+absorbent = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0olku"]
 rough = true
 absorbent = true
 
@@ -35,11 +39,12 @@ axis_lock_angular_z = true
 mass = 2500.0
 physics_material_override = SubResource("PhysicsMaterial_nec7y")
 script = ExtResource("1_vjfje")
-metadata/hp = 100
-metadata/fallpoint = 35
+metadata/hp = 500
+metadata/fallpoint = 100
 
 [node name="Platform" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.0914, 0)
+physics_material_override = SubResource("PhysicsMaterial_0olku")
 
 [node name="Model" type="MeshInstance3D" parent="Platform"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.234131, 0)

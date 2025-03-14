@@ -22,11 +22,11 @@ func _physics_process(_delta):
 		axis_lock_angular_y = false
 		axis_lock_angular_z = false
 	if hp <= 0:
-		build_spot.building = null
+		#build_spot.building = null
 		queue_free()
 
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
-	add_child(explosion)
+	add_sibling(explosion)
 	explosion.global_position = global_position
 	explosion.amount = 256
 	explosion.emitting = true

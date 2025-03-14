@@ -38,8 +38,8 @@ points = PackedVector3Array(-0.59932, -0.028661, 0, -0.596505, -0.028661, 0.0586
 radius = 3.0
 
 [node name="Player" type="RigidBody3D"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 131
+collision_mask = 131
 mass = 60.0
 physics_material_override = SubResource("PhysicsMaterial_3nabx")
 gravity_scale = 2.0

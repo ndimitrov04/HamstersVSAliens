@@ -1,9 +1,10 @@
-[gd_scene load_steps=38 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=39 format=3 uid="uid://bi7s0yriu1mso"]
 
-[ext_resource type="Texture2D" uid="uid://84yl1ew7nhab" path="res://Textures/Skyboxes/SkySkybox.png" id="1_7o4ip"]
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
+[ext_resource type="Texture2D" uid="uid://xko8qwr5poyp" path="res://Textures/Skyboxes/cloudy_midday_4k.png" id="2_w3a3p"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_qe4bh"]
+[ext_resource type="Resource" path="res://TerrainDataBG/data.hterrain" id="4_7tm3y"]
 [ext_resource type="Resource" path="res://TerrainData/data.hterrain" id="4_gra8q"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_vld6k"]
 [ext_resource type="Texture2D" uid="uid://cv4dhypx5e5h6" path="res://Textures/Terrain/TerrainTextures/main_slot0_albedo_bump.png" id="6_7bisy"]
@@ -21,11 +22,11 @@
 [ext_resource type="PackedScene" uid="uid://cimcivaj14iob" path="res://Scenes/build_spot.tscn" id="18_kf77m"]
 [ext_resource type="Script" path="res://Scripts/buy_menu.gd" id="19_dhi7y"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_id3pn"]
-panorama = ExtResource("1_7o4ip")
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o32dh"]
+panorama = ExtResource("2_w3a3p")
 
 [sub_resource type="Sky" id="Sky_i2hom"]
-sky_material = SubResource("PanoramaSkyMaterial_id3pn")
+sky_material = SubResource("PanoramaSkyMaterial_o32dh")
 
 [sub_resource type="Environment" id="Environment_3wlby"]
 background_mode = 2
@@ -37,11 +38,21 @@ tonemap_exposure = 0.8
 ssao_light_affect = 0.11
 ssao_ao_channel_affect = 0.09
 sdfgi_use_occlusion = true
+fog_enabled = true
 fog_mode = 1
-fog_density = 0.1
-fog_aerial_perspective = 0.2
-fog_sky_affect = 0.0
-volumetric_fog_length = 3.0
+fog_density = 0.2
+fog_sky_affect = 0.3
+fog_depth_curve = 1.1892
+fog_depth_begin = 200.0
+fog_depth_end = 800.0
+volumetric_fog_density = 0.02
+volumetric_fog_length = 10.0
+volumetric_fog_ambient_inject = 0.5
+
+[sub_resource type="Resource" id="Resource_qmb7o"]
+script = ExtResource("5_vld6k")
+mode = 0
+textures = [[], []]
 
 [sub_resource type="Resource" id="Resource_ukbfh"]
 script = ExtResource("5_vld6k")
@@ -80,9 +91,6 @@ points = PackedVector3Array(5.07837, 1.14286, 5.07738, -4.71563, -1, -4.71471, -
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wd501"]
 size = Vector2(64, 64)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_nvllr"]
-size = Vector2(64, 64)
-
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_128ub"]
 size = Vector2(64, 64)
 
@@ -99,6 +107,23 @@ environment = SubResource("Environment_3wlby")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 light_color = Color(1, 1, 0.964706, 1)
 shadow_enabled = true
+
+[node name="BTerrain" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -300, 0)
+script = ExtResource("3_qe4bh")
+map_scale = Vector3(100, 100, 100)
+centered = true
+_terrain_data = ExtResource("4_7tm3y")
+chunk_size = 16
+collision_enabled = false
+collision_layer = 1
+collision_mask = 1
+shader_type = "LowPoly"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_qmb7o")
+render_layers = 1
+cast_shadow = 1
 
 [node name="HTerrain" type="Node3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -179,6 +204,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
 [node name="UFO" parent="Enemies" instance=ExtResource("14_qqokl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.901638, 37.658, -24.1525)
+metadata/gold = 0
 
 [node name="BuySpots" type="Node3D" parent="."]
 
@@ -282,6 +308,17 @@ offset_right = 31.12
 offset_bottom = 22.12
 text = "HP"
 
+[node name="Gold" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.883
+anchor_top = 0.215
+anchor_right = 0.883
+anchor_bottom = 0.215
+offset_left = 0.640015
+offset_top = -0.199997
+offset_right = 192.64
+offset_bottom = 23.8
+
 [node name="BuyMenu" type="Control" parent="HUD"]
 visible = false
 layout_mode = 3
@@ -303,27 +340,27 @@ offset_right = 248.0
 offset_bottom = 11.9999
 text = "Build Menu"
 
-[node name="ItemList" type="ItemList" parent="HUD/BuyMenu"]
+[node name="TowerList" type="ItemList" parent="HUD/BuyMenu"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 39.2
+anchor_left = 38.6
 anchor_top = 18.0
-anchor_right = 39.2
+anchor_right = 38.6
 anchor_bottom = 18.0
-offset_top = -6.10352e-05
-offset_right = 280.0
+offset_left = -0.00012207
+offset_right = 344.0
 offset_bottom = 288.0
 allow_search = false
-item_count = 4
-item_0/text = "Fast Turret"
+item_count = 3
+item_0/text = "Fast Turret - 10G"
 item_0/icon = SubResource("PlaceholderTexture2D_wd501")
 item_0/selectable = false
-item_1/text = "Basic Tower"
-item_1/icon = SubResource("PlaceholderTexture2D_nvllr")
-item_2/text = "Speedboost Tower"
-item_2/icon = SubResource("PlaceholderTexture2D_128ub")
-item_3/text = "Regeneration Tower"
-item_3/icon = SubResource("PlaceholderTexture2D_w3usg")
+item_1/text = "Speedboost Tower - 20G"
+item_1/icon = SubResource("PlaceholderTexture2D_128ub")
+item_1/selectable = false
+item_2/text = "Regeneration Tower - 20G"
+item_2/icon = SubResource("PlaceholderTexture2D_w3usg")
+item_2/selectable = false
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_ejmyd")
@@ -331,4 +368,4 @@ volume_db = -15.0
 autoplay = true
 bus = &"Music"
 
-[connection signal="item_clicked" from="HUD/BuyMenu/ItemList" to="HUD/BuyMenu" method="_on_item_list_item_clicked"]
+[connection signal="item_clicked" from="HUD/BuyMenu/TowerList" to="HUD/BuyMenu" method="_on_tower_list_item_clicked"]

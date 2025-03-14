@@ -38,7 +38,7 @@ mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_72t4m")
 script = ExtResource("1_ny64m")
 metadata/turret_node = NodePath("Turret")
-metadata/hp = 100
+metadata/hp = 250
 metadata/shoot_time = 0.6
 metadata/bullet = ExtResource("2_t3s4a")
 

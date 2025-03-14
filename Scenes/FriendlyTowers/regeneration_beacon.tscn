@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://cv5b22ejhfc0d"]
+
+[ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/regeneration_area.gd" id="1_e04d0"]
+[ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_gi338"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r5ov4"]
+rough = true
+absorbent = true
+
+[sub_resource type="Gradient" id="Gradient_7y4pg"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_67joj"]
+gradient = SubResource("Gradient_7y4pg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f0ape"]
+albedo_color = Color(0, 1, 0, 1)
+albedo_texture = SubResource("GradientTexture1D_67joj")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_de88x"]
+material = SubResource("StandardMaterial3D_f0ape")
+bottom_radius = 1.0
+height = 1.5
+radial_segments = 16
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ceq51"]
+points = PackedVector3Array(0.0599131, 0.595421, 0.539594, -0.091655, -0.736873, -0.977398, -0.0904286, -0.696914, -0.96432, -0.977448, -0.73691, 0.0914683, 0.726837, -0.730852, 0.666299, 0.178845, 0.711832, -0.477107, 0.908973, -0.731118, -0.393926, -0.477107, 0.711832, -0.178845, -0.393925, -0.731116, 0.908971, 0.477175, 0.711654, 0.1788, -0.386873, 0.710162, 0.327211, -0.726837, -0.730852, -0.666299, 0.393925, -0.731116, -0.908971, -0.208677, 0.681758, -0.477137, 0.0914683, -0.73691, 0.977448, 0.977449, -0.736911, 0.0914684, 0.477204, 0.681854, -0.20852, -0.726839, -0.730855, 0.666301, 0.685965, -0.66, -0.685778, 0.238138, 0.710307, 0.446253, -0.908971, -0.731116, -0.393925, 0.393926, -0.731118, 0.908973, -0.393926, -0.731118, -0.908973, -0.477105, 0.71183, 0.178844, -0.1788, 0.711654, 0.477175, -0.908973, -0.731118, 0.393926, 0.908971, -0.731116, 0.393925, 0.0914768, 0.729042, -0.488769, -0.384822, 0.617514, -0.384822, 0.327347, 0.710053, -0.386814, 0.509604, 0.685497, -0.0597325, 0.384822, 0.617514, 0.384822)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_co83g"]
+radius = 500.0
+
+[node name="RegenerationBeacon" type="RigidBody3D"]
+collision_layer = 3
+collision_mask = 3
+mass = 2500.0
+physics_material_override = SubResource("PhysicsMaterial_r5ov4")
+script = ExtResource("1_gi338")
+metadata/hp = 200
+metadata/fallpoint = 35
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.6699, 0)
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.602364, 0)
+mesh = SubResource("CylinderMesh_de88x")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.602364, 0)
+shape = SubResource("ConvexPolygonShape3D_ceq51")
+
+[node name="BoostArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.2475, 0)
+script = ExtResource("1_e04d0")
+metadata/regen_amount = 10
+metadata/regen_wait_time = 5
+
+[node name="RegenTimer" type="Timer" parent="BoostArea"]
+autostart = true
+
+[node name="Supportbox" type="CollisionShape3D" parent="BoostArea"]
+shape = SubResource("SphereShape3D_co83g")
+
+[connection signal="body_entered" from="BoostArea" to="BoostArea" method="_on_body_entered"]
+[connection signal="body_exited" from="BoostArea" to="BoostArea" method="_on_body_exited"]
+[connection signal="timeout" from="BoostArea/RegenTimer" to="BoostArea" method="_on_regen_timer_timeout"]

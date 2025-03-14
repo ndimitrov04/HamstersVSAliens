@@ -122,6 +122,7 @@ metadata/pause_interval = 8.0
 metadata/target_player = false
 metadata/bullet_siblings = false
 metadata/track_player = true
+metadata/gold = 0
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(-50, 0, -4.37114e-06, 0, 50, 0, 4.37114e-06, 0, -50, 0, 0, 0)
