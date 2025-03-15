@@ -33,7 +33,6 @@ size = Vector2(0.3, 0.3)
 
 [node name="Explosion" type="GPUParticles3D"]
 emitting = false
-amount = 512
 lifetime = 3.0
 one_shot = true
 explosiveness = 1.0

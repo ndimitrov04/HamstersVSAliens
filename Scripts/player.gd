@@ -13,6 +13,7 @@ extends RigidBody3D
 
 @onready var hud = $"../../HUD"
 @onready var player_data = $"../../HUD/PlayerData"
+@onready var stats = $"../../HUD/Stats"
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 @onready var BULLET = preload("res://Scenes/Projectiles/light_bullet_friendly.tscn")
@@ -27,16 +28,23 @@ var pitch_input : float = 0.0
 var thrust_power : float = 60000
 var jump_power : float = 60000
 var floor_power : float = 120000
+var exploded : bool = false
 
 var speedboost : float = 1
 
 var homing_target = null
 var target_hit : bool = false
 
+var max_hp : int = 100
 var hp : int = 100
 var gold : int = 0
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 var build_spot = null
+
+var damage_buff : int = 0
+var hp_buff : int = 0
+var speed_buff : int = 0
+var jump_buff : int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,7 +56,19 @@ func _physics_process(delta):
 	
 	#Detect death
 	if hp <= 0:
-		pass #die here
+		if not exploded:
+			var explosion = EXPLOSION.instantiate()
+			add_sibling(explosion)
+			explosion.global_position = global_position
+			explosion.amount = 512
+			explosion.emitting = true
+			exploded = true
+		hide()
+		hud.game_over.show()
+		return
+	
+	if hp > max_hp + hp_buff:
+		hp = max_hp + hp_buff
 	
 	hud.hp_bar.value = lerp(hud.hp_bar.value, float(hp), 0.1)
 	hud.hp_label.text = str(int(lerp(hud.hp_bar.value, float(hp), 0.1)))
@@ -57,7 +77,7 @@ func _physics_process(delta):
 	input.x = Input.get_axis("move_left","move_right")
 	input.z = Input.get_axis("move_forward","move_backward")
 	#Move on axes via keyboard input, relative to camera twist
-	apply_central_force(twist_pivot.basis * input * thrust_power * delta * speedboost)
+	apply_central_force(twist_pivot.basis * input * (thrust_power + speed_buff) * delta * speedboost)
 
 	#Set maximum speed
 	if linear_velocity.x > MAXVELOCITY:
@@ -82,7 +102,7 @@ func _physics_process(delta):
 		var jumpInertia = max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)) * INERTIAJUMPMULTIPLIER
 		print(jumpInertia)
 		print((jump_power * jumpInertia))
-		apply_central_impulse(Vector3(0,1,0) * (jump_power * jumpInertia) * delta)
+		apply_central_impulse(Vector3(0,1,0) * ((jump_power + jump_buff) * jumpInertia) * delta)
 
 	if Input.is_action_just_pressed("shoot"):
 		shoot(BULLET)
@@ -130,6 +150,12 @@ func _physics_process(delta):
 	#Rotate ship to face the focus point of the camera
 	ship.rotation = camera.global_rotation
 	
+	stats.text = (
+		"MaxHP = " + str(max_hp + hp_buff) + "\n" +
+		"Strength = " + str(50 + damage_buff) + "\n" +
+		"Acceleration = " + str(thrust_power + speed_buff) + "\n" +
+		"Jump Power = " + str(jump_power + jump_buff)
+	)
 	player_data.text = (
 		"HamstersVSAliens Pre-Alpha Ver " + ProjectSettings.get_setting("application/config/version") + "\n" +
 		"Linear Velocity: " + str(linear_velocity) + "\n" +
@@ -181,6 +207,7 @@ func take_damage(damage : int):
 func shoot(object):
 	var bullet = object.instantiate()
 	add_child(bullet)
+	bullet.damage += damage_buff
 	bullet.global_position = shoot_point.global_position
 	bullet.global_rotation = camera.global_rotation
 

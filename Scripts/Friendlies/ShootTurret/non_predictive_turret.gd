@@ -11,6 +11,7 @@ extends RigidBody3D
 @onready var hp_bar = $HPProjector/HPBar
 
 @onready var targeted_enemy = null
+@onready var max_hp : int = get_meta("hp")
 @onready var hp : int = get_meta("hp")
 @onready var alive : bool = true
 
@@ -23,6 +24,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
+	if hp > max_hp:
+		hp = max_hp
+	
 	if hp <= 0:
 		die()
 	

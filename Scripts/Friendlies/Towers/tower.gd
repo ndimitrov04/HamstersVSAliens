@@ -2,6 +2,7 @@ extends RigidBody3D
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
+@onready var max_hp : int = get_meta("hp")
 @onready var hp : int = get_meta("hp")
 @onready var fallpoint : int = get_meta("fallpoint")
 
@@ -14,6 +15,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
+	if hp > max_hp:
+		hp = max_hp
+	
 	if hp <= fallpoint:
 		axis_lock_linear_x = false
 		axis_lock_linear_y = false

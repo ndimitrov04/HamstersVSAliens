@@ -31,7 +31,7 @@ func _physics_process(_delta):
 	if not target_player:
 		retarget()
 	
-	if hp <= 0:
+	if alive and hp <= 0:
 		die()
 	
 	if not alive and hit_ground:
@@ -50,7 +50,7 @@ func _on_body_entered(body):
 		explosion = EXPLOSION.instantiate()
 		add_sibling(explosion)
 		explosion.global_position = global_position
-		explosion.amount = 512
+		explosion.amount = 256
 		explosion.explosiveness = 0.9
 		explosion.emitting = true
 
@@ -60,7 +60,7 @@ func _on_lock_timeout_timeout():
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 	add_sibling(explosion)
 	explosion.global_position = global_position
-	explosion.amount = 256
+	explosion.amount = 128
 	explosion.emitting = true
 	hp -= damage
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=42 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
@@ -21,6 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://cqifkij713en5" path="res://Textures/HUD/circle.png" id="15_qn8vp"]
 [ext_resource type="PackedScene" uid="uid://cimcivaj14iob" path="res://Scenes/build_spot.tscn" id="18_kf77m"]
 [ext_resource type="Script" path="res://Scripts/buy_menu.gd" id="19_dhi7y"]
+[ext_resource type="Script" path="res://Scripts/level_up.gd" id="21_j0725"]
+[ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="22_vpbnl"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o32dh"]
 panorama = ExtResource("2_w3a3p")
@@ -97,6 +99,8 @@ size = Vector2(64, 64)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_w3usg"]
 size = Vector2(64, 64)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ab5nm"]
+
 [node name="Main" type="Node3D"]
 script = ExtResource("1_u31re")
 
@@ -104,7 +108,7 @@ script = ExtResource("1_u31re")
 environment = SubResource("Environment_3wlby")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+transform = Transform3D(0.957822, -0.269163, 0.100636, 0, 0.350207, 0.936672, -0.28736, -0.897166, 0.335436, -1.06494, 0, -0.00962663)
 light_color = Color(1, 1, 0.964706, 1)
 shadow_enabled = true
 
@@ -318,6 +322,19 @@ offset_left = 0.640015
 offset_top = -0.199997
 offset_right = 192.64
 offset_bottom = 23.8
+text = "Hamstacoins"
+
+[node name="Stats" type="Label" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.883
+anchor_top = 0.259
+anchor_right = 0.883
+anchor_bottom = 0.259
+offset_left = 0.640015
+offset_top = 0.279999
+offset_right = 208.64
+offset_bottom = 144.28
+text = "Stats :3"
 
 [node name="BuyMenu" type="Control" parent="HUD"]
 visible = false
@@ -362,10 +379,181 @@ item_2/text = "Regeneration Tower - 20G"
 item_2/icon = SubResource("PlaceholderTexture2D_w3usg")
 item_2/selectable = false
 
+[node name="LevelUp" type="Panel" parent="HUD"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.533
+anchor_top = 0.415
+anchor_right = 0.533
+anchor_bottom = 0.415
+offset_left = 0.639893
+offset_top = -0.200012
+offset_right = 480.64
+offset_bottom = 559.8
+script = ExtResource("21_j0725")
+
+[node name="Upgrade1" type="Panel" parent="HUD/LevelUp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.081
+anchor_right = 0.067
+anchor_bottom = 0.081
+offset_left = -0.16
+offset_top = -24.36
+offset_right = 415.84
+offset_bottom = 210.64
+mouse_default_cursor_shape = 2
+script = ExtResource("22_vpbnl")
+metadata/index = 0
+
+[node name="UName" type="Label" parent="HUD/LevelUp/Upgrade1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.077
+anchor_top = 0.081
+anchor_right = 0.077
+anchor_bottom = 0.081
+offset_left = -0.0320015
+offset_top = -0.0349998
+offset_right = 135.968
+offset_bottom = 22.965
+text = "Upgrade_Name_1"
+
+[node name="UDescription" type="Label" parent="HUD/LevelUp/Upgrade1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.077
+anchor_top = 0.081
+anchor_right = 0.077
+anchor_bottom = 0.081
+offset_left = -16.032
+offset_top = 39.965
+offset_right = 207.968
+offset_bottom = 192.965
+text = "Description:
+Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet."
+autowrap_mode = 2
+
+[node name="UImage" type="TextureRect" parent="HUD/LevelUp/Upgrade1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.615
+anchor_top = 0.285
+anchor_right = 0.615
+anchor_bottom = 0.285
+offset_left = 0.160004
+offset_top = 0.0249939
+offset_right = 144.16
+offset_bottom = 144.025
+texture = SubResource("PlaceholderTexture2D_ab5nm")
+
+[node name="Upgrade2" type="Panel" parent="HUD/LevelUp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.081
+anchor_right = 0.067
+anchor_bottom = 0.081
+offset_left = -0.16
+offset_top = 255.64
+offset_right = 415.84
+offset_bottom = 490.64
+mouse_default_cursor_shape = 2
+script = ExtResource("22_vpbnl")
+metadata/index = 1
+
+[node name="UName" type="Label" parent="HUD/LevelUp/Upgrade2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.077
+anchor_top = 0.081
+anchor_right = 0.077
+anchor_bottom = 0.081
+offset_left = -0.0320015
+offset_top = -0.0349998
+offset_right = 135.968
+offset_bottom = 22.965
+text = "Upgrade_Name_2"
+
+[node name="UDescription" type="Label" parent="HUD/LevelUp/Upgrade2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.077
+anchor_top = 0.081
+anchor_right = 0.077
+anchor_bottom = 0.081
+offset_left = -16.032
+offset_top = 39.965
+offset_right = 207.968
+offset_bottom = 192.965
+text = "Description:
+Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet."
+autowrap_mode = 2
+
+[node name="UImage" type="TextureRect" parent="HUD/LevelUp/Upgrade2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.615
+anchor_top = 0.285
+anchor_right = 0.615
+anchor_bottom = 0.285
+offset_left = 0.160004
+offset_top = 0.0249939
+offset_right = 144.16
+offset_bottom = 144.025
+texture = SubResource("PlaceholderTexture2D_ab5nm")
+
+[node name="LevelUpLabel" type="Label" parent="HUD/LevelUp"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.017
+anchor_top = -0.068
+anchor_right = 0.017
+anchor_bottom = -0.068
+offset_left = -0.160001
+offset_top = 0.256001
+offset_right = 39.84
+offset_bottom = 23.256
+text = "Choose an upgrade"
+
+[node name="GameOver" type="Label" parent="HUD"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.2
+offset_left = -164.0
+offset_top = 8.0
+offset_right = 164.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "You Died!"
+
+[node name="Retry" type="Button" parent="HUD/GameOver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.433
+anchor_top = 1.364
+anchor_right = 0.433
+anchor_bottom = 1.364
+offset_left = -58.024
+offset_top = -0.0320053
+offset_right = 57.976
+offset_bottom = 39.968
+text = "Play Again?"
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_ejmyd")
 volume_db = -15.0
 autoplay = true
 bus = &"Music"
+parameters/looping = true
 
 [connection signal="item_clicked" from="HUD/BuyMenu/TowerList" to="HUD/BuyMenu" method="_on_tower_list_item_clicked"]
+[connection signal="gui_input" from="HUD/LevelUp/Upgrade1" to="HUD/LevelUp/Upgrade1" method="_on_gui_input"]
+[connection signal="gui_input" from="HUD/LevelUp/Upgrade2" to="HUD/LevelUp/Upgrade2" method="_on_gui_input"]
+[connection signal="pressed" from="HUD/GameOver/Retry" to="HUD" method="_on_retry_pressed"]

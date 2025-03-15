@@ -10,6 +10,7 @@ extends Node3D
 @onready var level_data = $HUD/LevelData
 
 @onready var player = $Friendlies/Player
+@onready var level_up = $HUD/LevelUp
 
 const MAPRADIUS = 500
 const SKYBOUNDS = [20,35]
@@ -32,6 +33,7 @@ func _process(_delta):
 		new_wave()
 
 func new_wave():
+	level_up.initiate_upgrade_phase()
 	current_wave += 1
 	for i in range(0, current_wave * 5):
 		var enemy = enemy_pool[randi_range(1,enemy_pool.size()-1)].instantiate()

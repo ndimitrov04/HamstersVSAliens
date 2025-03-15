@@ -60,9 +60,9 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 top_level = true
 
 [node name="EnemyDetector" type="ShapeCast3D" parent="Ship"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.119149, -0.0454212)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0251245, -0.119159, 0.0921463)
 shape = SubResource("SphereShape3D_i3mnr")
-target_position = Vector3(0, 0, -250)
+target_position = Vector3(0, 0, -150)
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="ShootPoint" type="Node3D" parent="Ship"]
