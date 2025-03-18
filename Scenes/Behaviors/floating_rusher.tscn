@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dts8twdr38f4g"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_rusher.gd" id="1_21ya1"]
+
+[node name="FloatingRusher" type="Node3D"]
+script = ExtResource("1_21ya1")

@@ -39,7 +39,7 @@ axis_lock_angular_z = true
 mass = 2500.0
 physics_material_override = SubResource("PhysicsMaterial_nec7y")
 script = ExtResource("1_vjfje")
-metadata/hp = 500
+metadata/hp = 2500
 metadata/fallpoint = 100
 
 [node name="Platform" type="StaticBody3D" parent="."]
@@ -51,7 +51,7 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.234131, 0)
 mesh = SubResource("BoxMesh_bp3sq")
 
 [node name="Hitbox" type="CollisionShape3D" parent="Platform"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.234131, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0.234131, 0)
 shape = SubResource("ConvexPolygonShape3D_bygfm")
 
 [node name="Model" type="MeshInstance3D" parent="."]

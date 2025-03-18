@@ -7,6 +7,10 @@ extends RigidBody3D
 @onready var max_hp : int = get_meta("hp")
 @onready var hp : int = get_meta("hp")
 @onready var fallpoint : int = get_meta("fallpoint")
+@onready var max_shield : int = get_meta("shield")
+@onready var shield : int = get_meta("shield")
+@onready var shield_regen : bool = false
+@onready var shield_regen_timer = $ShieldRegenTimer
 
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 @onready var build_spot = null
@@ -29,6 +33,20 @@ func _physics_process(_delta):
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 	add_sibling(explosion)
 	explosion.global_position = global_position
-	explosion.amount = 256
-	explosion.emitting = true
-	hp -= damage
+	shield_regen = false
+	shield_regen_timer.start()
+	if shield <= 0:
+		hp -= damage
+		explosion.amount = 256
+		explosion.emitting = true
+	else:
+		shield -= damage
+		explosion.amount = 64
+		explosion.emitting = true
+
+func _on_shield_regen_timer_timeout():
+	shield_regen = true
+
+func _on_shield_regen_tick_timeout():
+	if shield_regen:
+		shield += 10

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cv5b22ejhfc0d"]
+[gd_scene load_steps=12 format=3 uid="uid://cv5b22ejhfc0d"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/regeneration_area.gd" id="1_e04d0"]
 [ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_gi338"]
@@ -6,6 +6,22 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r5ov4"]
 rough = true
 absorbent = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j81de"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.270588)
+metallic = 1.0
+roughness = 0.5
+emission_enabled = true
+emission = Color(0.41824, 0.601976, 1, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_e5qst"]
+material = SubResource("StandardMaterial3D_j81de")
+radius = 7.0
+height = 14.0
+radial_segments = 16
+rings = 8
 
 [sub_resource type="Gradient" id="Gradient_7y4pg"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -37,6 +53,11 @@ physics_material_override = SubResource("PhysicsMaterial_r5ov4")
 script = ExtResource("1_gi338")
 metadata/hp = 200
 metadata/fallpoint = 35
+metadata/shield = 500
+
+[node name="Shield" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79916, 0)
+mesh = SubResource("SphereMesh_e5qst")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.6699, 0)
@@ -61,6 +82,16 @@ autostart = true
 [node name="Supportbox" type="CollisionShape3D" parent="BoostArea"]
 shape = SubResource("SphereShape3D_co83g")
 
+[node name="ShieldRegenTick" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="ShieldRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [connection signal="body_entered" from="BoostArea" to="BoostArea" method="_on_body_entered"]
 [connection signal="body_exited" from="BoostArea" to="BoostArea" method="_on_body_exited"]
 [connection signal="timeout" from="BoostArea/RegenTimer" to="BoostArea" method="_on_regen_timer_timeout"]
+[connection signal="timeout" from="ShieldRegenTick" to="." method="_on_shield_regen_tick_timeout"]
+[connection signal="timeout" from="ShieldRegenTimer" to="." method="_on_shield_regen_timer_timeout"]

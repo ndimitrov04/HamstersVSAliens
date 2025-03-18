@@ -14,7 +14,7 @@ const TOWERS = [FAST_TURRET, SPEEDBOOST_TOWER, REGENERATION_TOWER]
 const PRICES = [10,20,20]
 
 const BUILDHEIGHT = 30
-const TOWERHEIGHT = 46
+const TOWERHEIGHT = 48
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bwyq1ro8qs0gr"]
+[gd_scene load_steps=14 format=3 uid="uid://bwyq1ro8qs0gr"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/ShootTurret/non_predictive_turret.gd" id="1_ny64m"]
 [ext_resource type="PackedScene" uid="uid://blul2ix751h0k" path="res://Scenes/Projectiles/light_bullet_friendly.tscn" id="2_t3s4a"]
@@ -8,6 +8,22 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_72t4m"]
 rough = true
 absorbent = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3uv2k"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.270588)
+metallic = 1.0
+roughness = 0.5
+emission_enabled = true
+emission = Color(0.41824, 0.601976, 1, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_hmyru"]
+material = SubResource("StandardMaterial3D_3uv2k")
+radius = 7.0
+height = 14.0
+radial_segments = 16
+rings = 8
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2y3yx"]
 size = Vector3(0.55, 0.563576, 0.55)
@@ -19,7 +35,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0674j"]
 gradient = SubResource("Gradient_qsc3r")
-width = 3
+width = 25
 height = 1
 
 [sub_resource type="Gradient" id="Gradient_wm43g"]
@@ -36,11 +52,19 @@ collision_layer = 3
 collision_mask = 3
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_72t4m")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -1, 0)
+linear_damp = 1.0
 script = ExtResource("1_ny64m")
 metadata/turret_node = NodePath("Turret")
 metadata/hp = 250
 metadata/shoot_time = 0.6
 metadata/bullet = ExtResource("2_t3s4a")
+metadata/shield = 300
+
+[node name="Shield" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79916, 0)
+mesh = SubResource("SphereMesh_hmyru")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, -0.0602805, 2.68335, -0.0883215)
@@ -85,6 +109,16 @@ texture = SubResource("GradientTexture2D_r17se")
 [node name="ShootTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="ShieldRegenTick" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="ShieldRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="ShieldRegenTick" to="." method="_on_shield_regen_tick_timeout"]
+[connection signal="timeout" from="ShieldRegenTimer" to="." method="_on_shield_regen_timer_timeout"]
 
 [editable path="Model"]

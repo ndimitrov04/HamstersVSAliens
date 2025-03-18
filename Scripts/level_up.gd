@@ -26,7 +26,7 @@ func up3f():
 
 var up4 = ["HP Boost", "Boosts your max HP by 10 (Starting amount = 50)", PLACEHOLDERIMAGE]
 func up4f():
-	get_parent().player.hp_buff += 10
+	get_parent().player.max_hp += 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

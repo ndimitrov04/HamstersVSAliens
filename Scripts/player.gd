@@ -37,7 +37,7 @@ var target_hit : bool = false
 
 var max_hp : int = 100
 var hp : int = 100
-var gold : int = 0
+var gold : int = 10000
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 var build_spot = null
 
@@ -64,12 +64,14 @@ func _physics_process(delta):
 			explosion.emitting = true
 			exploded = true
 		hide()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		hud.game_over.show()
 		return
 	
 	if hp > max_hp + hp_buff:
 		hp = max_hp + hp_buff
 	
+	hud.hp_bar.max_value = max_hp
 	hud.hp_bar.value = lerp(hud.hp_bar.value, float(hp), 0.1)
 	hud.hp_label.text = str(int(lerp(hud.hp_bar.value, float(hp), 0.1)))
 	

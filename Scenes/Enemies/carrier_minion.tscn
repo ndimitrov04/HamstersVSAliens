@@ -1,5 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://ch7l4a7iegb8w"]
 
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_iaybq"]
 [ext_resource type="PackedScene" uid="uid://f6fuvx7c2ywn" path="res://Scenes/Projectiles/light_bullet.tscn" id="1_ofp63"]
 [ext_resource type="PackedScene" uid="uid://bp1uey4204u3h" path="res://ImportedModels/Spaceships/S1/Spaceship-VSxUAFhzbA.glb" id="3_35yu1"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_nmbe7"]
@@ -8,90 +9,6 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u44k2"]
 bounce = 0.5
-
-[sub_resource type="GDScript" id="GDScript_r1e6m"]
-script/source = "extends RigidBody3D
-
-@onready var targets = $\"../../Friendlies\"
-@onready var target
-@onready var target_player : bool = get_meta(\"target_player\")
-
-@onready var hitbox = $Hitbox
-@onready var lock_marker = $LockMarker
-@onready var model = $Model
-
-@onready var EXPLOSION = preload(\"res://Scenes/Particles/explosion.tscn\")
-
-var alive : bool = true
-var hit_ground : bool = false
-var type : ObjectTypes.TYPE = ObjectTypes.TYPE.ENEMY
-
-@onready var hp = get_meta(\"hp\")
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	if target_player:
-		target = $\"../../Friendlies/Player\"
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(_delta):
-	#debug_data.text = (
-	#	\"Alive?: \" + str(alive) + \"\\n\" +
-	#	\"HitGround: \" + str(hitGround)
-	#)
-	if not target_player:
-		retarget()
-	
-	if hp <= 0:
-		die()
-	
-	if not alive and hit_ground:
-		await get_tree().create_timer(0.5).timeout
-		queue_free()
-
-func _on_body_entered(body):
-	var explosion
-	
-	if body.name == \"Player\":
-		die()
-	
-	if body.name == \"HTerrain\":
-		hit_ground = true
-		explosion = EXPLOSION.instantiate()
-		add_child(explosion)
-		explosion.global_position = global_position
-		explosion.amount = 4096
-		explosion.explosiveness = 0.9
-		explosion.emitting = true
-
-func _on_lock_timeout_timeout():
-	lock_marker.visible = false
-
-func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
-	add_child(explosion)
-	explosion.global_position = global_position
-	explosion.amount = 256
-	explosion.emitting = true
-	hp -= damage
-
-func die(explosion = EXPLOSION.instantiate()):
-	alive = false
-	add_child(explosion)
-	explosion.global_position = global_position
-	explosion.amount = 256
-	explosion.emitting = true
-	axis_lock_linear_y = false
-
-func retarget():
-	var closest_enemy_distance = 9999
-	var closest_enemy = null
-	for enemy in targets.get_children():
-		var distance_to_enemy = abs(position.x - enemy.global_position.x) + abs(position.y - enemy.global_position.y) + abs(position.z - enemy.global_position.z)
-		if distance_to_enemy < closest_enemy_distance:
-			closest_enemy_distance = distance_to_enemy
-			closest_enemy = enemy
-	target = closest_enemy
-"
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vyynd"]
 points = PackedVector3Array(-0.0109, 0.00202164, -0.0189243, -0.0109, -0.00265227, -0.0173602, 0.0590222, -0.00933044, -0.014839, -0.0147556, -0.0111763, 0.0202, -0.0590222, -0.00933044, -0.014839, -0.00183722, 0.0201778, -0.0203702, -0.0442667, 0.0146434, -0.00377254, 0.0442667, 0.0146434, -0.00377254, 0.0147556, -0.0111763, 0.0202, -0.0184416, 0.0127975, 0.0146647, -0.0571734, -0.00564192, -0.00192882, -0.0239763, 0.0201778, -8.92498e-05, 0.0571734, -0.00564192, -0.00192882, 0.0184416, 0.0127975, 0.0146647, -0.0461039, 0.0146434, -0.0129953, 0.0461039, 0.0146434, -0.0129953, 0.0239763, 0.0201778, -8.92498e-05, 0.00183722, 0.0183319, -0.0222222, -0.0147556, -0.00379928, 0.0202, -0.0128481, -0.0108764, 0.00300236, 0.0184416, 0.00173514, 0.0183521, 0.0571734, -0.00933044, -0.00192882, -0.0571734, -0.00933044, -0.00192882, 0.0239763, 0.0201778, -0.0111474, -0.0221276, 0.0183319, 0.00544192, -0.0590222, -0.00564192, -0.014839, -0.0239763, 0.0201778, -0.0111474, 0.0590222, -0.00564192, -0.014839, -0.00183722, 0.0183319, -0.0222222, -0.0184416, 0.00173514, 0.0183521, 0.0221276, 0.0183319, 0.00544192, -0.0590222, -0.00564192, -0.00377254)
@@ -113,7 +30,7 @@ physics_material_override = SubResource("PhysicsMaterial_u44k2")
 gravity_scale = 1.5
 contact_monitor = true
 max_contacts_reported = 1
-script = SubResource("GDScript_r1e6m")
+script = ExtResource("1_iaybq")
 metadata/hp = 60
 metadata/bullet = ExtResource("1_ofp63")
 metadata/shoot_time = 8.0

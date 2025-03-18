@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://033bvwxawjym"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/impact_exploder.gd" id="1_sukqr"]
+
+[node name="ImpactExploder" type="Node3D"]
+script = ExtResource("1_sukqr")

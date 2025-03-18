@@ -1,0 +1,222 @@
+[gd_scene load_steps=16 format=3 uid="uid://dxvgqnw73i02v"]
+
+[ext_resource type="Script" path="res://Scripts/Projectiles/destroyer_bullet.gd" id="1_087kx"]
+[ext_resource type="PackedScene" uid="uid://dy8h5y0ipqki3" path="res://ImportedModels/Spaceships/S6/Spacecraft Speeder.glb" id="2_s06ev"]
+[ext_resource type="PackedScene" uid="uid://dts8twdr38f4g" path="res://Scenes/Behaviors/floating_rusher.tscn" id="4_ltd7a"]
+[ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_vmwjv"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tclv0"]
+bounce = 0.5
+
+[sub_resource type="GDScript" id="GDScript_xtv5w"]
+script/source = "extends RigidBody3D
+
+@onready var targets = $\"../../Friendlies\"
+@onready var target
+@onready var target_player : bool = get_meta(\"target_player\")
+@onready var player = $\"../../Friendlies/Player\"
+
+@onready var hitbox = $Hitbox
+@onready var lock_marker = $LockMarker
+@onready var model = $Model
+
+@onready var EXPLOSION = preload(\"res://Scenes/Particles/explosion.tscn\")
+
+var alive : bool = true
+var hit_ground : bool = false
+var type : ObjectTypes.TYPE = ObjectTypes.TYPE.ENEMY
+
+@onready var hp = get_meta(\"hp\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	if has_meta(\"targets\"):
+		targets = get_node(get_meta(\"targets\"))
+	if target_player:
+		target = $\"../../Friendlies/Player\"
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(_delta):
+	#debug_data.text = (
+	#	\"Alive?: \" + str(alive) + \"\\n\" +
+	#	\"HitGround: \" + str(hitGround)
+	#)
+	if not target_player:
+		retarget()
+	
+	if alive and hp <= 0:
+		die()
+	
+	if not alive and hit_ground:
+		await get_tree().create_timer(0.5).timeout
+		player.gold += get_meta(\"gold\")
+		queue_free()
+
+func _on_body_entered(body):
+	var explosion
+	
+	if body.name == \"Player\":
+		die()
+	
+	if body.name == \"HTerrain\":
+		hit_ground = true
+		explosion = EXPLOSION.instantiate()
+		add_sibling(explosion)
+		explosion.global_position = global_position
+		explosion.amount = 256
+		explosion.explosiveness = 0.9
+		explosion.emitting = true
+
+func _on_lock_timeout_timeout():
+	lock_marker.visible = false
+
+func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
+	add_sibling(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 128
+	explosion.emitting = true
+	hp -= damage
+
+func die(explosion = EXPLOSION.instantiate()):
+	alive = false
+	add_sibling(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
+	axis_lock_linear_y = false
+
+func retarget():
+	var closest_enemy_distance = 9999
+	var closest_enemy = null
+	for enemy in targets.get_children():
+		if enemy == self:
+			continue
+		var distance_to_enemy = abs(position.x - enemy.global_position.x) + abs(position.y - enemy.global_position.y) + abs(position.z - enemy.global_position.z)
+		if distance_to_enemy < closest_enemy_distance:
+			closest_enemy_distance = distance_to_enemy
+			closest_enemy = enemy
+	target = closest_enemy
+"
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s1ap7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sh2uq"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.803922, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.835294, 0.835294, 0.254902, 1)
+emission_energy_multiplier = 3.0
+rim_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_w2n1j"]
+material = SubResource("StandardMaterial3D_sh2uq")
+radius = 0.8
+height = 1.6
+radial_segments = 6
+rings = 3
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gnptq"]
+points = PackedVector3Array(-0.0429879, -0.779441, -0.0242621, 0.00561264, 0.0485038, 0.77667, 0.029534, 0.0958357, 0.743252, -0.675367, 0.0486033, -0.389131, 0.684142, 0.0241383, -0.387579, -0.0429879, 0.779441, -0.0242621, -0.675367, 0.0486033, 0.389131, 0.00561264, 0.0485039, -0.77667, 0.684142, -0.0241383, 0.387579, -0.0185983, -0.558106, 0.558106, 0.487445, -0.553987, -0.289069, -0.480102, -0.558602, -0.291398, 0.487445, 0.553987, 0.289069, -0.480102, 0.558602, 0.291398, -0.0185983, 0.558106, -0.558106, 0.487446, 0.553987, -0.28907, -0.480102, -0.558602, 0.291398, 0.487446, -0.553987, 0.28907, -0.0185983, -0.558106, -0.558106, -0.480102, 0.558602, -0.291398, -0.0185983, 0.558106, 0.558106, -0.675367, -0.0486033, 0.389131, 0.00561264, -0.0485039, 0.77667, -0.675367, -0.0486033, -0.389131, 0.00561264, -0.169499, -0.726556, 0.0297156, 0.772958, 0.0481302, 0.0297091, -0.772903, 0.0482686, 0.684142, -0.0241383, -0.387579, 0.684142, 0.0241383, 0.387579, 0.150528, -0.724031, -0.0964971, 0.150501, 0.724045, -0.0964788, -0.0421373, -0.0238375, -0.765798)
+
+[sub_resource type="PackedScene" id="PackedScene_rq5g7"]
+_bundled = {
+"conn_count": 2,
+"conns": PackedInt32Array(1073741828, 1073741827, 24, 23, 2, 0, 0, 1073741830, 1073741829, 26, 25, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("DestroyerBullet", "RigidBody3D", "collision_layer", "collision_mask", "input_ray_pickable", "mass", "physics_material_override", "gravity_scale", "lock_rotation", "contact_monitor", "max_contacts_reported", "script", "Model", "MeshInstance3D", "mesh", "Hitbox", "CollisionShape3D", "shape", "Timer", "Timer", "wait_time", "one_shot", "autostart", "_on_body_entered", "body_entered", "_on_timer_timeout", "timeout"),
+"node_count": 4,
+"node_paths": [NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("Timer")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 10, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 10, 8, 11, 9, 0, 1073741824, 0, 13, 12, -1, 1, 14, 10, 0, 1073741825, 0, 16, 15, -1, 1, 17, 11, 0, 1073741826, 0, 19, 18, -1, 3, 20, 12, 21, 13, 22, 14, 0),
+"variants": [2, 2, false, 0.01, SubResource("PhysicsMaterial_s1ap7"), 0.1, true, true, 1, ExtResource("1_087kx"), SubResource("SphereMesh_w2n1j"), SubResource("ConvexPolygonShape3D_gnptq"), 2.0, true, true],
+"version": 3
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ac2rr"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.333333)
+roughness = 0.64
+clearcoat_roughness = 0.0
+heightmap_scale = 16.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+backlight_enabled = true
+backlight = Color(0, 0, 0.396078, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rav1d"]
+material = SubResource("StandardMaterial3D_ac2rr")
+radius = 6.0
+height = 12.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2dugs"]
+points = PackedVector3Array(3.73365, 4.37645, 1.54593, -5.73403, -1.27224, -0.457232, -5.5797, -1.09552, -1.55665, 3.55135, -4.74087, -0.276232, 1.55005, 1.09572, -5.58094, -0.643953, -1.09655, 5.76084, -3.55744, 4.73817, 0.269128, -1.90944, -5.44215, -1.36456, 5.76231, -1.09683, 0.63604, -1.55197, 4.55328, -3.55485, -1.92172, -2.92078, -4.84272, -2.0974, 3.09263, 4.63615, -1.55353, -4.55678, 3.55035, 3.72848, -1.09135, 4.45746, 4.45422, -1.09056, -3.73384, 4.63651, 3.09326, -2.09593, -4.46023, -1.09005, 3.72517, -4.07403, 1.4466, -4.07403, 0.638325, 5.87761, 0.270128, 1.91567, 2.92439, 4.84261, 1.5443, -4.3719, -3.73779, -5.20654, 2.92015, -0.094105, 2.44134, -4.52914, 2.9845, -4.642, -3.63821, -0.0937904, 2.43918, 4.5251, -2.98995, 5.35695, 1.27113, 2.26679, 0.638321, -5.87762, 0.270126, -0.0940242, 5.28837, 2.63931, -5.35919, 1.26975, 2.26432, -1.55763, 1.09651, -5.57915, 1.55005, -1.09576, -5.58093, -3.70548, -3.0691, -3.52503)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_l4v8a"]
+points = PackedVector3Array(-0.0589025, 0.0297256, -0.107512, -0.142222, 0.0111242, -0.055724, 0.142222, 0.0111242, -0.055724, -0.0119582, 0.0743834, 0.0696653, -0.0197906, 0.0266376, 0.100759, -0.0622013, 0.0688763, -0.0912904, 0.020877, 0.000604773, 0.047823, 0.142222, 0.0289011, -0.0201798, 0.0622013, 0.0688763, -0.0912904, -0.142222, 0.0289011, -0.0201798, 0.0222187, 0.0155638, -0.113522, -0.02, 0.00244654, -0.0661757, 0.019949, 0.0424559, 0.101567, 0.0157202, 0.0778689, 0.0529038, -0.142222, 0.0111242, -0.0201798, -0.0577743, 0.0555482, -0.113522, 0.137767, 0.0111242, -0.0157423, -0.020877, 0.000604773, 0.047823, -0.00676698, 0.08, -0.0188004, 0.0197906, 0.0266376, 0.100759, 0.0572463, 0.00150407, -0.0513, 0.0577743, 0.0555482, -0.113522, -0.019949, 0.0424559, 0.101567, -0.0157202, 0.0778689, 0.0529038, -0.142222, 0.0289011, -0.055724, 0.142222, 0.0289011, -0.055724, -0.0222187, 0.0155638, -0.113522, -0.0584621, 0.00059202, 0.0102379, 0.0119582, 0.0743834, 0.0696653, 0.0584621, 0.00059202, 0.0102379, -0.0572463, 0.00150407, -0.0513, 0.0589025, 0.0297256, -0.107512)
+
+[node name="Shielder" type="RigidBody3D"]
+collision_layer = 5
+collision_mask = 5
+axis_lock_linear_y = true
+axis_lock_angular_z = true
+mass = 150.0
+physics_material_override = SubResource("PhysicsMaterial_tclv0")
+gravity_scale = 1.5
+contact_monitor = true
+max_contacts_reported = 1
+script = SubResource("GDScript_xtv5w")
+metadata/hp = 50
+metadata/bullet = SubResource("PackedScene_rq5g7")
+metadata/shoot_time = 0.0
+metadata/pause_time = 0.0
+metadata/pause_interval = 0.0
+metadata/target_player = false
+metadata/bullet_siblings = false
+metadata/track_player = false
+metadata/gold = 10
+metadata/targets = NodePath("../../Enemies")
+
+[node name="Shield" type="Area3D" parent="."]
+collision_layer = 132
+collision_mask = 132
+
+[node name="Model" type="MeshInstance3D" parent="Shield"]
+mesh = SubResource("SphereMesh_rav1d")
+skeleton = NodePath("../..")
+
+[node name="Hitbox" type="CollisionShape3D" parent="Shield"]
+shape = SubResource("ConvexPolygonShape3D_2dugs")
+
+[node name="ShieldRegenTick" type="Timer" parent="Shield"]
+wait_time = 0.5
+autostart = true
+
+[node name="ShieldRegenTimer" type="Timer" parent="Shield"]
+wait_time = 5.0
+autostart = true
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(-10, 0, 8.74228e-07, 0, 10, 0, -8.74228e-07, 0, -10, -0.0320321, 0, -0.0864483)
+shape = SubResource("ConvexPolygonShape3D_l4v8a")
+
+[node name="Model" parent="." instance=ExtResource("2_s06ev")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.03203, 0, -1.58645)
+
+[node name="LockMarker" type="Sprite3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+texture = ExtResource("4_vmwjv")
+
+[node name="LockTimeout" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="FloatingRusher" parent="." instance=ExtResource("4_ltd7a")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
+
+[editable path="Model"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cd38ytne4dlvk"]
+[gd_scene load_steps=12 format=3 uid="uid://cd38ytne4dlvk"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/speedboost_area.gd" id="1_1aggo"]
 [ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_hrxe1"]
@@ -6,6 +6,22 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_paopn"]
 rough = true
 absorbent = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rsyh"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.270588)
+metallic = 1.0
+roughness = 0.5
+emission_enabled = true
+emission = Color(0.41824, 0.601976, 1, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_twnqr"]
+material = SubResource("StandardMaterial3D_3rsyh")
+radius = 7.0
+height = 14.0
+radial_segments = 16
+rings = 8
 
 [sub_resource type="Gradient" id="Gradient_ai3ci"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -38,6 +54,11 @@ physics_material_override = SubResource("PhysicsMaterial_paopn")
 script = ExtResource("1_hrxe1")
 metadata/hp = 200
 metadata/fallpoint = 35
+metadata/shield = 500
+
+[node name="Shield" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79916, 0)
+mesh = SubResource("SphereMesh_twnqr")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.602364, 0)
@@ -57,5 +78,15 @@ script = ExtResource("1_1aggo")
 [node name="Supportbox" type="CollisionShape3D" parent="BoostArea"]
 shape = SubResource("SphereShape3D_co83g")
 
+[node name="ShieldRegenTick" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="ShieldRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
 [connection signal="body_entered" from="BoostArea" to="BoostArea" method="_on_body_entered"]
 [connection signal="body_exited" from="BoostArea" to="BoostArea" method="_on_body_exited"]
+[connection signal="timeout" from="ShieldRegenTick" to="." method="_on_shield_regen_tick_timeout"]
+[connection signal="timeout" from="ShieldRegenTimer" to="." method="_on_shield_regen_timer_timeout"]

@@ -9,10 +9,15 @@ extends RigidBody3D
 @onready var shoot_point = $Turret/ShootPoint
 @onready var hp_projector = $HPProjector
 @onready var hp_bar = $HPProjector/HPBar
+@onready var shield_regen_timer = $ShieldRegenTimer
+@onready var shield_model = $Shield
 
 @onready var targeted_enemy = null
 @onready var max_hp : int = get_meta("hp")
 @onready var hp : int = get_meta("hp")
+@onready var max_shield : int = get_meta("shield")
+@onready var shield : int = get_meta("shield")
+@onready var shield_regen : bool = false
 @onready var alive : bool = true
 
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
@@ -26,6 +31,15 @@ func _ready():
 func _physics_process(_delta):
 	if hp > max_hp:
 		hp = max_hp
+	
+	if shield <= 0:
+		shield = 0
+		shield_model.hide()
+	else:
+		shield_model.show()
+		
+	if shield > max_shield:
+		shield = max_shield
 	
 	if hp <= 0:
 		die()
@@ -58,16 +72,30 @@ func retarget():
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 	add_child(explosion)
 	explosion.global_position = global_position
-	explosion.amount = 256
-	explosion.emitting = true
-	hp -= damage
+	shield_regen = false
+	shield_regen_timer.start()
+	if shield <= 0:
+		hp -= damage
+		explosion.amount = 256
+		explosion.emitting = true
+	else:
+		shield -= damage
+		explosion.amount = 64
+		explosion.emitting = true
 
 func die(explosion = EXPLOSION.instantiate()):
 	alive = false
-	add_child(explosion)
+	add_sibling(explosion)
 	explosion.global_position = global_position
 	explosion.amount = 256
 	explosion.emitting = true
 	await get_tree().create_timer(0.5).timeout
 	build_spot.building = null
 	queue_free()
+
+func _on_shield_regen_timer_timeout():
+	shield_regen = true
+
+func _on_shield_regen_tick_timeout():
+	if shield_regen:
+		shield += 10

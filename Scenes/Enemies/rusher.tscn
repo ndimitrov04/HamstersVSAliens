@@ -1,0 +1,156 @@
+[gd_scene load_steps=9 format=3 uid="uid://dx2825stkeong"]
+
+[ext_resource type="ArrayMesh" uid="uid://c400t4fu4u4sp" path="res://ImportedModels/Spaceships/S5/model.obj" id="1_8rana"]
+[ext_resource type="PackedScene" uid="uid://dts8twdr38f4g" path="res://Scenes/Behaviors/floating_rusher.tscn" id="3_e6me8"]
+[ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_4qmel"]
+[ext_resource type="PackedScene" uid="uid://033bvwxawjym" path="res://Scenes/Behaviors/impact_exploder.tscn" id="4_qso4a"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o11ba"]
+bounce = 0.5
+
+[sub_resource type="GDScript" id="GDScript_ysq1x"]
+script/source = "extends RigidBody3D
+
+@onready var targets = $\"../../Friendlies\"
+@onready var target
+@onready var target_player : bool = get_meta(\"target_player\")
+@onready var player = $\"../../Friendlies/Player\"
+
+@onready var hitbox = $Hitbox
+@onready var lock_marker = $LockMarker
+@onready var model = $Model
+
+@onready var EXPLOSION = preload(\"res://Scenes/Particles/explosion.tscn\")
+
+var alive : bool = true
+var hit_ground : bool = false
+var type : ObjectTypes.TYPE = ObjectTypes.TYPE.ENEMY
+
+@onready var hp = get_meta(\"hp\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	if target_player:
+		target = $\"../../Friendlies/Player\"
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(_delta):
+	#debug_data.text = (
+	#	\"Alive?: \" + str(alive) + \"\\n\" +
+	#	\"HitGround: \" + str(hitGround)
+	#)
+	if not target_player:
+		retarget()
+	
+	if alive and hp <= 0:
+		die()
+	
+	if not alive and hit_ground:
+		await get_tree().create_timer(0.5).timeout
+		player.gold += get_meta(\"gold\")
+		queue_free()
+
+func _on_body_entered(body):
+	var explosion
+	
+	if body.name == \"Player\":
+		die()
+	
+	if body.name == \"HTerrain\":
+		if not alive:
+			hit_ground = true
+			explosion = EXPLOSION.instantiate()
+			add_sibling(explosion)
+			explosion.global_position = global_position
+			explosion.amount = 256
+			explosion.explosiveness = 0.9
+			explosion.emitting = true
+
+func _on_lock_timeout_timeout():
+	lock_marker.visible = false
+
+func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
+	add_sibling(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 128
+	explosion.emitting = true
+	hp -= damage
+
+func die(explosion = EXPLOSION.instantiate()):
+	alive = false
+	gravity_scale = 1.5
+	add_sibling(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
+	axis_lock_linear_y = false
+
+func retarget():
+	var closest_enemy_distance = 9999
+	var closest_enemy = null
+	for enemy in targets.get_children():
+		var distance_to_enemy = abs(position.x - enemy.global_position.x) + abs(position.y - enemy.global_position.y) + abs(position.z - enemy.global_position.z)
+		if distance_to_enemy < closest_enemy_distance:
+			closest_enemy_distance = distance_to_enemy
+			closest_enemy = enemy
+	target = closest_enemy
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3fmhi"]
+transparency = 1
+albedo_color = Color(0.258824, 0.258824, 0.258824, 0.133333)
+roughness = 0.55
+emission_enabled = true
+emission = Color(0.69246, 1.841e-06, 7.70092e-07, 1)
+emission_energy_multiplier = 2.12
+rim_tint = 0.0
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_331n6"]
+points = PackedVector3Array(-0.287291, -0.0303427, -0.111189, 0.289483, 0.0680048, 0.0475233, 0.283636, -0.0163455, 0.0441137, 0.158855, 0.00625282, -0.523477, -0.159756, 0.200189, 0.0587611, -0.107713, -0.0210529, 0.293108, 0.139476, -0.125208, -0.201434, -0.120739, -0.00805743, -0.539908, 0.152502, 0.200189, -0.0845053, -0.133704, 0.0699792, -0.513815, 0.166894, 0.0679099, 0.254288, -0.14673, -0.125208, -0.149411, -0.29874, 0.0558761, 0.0117159, 0.294649, 0.0933904, -0.222747, 0.289238, -0.0418223, -0.220945, 0.180686, -0.0177855, 0.245225, 0.152502, 0.0830065, -0.474757, -0.176506, 0.0683202, 0.259382, -0.133704, 0.187162, -0.149411, -0.265168, 0.0909481, -0.218533, 0.0676557, -0.0992313, 0.0430008, 0.139476, 0.187162, 0.0718075, -0.18878, -0.030394, 0.209861, -0.107713, 0.0699792, 0.293108, -0.194344, -0.00423827, -0.445296, -0.120739, -0.125208, -0.214481, -0.06387, -0.10121, 0.045409, -0.263075, -0.0391817, -0.217771, 0.139476, -0.125208, -0.162376, 0.204607, 0.096002, 0.201946, -0.14673, 0.200189, -0.0845053, -0.293306, -0.00474728, 0.00922779)
+
+[node name="Rusher" type="RigidBody3D"]
+collision_layer = 5
+collision_mask = 5
+mass = 150.0
+physics_material_override = SubResource("PhysicsMaterial_o11ba")
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = SubResource("GDScript_ysq1x")
+metadata/hp = 75
+metadata/bullet = ExtResource("1_8rana")
+metadata/shoot_time = 0.0
+metadata/pause_time = 0.0
+metadata/pause_interval = 0.0
+metadata/target_player = true
+metadata/bullet_siblings = false
+metadata/track_player = true
+metadata/gold = 2
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, -0.285931, 0, -0.159427)
+material_overlay = SubResource("StandardMaterial3D_3fmhi")
+mesh = ExtResource("1_8rana")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, -0.285931, 0, -0.159427)
+shape = SubResource("ConvexPolygonShape3D_331n6")
+
+[node name="LockMarker" type="Sprite3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+texture = ExtResource("4_4qmel")
+
+[node name="LockTimeout" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="FloatingRusher" parent="." instance=ExtResource("3_e6me8")]
+
+[node name="ImpactExploder" parent="." instance=ExtResource("4_qso4a")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]

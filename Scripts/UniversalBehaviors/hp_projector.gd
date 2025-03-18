@@ -5,7 +5,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	hp_background.texture.width = max(int(lerp(float(hp_bar.texture.width), float(get_parent().hp), 0.1))/4,1)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
