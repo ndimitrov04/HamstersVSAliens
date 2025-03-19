@@ -32,6 +32,7 @@ metadata/target_player = false
 metadata/bullet_siblings = true
 metadata/track_player = false
 metadata/gold = 20
+metadata/max_bullets = 4
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(-150, 0, -1.31134e-05, 0, 150, 0, 1.31134e-05, 0, -150, 0, 0, 0)

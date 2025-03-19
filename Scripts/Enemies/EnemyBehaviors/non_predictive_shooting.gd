@@ -21,8 +21,12 @@ func _physics_process(_delta):
 			get_parent().look_at(get_parent().target.global_position * Vector3(1,0,1) + Vector3(0,get_parent().global_position.y,0))
 
 func _on_shoot_timer_timeout():
-	if get_parent().alive:
+	if get_parent().alive and not get_parent().has_meta("max_bullets"):
 		shoot()
+	elif get_parent().alive and get_parent().has_meta("max_bullets"):
+		if get_parent().get_meta("max_bullets") > 0:
+			get_parent().set_meta("max_bullets", get_parent().get_meta("max_bullets")-1)
+			shoot()
 
 func shoot():
 	var bullet = BULLET.instantiate()

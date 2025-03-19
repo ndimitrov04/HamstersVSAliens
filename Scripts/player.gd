@@ -10,6 +10,8 @@ extends RigidBody3D
 @onready var sphere = $Sphere
 @onready var ship = $Ship
 @onready var shoot_point = $Ship/ShootPoint
+@onready var shot_cd_timer = $ShotCDTimer
+@onready var heat_cd_timer = $HeatCDTimer
 
 @onready var hud = $"../../HUD"
 @onready var player_data = $"../../HUD/PlayerData"
@@ -34,9 +36,13 @@ var speedboost : float = 1
 
 var homing_target = null
 var target_hit : bool = false
+var shot_cooldown : bool = false
+var heat_cooldown : bool = false
 
 var max_hp : int = 100
 var hp : int = 100
+var max_heat : int = 100
+var heat : int = 0
 var gold : int = 10000
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 var build_spot = null
@@ -74,6 +80,9 @@ func _physics_process(delta):
 	hud.hp_bar.max_value = max_hp
 	hud.hp_bar.value = lerp(hud.hp_bar.value, float(hp), 0.1)
 	hud.hp_label.text = str(int(lerp(hud.hp_bar.value, float(hp), 0.1)))
+	hud.speed_bar.max_value = MAXVELOCITY * speedboost
+	hud.speed_bar.value = lerp(hud.speed_bar.value, max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)), 0.05)
+	hud.overheat_bar.value = lerp(hud.overheat_bar.value, float(heat), 1)
 	
 	var input = Vector3.ZERO
 	input.x = Input.get_axis("move_left","move_right")
@@ -106,10 +115,18 @@ func _physics_process(delta):
 		print((jump_power * jumpInertia))
 		apply_central_impulse(Vector3(0,1,0) * ((jump_power + jump_buff) * jumpInertia) * delta)
 
-	if Input.is_action_just_pressed("shoot"):
-		shoot(BULLET)
+	if Input.is_action_pressed("shoot") and heat < max_heat:
+		if not shot_cooldown:
+			shoot(BULLET)
+			shot_cooldown = true
+			heat_cooldown = false
+			shot_cd_timer.start()
+			heat += 5
+			heat_cd_timer.start()
 	if Input.is_action_just_pressed("debug_shoot"):
 		shoot(DEBUG_ENEMY_BULLET)
+	if heat_cooldown and heat > 0:
+		heat -= 1
 
 	#Lock on if looking at enemy and homing attack on right click
 	if enemy_detector.is_colliding():
@@ -163,7 +180,8 @@ func _physics_process(delta):
 		"Linear Velocity: " + str(linear_velocity) + "\n" +
 		"Angluar Velocity: " + str(angular_velocity) + "\n" +
 		"Input: " + str(twist_pivot.basis * input * thrust_power * delta) + "\n" +
-		"OnFloor?: " + str(floor_detector.is_colliding())
+		"OnFloor?: " + str(floor_detector.is_colliding()) + "\n" +
+		"Heat: " + str(heat)
 		)
 	hud.gold.text = "HamsterCoins: " + str(gold)
 
@@ -222,3 +240,9 @@ func _on_body_entered(body):
 			linear_velocity.y = move_toward(linear_velocity.y, -position.y + body.global_position.y, -abs(position.y - body.global_position.y)*3)
 			linear_velocity.z = move_toward(linear_velocity.z, -position.z + body.global_position.z, -abs(position.z - body.global_position.z)*3)
 			print("Target hit")
+
+func _on_shot_cd_timer_timeout():
+	shot_cooldown = false
+
+func _on_heat_cd_timer_timeout():
+	heat_cooldown = true

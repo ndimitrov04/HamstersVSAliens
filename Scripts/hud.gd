@@ -7,6 +7,8 @@ extends CanvasLayer
 @onready var debug_data = $DebugData
 @onready var crosshair = $Crosshair
 @onready var hp_bar = $HPBar
+@onready var speed_bar = $SpeedBar
+@onready var overheat_bar = $OverheatBar
 @onready var hp_label = $HPLabel
 @onready var gold = $Gold
 @onready var buy_menu = $BuyMenu

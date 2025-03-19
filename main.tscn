@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=45 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
@@ -89,6 +89,15 @@ size = Vector3(10, 2, 10)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ob41k"]
 points = PackedVector3Array(5.07837, 1.14286, 5.07738, -4.71563, -1, -4.71471, -4.71563, -1, 4.71471, -5.07837, 1.14286, -5.07738, 4.71563, -1, -4.71471, -5.07837, 1.14286, 5.07738, 5.07837, 1.14286, -5.07738, 4.71563, -1, 4.71471)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ulucw"]
+load_path = "res://.godot/imported/circle2.png-faece47545d191e97b6728f4f63a4903.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lu1qe"]
+load_path = "res://.godot/imported/circle.png-d6ddc4d26962473d396774eef7099ce5.ctex"
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uhqrv"]
+size = Vector2(50, 225)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wd501"]
 size = Vector2(64, 64)
@@ -299,6 +308,40 @@ value = 100.0
 fill_mode = 5
 texture_under = ExtResource("14_0c7be")
 texture_progress = ExtResource("15_qn8vp")
+
+[node name="SpeedBar" type="TextureProgressBar" parent="HUD"]
+anchors_preset = -1
+anchor_left = -0.017
+anchor_top = 1.015
+anchor_right = -0.017
+anchor_bottom = 1.015
+offset_left = 384.64
+offset_top = -0.200073
+offset_right = 2304.64
+offset_bottom = 1919.8
+rotation = 3.14159
+scale = Vector2(0.2, 0.2)
+max_value = 25.0
+step = 0.0
+value = 5.0
+fill_mode = 4
+radial_initial_angle = 40.0
+radial_fill_degrees = 280.0
+texture_under = SubResource("CompressedTexture2D_ulucw")
+texture_progress = SubResource("CompressedTexture2D_lu1qe")
+
+[node name="OverheatBar" type="TextureProgressBar" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.948
+anchor_right = 0.187
+anchor_bottom = 0.948
+offset_left = 0.959991
+offset_top = -223.84
+offset_right = 50.96
+offset_bottom = 1.15991
+fill_mode = 3
+texture_progress = SubResource("PlaceholderTexture2D_uhqrv")
 
 [node name="HPLabel" type="Label" parent="HUD"]
 anchors_preset = -1

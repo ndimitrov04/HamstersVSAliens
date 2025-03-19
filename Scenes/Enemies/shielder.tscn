@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxvgqnw73i02v"]
+[gd_scene load_steps=17 format=3 uid="uid://dxvgqnw73i02v"]
 
 [ext_resource type="Script" path="res://Scripts/Projectiles/destroyer_bullet.gd" id="1_087kx"]
+[ext_resource type="Script" path="res://Scripts/UniversalBehaviors/shield.gd" id="2_5pvaw"]
 [ext_resource type="PackedScene" uid="uid://dy8h5y0ipqki3" path="res://ImportedModels/Spaceships/S6/Spacecraft Speeder.glb" id="2_s06ev"]
 [ext_resource type="PackedScene" uid="uid://dts8twdr38f4g" path="res://Scenes/Behaviors/floating_rusher.tscn" id="4_ltd7a"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_vmwjv"]
@@ -177,10 +178,13 @@ metadata/bullet_siblings = false
 metadata/track_player = false
 metadata/gold = 10
 metadata/targets = NodePath("../../Enemies")
+metadata/shield = 300
 
 [node name="Shield" type="Area3D" parent="."]
-collision_layer = 132
-collision_mask = 132
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+collision_layer = 133
+collision_mask = 133
+script = ExtResource("2_5pvaw")
 
 [node name="Model" type="MeshInstance3D" parent="Shield"]
 mesh = SubResource("SphereMesh_rav1d")
@@ -217,6 +221,9 @@ autostart = true
 [node name="FloatingRusher" parent="." instance=ExtResource("4_ltd7a")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Shield" to="Shield" method="_on_body_entered"]
+[connection signal="timeout" from="Shield/ShieldRegenTick" to="Shield" method="_on_shield_regen_tick_timeout"]
+[connection signal="timeout" from="Shield/ShieldRegenTimer" to="Shield" method="_on_shield_regen_timer_timeout"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
 
 [editable path="Model"]

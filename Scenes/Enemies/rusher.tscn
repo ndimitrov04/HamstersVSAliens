@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dx2825stkeong"]
+[gd_scene load_steps=10 format=3 uid="uid://dx2825stkeong"]
 
 [ext_resource type="ArrayMesh" uid="uid://c400t4fu4u4sp" path="res://ImportedModels/Spaceships/S5/model.obj" id="1_8rana"]
 [ext_resource type="PackedScene" uid="uid://dts8twdr38f4g" path="res://Scenes/Behaviors/floating_rusher.tscn" id="3_e6me8"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://033bvwxawjym" path="res://Scenes/Behaviors/impact_exploder.tscn" id="4_qso4a"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o11ba"]
+friction = 0.0
 bounce = 0.5
 
 [sub_resource type="GDScript" id="GDScript_ysq1x"]
@@ -107,12 +108,17 @@ rim_tint = 0.0
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2tvyk"]
+points = PackedVector3Array(-0.273325, -1.46766, -0.135642, 0.276805, 1.46656, 0.138939, 0.36732, 1.41639, 0.321448, -1.31971, 0.182129, 0.685111, -0.455412, 0.182694, -1.41518, 1.37279, -0.3198, 0.504448, 0.0474292, -0.275184, 1.4705, 1.14025, -0.182018, -0.954606, -1.36743, 0.273601, -0.545789, 0.951215, 0.904015, -0.721342, -0.588666, 1.31676, -0.406781, -0.0893227, 0.91062, 1.18562, 0.775235, -1.22835, 0.365444, -0.813701, -1.08708, 0.635619, -0.226043, -1.00182, -1.09142, -1.2701, -0.681157, -0.40688, 1.08633, 0.632365, 0.814943, 0.907059, -1.08639, -0.49598, -0.904122, 1.08694, 0.499634, 0.138295, 0.910076, -1.18151, 1.37184, 0.593668, -0.0895675, 0.458464, -0.182555, -1.41411, 0.229042, -1.0912, 1.00175, -0.773726, 0.0911583, 1.27877, 0.822582, -0.227962, 1.23264, -0.908193, -0.363658, -1.13544, -0.857282, 0.723137, -0.992791, 1.42056, -0.457572, -0.135342, -1.27538, 0.775125, -0.134868, -1.36678, -0.45607, 0.412049, -0.812721, -0.633157, 1.08748, 0.455922, 0.726442, 1.2278)
+
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_331n6"]
 points = PackedVector3Array(-0.287291, -0.0303427, -0.111189, 0.289483, 0.0680048, 0.0475233, 0.283636, -0.0163455, 0.0441137, 0.158855, 0.00625282, -0.523477, -0.159756, 0.200189, 0.0587611, -0.107713, -0.0210529, 0.293108, 0.139476, -0.125208, -0.201434, -0.120739, -0.00805743, -0.539908, 0.152502, 0.200189, -0.0845053, -0.133704, 0.0699792, -0.513815, 0.166894, 0.0679099, 0.254288, -0.14673, -0.125208, -0.149411, -0.29874, 0.0558761, 0.0117159, 0.294649, 0.0933904, -0.222747, 0.289238, -0.0418223, -0.220945, 0.180686, -0.0177855, 0.245225, 0.152502, 0.0830065, -0.474757, -0.176506, 0.0683202, 0.259382, -0.133704, 0.187162, -0.149411, -0.265168, 0.0909481, -0.218533, 0.0676557, -0.0992313, 0.0430008, 0.139476, 0.187162, 0.0718075, -0.18878, -0.030394, 0.209861, -0.107713, 0.0699792, 0.293108, -0.194344, -0.00423827, -0.445296, -0.120739, -0.125208, -0.214481, -0.06387, -0.10121, 0.045409, -0.263075, -0.0391817, -0.217771, 0.139476, -0.125208, -0.162376, 0.204607, 0.096002, 0.201946, -0.14673, 0.200189, -0.0845053, -0.293306, -0.00474728, 0.00922779)
 
 [node name="Rusher" type="RigidBody3D"]
 collision_layer = 5
 collision_mask = 5
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 mass = 150.0
 physics_material_override = SubResource("PhysicsMaterial_o11ba")
 gravity_scale = 0.0
@@ -130,12 +136,15 @@ metadata/track_player = true
 metadata/gold = 2
 
 [node name="Model" type="MeshInstance3D" parent="."]
-transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, -0.285931, 0, -0.159427)
+transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, 0.0441679, 0, -0.159427)
 material_overlay = SubResource("StandardMaterial3D_3fmhi")
 mesh = ExtResource("1_8rana")
 
+[node name="Walkbox" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_2tvyk")
+
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, -0.285931, 0, -0.159427)
+transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, 0.0441679, 0, -0.159427)
 shape = SubResource("ConvexPolygonShape3D_331n6")
 
 [node name="LockMarker" type="Sprite3D" parent="."]

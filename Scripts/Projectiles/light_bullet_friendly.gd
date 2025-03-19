@@ -3,6 +3,7 @@ extends RigidBody3D
 @onready var damage = 50
 @onready var speed = 1.5
 @onready var hitbox = $Hitbox
+@onready var type = ObjectTypes.TYPE.FRIENDLYBULLET
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
