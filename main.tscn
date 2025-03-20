@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=51 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
@@ -23,6 +23,9 @@
 [ext_resource type="Script" path="res://Scripts/buy_menu.gd" id="19_dhi7y"]
 [ext_resource type="Script" path="res://Scripts/level_up.gd" id="21_j0725"]
 [ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="22_vpbnl"]
+[ext_resource type="Script" path="res://menu.gd" id="23_pjcbg"]
+[ext_resource type="Shader" path="res://Shaders/frostedglass.gdshader" id="23_s3gqi"]
+[ext_resource type="Texture2D" uid="uid://c8w4lu0t7upwi" path="res://Textures/hamster.png" id="23_upoxq"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o32dh"]
 panorama = ExtResource("2_w3a3p")
@@ -109,6 +112,26 @@ size = Vector2(64, 64)
 size = Vector2(64, 64)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ab5nm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yk2cw"]
+bg_color = Color(0.215686, 0.313726, 0.388235, 0.756863)
+corner_radius_top_left = 290
+corner_detail = 12
+shadow_size = 10
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e01r2"]
+shader = ExtResource("23_s3gqi")
+shader_parameter/blur_type = 0
+shader_parameter/blur_amount = 2
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_direction = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_16lgl"]
+shader = ExtResource("23_s3gqi")
+shader_parameter/blur_type = 0
+shader_parameter/blur_amount = 8
+shader_parameter/blur_radius = 0.5
+shader_parameter/blur_direction = Vector2(1, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_u31re")
@@ -246,14 +269,17 @@ transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 201.051, -34.2834, -224.09
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -204.247, 11.362, 344.397)
 
 [node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 3
 script = ExtResource("13_ypdc3")
 
 [node name="PlayerData" type="Label" parent="HUD"]
+visible = false
 offset_right = 96.0
 offset_bottom = 72.0
 text = "Player :3"
 
 [node name="LevelData" type="Label" parent="HUD"]
+visible = false
 anchors_preset = -1
 anchor_left = 0.204
 anchor_right = 0.204
@@ -274,7 +300,8 @@ Use WASD to move
 Space to jump
 Right click while looking at 
 an enemy to homing attack
-Hold ALT to unfocus mouse"
+Hold ALT to unfocus mouse
+Press ESC to pause"
 
 [node name="Crosshair" type="TextureRect" parent="HUD"]
 anchors_preset = 8
@@ -589,6 +616,169 @@ offset_right = 57.976
 offset_bottom = 39.968
 text = "Play Again?"
 
+[node name="Menu" type="Panel" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.837
+anchor_top = 0.722
+anchor_right = 0.837
+anchor_bottom = 0.722
+offset_left = -327.04
+offset_top = -307.76
+offset_right = 312.96
+offset_bottom = 308.24
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yk2cw")
+script = ExtResource("23_pjcbg")
+
+[node name="GameBlur" type="Panel" parent="HUD/Menu"]
+material = SubResource("ShaderMaterial_e01r2")
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1944.0
+offset_top = -1112.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MenuBackground" type="Panel" parent="HUD/Menu"]
+material = SubResource("ShaderMaterial_16lgl")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.837
+anchor_top = 0.722
+anchor_right = 0.837
+anchor_bottom = 0.722
+offset_left = -535.68
+offset_top = -444.752
+offset_right = 104.32
+offset_bottom = 171.248
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yk2cw")
+
+[node name="Design" type="Control" parent="HUD/Menu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Logo" type="TextureRect" parent="HUD/Menu/Design"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.853
+anchor_top = 0.87
+anchor_right = 0.853
+anchor_bottom = 0.87
+offset_left = 397.88
+offset_top = 413.2
+offset_right = 625.88
+offset_bottom = 541.2
+texture = ExtResource("23_upoxq")
+expand_mode = 1
+
+[node name="Title" type="Label" parent="HUD/Menu/Design"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.375
+anchor_top = 0.886
+anchor_right = 0.375
+anchor_bottom = 0.886
+offset_left = 0.999999
+offset_top = 476.56
+offset_right = 449.0
+offset_bottom = 543.56
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.443137, 0.443137, 0.443137, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 48
+text = "Hamsters VS Aliens"
+
+[node name="VersionNumber" type="Label" parent="HUD/Menu/Design"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.206
+anchor_top = 0.87
+anchor_right = 0.206
+anchor_bottom = 0.87
+offset_left = 31.76
+offset_top = 453.2
+offset_right = 215.76
+offset_bottom = 485.2
+text = "Ver. Alpha: X.XXX"
+
+[node name="Settings" type="Control" parent="HUD/Menu"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VolumeSliderLabel" type="Label" parent="HUD/Menu/Settings"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 288.0
+offset_right = 165.0
+offset_bottom = 311.0
+text = "Music Volume"
+
+[node name="VolumeSlider" type="HSlider" parent="HUD/Menu/Settings"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.6
+anchor_top = 7.4
+anchor_right = 1.6
+anchor_bottom = 7.4
+offset_left = -16.0
+offset_top = 16.0
+offset_right = 296.0
+offset_bottom = 48.0
+min_value = -16.0
+max_value = 16.0
+
+[node name="SensitivitySliderLabel" type="Label" parent="HUD/Menu/Settings"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 392.0
+offset_right = 165.0
+offset_bottom = 415.0
+text = "Sensitivity"
+
+[node name="SensSlider" type="HSlider" parent="HUD/Menu/Settings"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.6
+anchor_top = 10.0
+anchor_right = 1.6
+anchor_bottom = 10.0
+offset_left = -16.0
+offset_top = 16.0
+offset_right = 296.0
+offset_bottom = 48.0
+max_value = 4.0
+step = 0.001
+value = 2.0
+
+[node name="DebugHUD" type="Button" parent="HUD/Menu/Settings"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 312.0
+offset_right = 592.0
+offset_bottom = 352.0
+toggle_mode = true
+text = "Debug HUD"
+
+[node name="QuitGame" type="Button" parent="HUD/Menu/Settings"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 368.0
+offset_right = 592.0
+offset_bottom = 408.0
+toggle_mode = true
+text = "Quit Game"
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_ejmyd")
 volume_db = -15.0
@@ -600,3 +790,7 @@ parameters/looping = true
 [connection signal="gui_input" from="HUD/LevelUp/Upgrade1" to="HUD/LevelUp/Upgrade1" method="_on_gui_input"]
 [connection signal="gui_input" from="HUD/LevelUp/Upgrade2" to="HUD/LevelUp/Upgrade2" method="_on_gui_input"]
 [connection signal="pressed" from="HUD/GameOver/Retry" to="HUD" method="_on_retry_pressed"]
+[connection signal="value_changed" from="HUD/Menu/Settings/VolumeSlider" to="HUD/Menu" method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="HUD/Menu/Settings/SensSlider" to="HUD/Menu" method="_on_sens_slider_value_changed"]
+[connection signal="toggled" from="HUD/Menu/Settings/DebugHUD" to="HUD/Menu" method="_on_debug_hud_toggled"]
+[connection signal="pressed" from="HUD/Menu/Settings/QuitGame" to="HUD/Menu" method="_on_quit_game_pressed"]

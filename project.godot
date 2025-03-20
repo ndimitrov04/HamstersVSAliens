@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="HamstersVSAliens"
-config/version="0.09"
-run/main_scene="res://main.tscn"
+config/version="0.095"
+run/main_scene="res://loading_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Textures/icon.svg"
 
