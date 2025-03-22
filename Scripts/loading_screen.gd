@@ -13,11 +13,11 @@ func _ready():
 	version_number.text = "Version: Alpha " + str(ProjectSettings.get_setting("application/config/version"))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var progress = []
 	ResourceLoader.load_threaded_get_status(next_scene, progress)
 	loading_bar.value = progress[0] * 100
-	loading_text.text = str(progress[0] * 100) + "%"
+	loading_text.text = str(int(progress[0] * 100)) + "%"
 
 	if progress[0] == 1:
 		var packed_scene = ResourceLoader.load_threaded_get(next_scene)

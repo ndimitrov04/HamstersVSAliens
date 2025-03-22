@@ -16,7 +16,7 @@ func _ready():
 	hide()
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	#Toggle mouse focus
 	if Input.is_action_just_pressed("ui_cancel"):
 		if get_tree().paused:

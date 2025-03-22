@@ -2,7 +2,8 @@ extends RigidBody3D
 
 @onready var twist_pivot := $TwistPivot
 @onready var pitch_pivot := $TwistPivot/PitchPivot
-@onready var camera = $TwistPivot/PitchPivot/Camera
+#@onready var camera = $TwistPivot/PitchPivot/Camera
+@onready var camera = $TwistPivot/PitchPivot/SpringArm3D/Camera
 @onready var floor_detector = $FloorDetector
 @onready var enemy_detector = $Ship/EnemyDetector
 @onready var floor_marker = $FloorMarker
@@ -12,6 +13,7 @@ extends RigidBody3D
 @onready var shoot_point = $Ship/ShootPoint
 @onready var shot_cd_timer = $ShotCDTimer
 @onready var heat_cd_timer = $HeatCDTimer
+@onready var homing_cooldown = $HomingCooldown
 
 @onready var hud = $"../../HUD"
 @onready var player_data = $"../../HUD/PlayerData"
@@ -35,6 +37,7 @@ var exploded : bool = false
 var speedboost : float = 1
 
 var homing_target = null
+var homing_available = true
 var target_hit : bool = false
 var shot_cooldown : bool = false
 var heat_cooldown : bool = false
@@ -83,6 +86,7 @@ func _physics_process(delta):
 	hud.speed_bar.max_value = MAXVELOCITY * speedboost
 	hud.speed_bar.value = lerp(hud.speed_bar.value, max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)), 0.05)
 	hud.overheat_bar.value = lerp(hud.overheat_bar.value, float(heat), 1)
+	hud.crosshair.value = ((homing_cooldown.wait_time - homing_cooldown.time_left) / homing_cooldown.wait_time) * 100
 	
 	var input = Vector3.ZERO
 	input.x = Input.get_axis("move_left","move_right")
@@ -129,7 +133,7 @@ func _physics_process(delta):
 		heat -= 1
 
 	#Lock on if looking at enemy and homing attack on right click
-	if enemy_detector.is_colliding():
+	if enemy_detector.is_colliding() and homing_available:
 		var object = enemy_detector.get_collider(0)
 		if "type" in object:
 			if object.type == ObjectTypes.TYPE.ENEMY and object.alive:
@@ -188,9 +192,13 @@ func _unhandled_input(event: InputEvent):
 			pitch_input = -event.relative.y * mouse_sensitivity
 
 func homing_attack(homingRepeat : int = 175, homing_refresh : float = 0.01):
+	if not homing_available:
+		return
+	homing_available = false
 	homing_target = enemy_detector.get_collider(0)
 	for i in range(0,homingRepeat):
 		if target_hit:
+			homing_cooldown.start()
 			break
 		if homing_target:
 			var enemy_position = homing_target.global_position
@@ -242,3 +250,6 @@ func _on_shot_cd_timer_timeout():
 
 func _on_heat_cd_timer_timeout():
 	heat_cooldown = true
+
+func _on_homing_cooldown_timeout():
+	homing_available = true
