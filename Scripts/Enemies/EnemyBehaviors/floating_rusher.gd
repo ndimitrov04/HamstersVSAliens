@@ -14,6 +14,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if get_parent().target == null:
+		return
+		
 	if get_parent().global_position.x > get_parent().target.global_position.x:
 		input.x = -1
 	elif get_parent().global_position.x < get_parent().target.global_position.x:

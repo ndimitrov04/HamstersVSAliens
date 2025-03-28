@@ -1,10 +1,16 @@
 extends CanvasLayer
 
 @onready var player = $"../Friendlies/Player"
+@onready var friendlies = $"../Friendlies"
+@onready var enemies = $"../Enemies"
+@onready var buy_spots = $"../BuySpots"
+@onready var main = $".."
+@onready var wave_timer = $"../NextWave"
 
 @onready var player_data = $PlayerData
 @onready var level_data = $LevelData
 @onready var debug_data = $DebugData
+@onready var game_info = $GameInfo
 @onready var crosshair = $Crosshair
 @onready var hp_bar = $HPBar
 @onready var speed_bar = $SpeedBar
@@ -14,6 +20,7 @@ extends CanvasLayer
 @onready var buy_menu = $BuyMenu
 @onready var level_up = $LevelUp
 @onready var stats = $Stats
+@onready var next_wave = $NextWave
 @onready var game_over = $GameOver
 @onready var retry = $GameOver/Retry
 @onready var menu = $Menu
@@ -29,6 +36,28 @@ func _physics_process(_delta):
 			menu.show()
 		else:
 			menu.hide()
+	update_player_info()
+	if not wave_timer.is_stopped():
+		next_wave.text = "Next wave coming in: " + str(int(wave_timer.time_left))
+
+func update_game_info():
+	await get_tree().create_timer(0.2).timeout
+	var enemy_count : int = 0
+	for object in enemies.get_children():
+		if "type" in object:
+			if object.type == ObjectTypes.TYPE.ENEMY:
+				enemy_count += 1
+	game_info.text = "Enemies Left: " + str(enemy_count) + "\nCurrent Wave: " + str(main.current_wave)
+
+func update_player_info():
+	hp_bar.max_value = player.max_hp
+	hp_bar.value = lerp(hp_bar.value, float(player.hp), 0.1)
+	hp_label.text = str(int(lerp(hp_bar.value, float(player.hp), 0.1)))
+	speed_bar.max_value = player.MAXVELOCITY * player.speedboost
+	speed_bar.value = lerp(speed_bar.value, max(abs(player.linear_velocity.x), abs(player.linear_velocity.y), abs(player.linear_velocity.z)), 0.05)
+	overheat_bar.value = lerp(overheat_bar.value, float(player.heat), 1)
+	crosshair.value = ((player.homing_cooldown.wait_time - player.homing_cooldown.time_left) / player.homing_cooldown.wait_time) * 100
+	gold.text = "HamsterCoins: " + str(player.gold)
 
 func _on_retry_pressed():
 	get_tree().reload_current_scene()

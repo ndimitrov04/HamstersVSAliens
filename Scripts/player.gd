@@ -80,14 +80,6 @@ func _physics_process(delta):
 	if hp > max_hp + hp_buff:
 		hp = max_hp + hp_buff
 	
-	hud.hp_bar.max_value = max_hp
-	hud.hp_bar.value = lerp(hud.hp_bar.value, float(hp), 0.1)
-	hud.hp_label.text = str(int(lerp(hud.hp_bar.value, float(hp), 0.1)))
-	hud.speed_bar.max_value = MAXVELOCITY * speedboost
-	hud.speed_bar.value = lerp(hud.speed_bar.value, max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)), 0.05)
-	hud.overheat_bar.value = lerp(hud.overheat_bar.value, float(heat), 1)
-	hud.crosshair.value = ((homing_cooldown.wait_time - homing_cooldown.time_left) / homing_cooldown.wait_time) * 100
-	
 	var input = Vector3.ZERO
 	input.x = Input.get_axis("move_left","move_right")
 	input.z = Input.get_axis("move_forward","move_backward")
@@ -115,8 +107,8 @@ func _physics_process(delta):
 	#Jump if on ground
 	if Input.is_action_just_pressed("jump") and floor_detector.is_colliding():
 		var jumpInertia = max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)) * INERTIAJUMPMULTIPLIER
-		print(jumpInertia)
-		print((jump_power * jumpInertia))
+		#print(jumpInertia)
+		#print((jump_power * jumpInertia))
 		apply_central_impulse(Vector3(0,1,0) * ((jump_power + jump_buff) * jumpInertia) * delta)
 
 	if Input.is_action_pressed("shoot") and heat < max_heat:
@@ -169,6 +161,7 @@ func _physics_process(delta):
 	#Rotate ship to face the focus point of the camera
 	ship.rotation = camera.global_rotation
 	
+	#Debug stats
 	stats.text = (
 		"MaxHP = " + str(max_hp + hp_buff) + "\n" +
 		"Strength = " + str(50 + damage_buff) + "\n" +
@@ -183,7 +176,6 @@ func _physics_process(delta):
 		"OnFloor?: " + str(floor_detector.is_colliding()) + "\n" +
 		"Heat: " + str(heat)
 		)
-	hud.gold.text = "HamsterCoins: " + str(gold)
 
 func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseMotion:
@@ -204,7 +196,7 @@ func homing_attack(homingRepeat : int = 175, homing_refresh : float = 0.01):
 			var enemy_position = homing_target.global_position
 			linear_velocity = Vector3(0,0,0)
 			var distance = abs(position.x - enemy_position.x) + abs(position.y - enemy_position.y) + abs(position.z - enemy_position.z)
-			print(distance)
+			#print(distance)
 			if distance >= 10:
 				linear_velocity.x = move_toward(linear_velocity.x, position.x - enemy_position.x, -abs(position.x - enemy_position.x) * 6)
 				linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 6)
@@ -243,7 +235,7 @@ func _on_body_entered(body):
 			linear_velocity.x = move_toward(linear_velocity.x, -position.x + body.global_position.x, -abs(position.x - body.global_position.x)*3)
 			linear_velocity.y = move_toward(linear_velocity.y, -position.y + body.global_position.y, -abs(position.y - body.global_position.y)*3)
 			linear_velocity.z = move_toward(linear_velocity.z, -position.z + body.global_position.z, -abs(position.z - body.global_position.z)*3)
-			print("Target hit")
+			#print("Target hit")
 
 func _on_shot_cd_timer_timeout():
 	shot_cooldown = false

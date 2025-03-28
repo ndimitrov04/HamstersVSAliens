@@ -11,4 +11,6 @@ func _physics_process(_delta):
 func _on_rusher_body_entered(body):
 	if body.name == "Player":
 		body.take_damage(75)
+		get_parent().hp = 0
+		get_parent().hit_ground = true
 		get_parent().die()

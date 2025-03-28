@@ -41,5 +41,6 @@ func _on_tower_list_item_clicked(index, _at_position, _mouse_button_index):
 		building.global_position = player.build_spot.global_position + Vector3(0,TOWERHEIGHT,0)
 		player.build_spot.building = building
 		building.build_spot = player.build_spot
+		player.gold -= PRICES[index]
 	else:
 		print("BUILDING IN OCCUPIED SPACE!")

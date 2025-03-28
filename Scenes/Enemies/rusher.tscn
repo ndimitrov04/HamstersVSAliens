@@ -85,6 +85,9 @@ func die(explosion = EXPLOSION.instantiate()):
 	explosion.amount = 256
 	explosion.emitting = true
 	axis_lock_linear_y = false
+	if has_meta(\"instant_death\"):
+		if get_meta(\"instant_death\") == true:
+			hit_ground = true
 
 func retarget():
 	var closest_enemy_distance = 9999
@@ -134,6 +137,7 @@ metadata/target_player = true
 metadata/bullet_siblings = false
 metadata/track_player = true
 metadata/gold = 2
+metadata/instant_death = true
 
 [node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, 0.0441679, 0, -0.159427)
@@ -161,5 +165,5 @@ autostart = true
 
 [node name="ImpactExploder" parent="." instance=ExtResource("4_qso4a")]
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="." to="ImpactExploder" method="_on_rusher_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
