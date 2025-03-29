@@ -36,6 +36,7 @@ func _physics_process(_delta):
 			menu.show()
 		else:
 			menu.hide()
+			menu.graphics_menu.hide()
 	update_player_info()
 	if not wave_timer.is_stopped():
 		next_wave.text = "Next wave coming in: " + str(int(wave_timer.time_left))

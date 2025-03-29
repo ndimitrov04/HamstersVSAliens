@@ -7,6 +7,7 @@ extends Panel
 @onready var player_data = $"../PlayerData"
 @onready var level_data = $"../LevelData"
 @onready var debug_data = $"../DebugData"
+@onready var graphics_menu = $GraphicsMenu
 
 const MUSIC_BUS : int = 1
 
@@ -41,6 +42,12 @@ func _on_debug_hud_toggled(toggled_on):
 		player_data.hide()
 		debug_data.hide()
 		level_data.hide()
+
+func _on_graphics_toggled(toggled_on):
+	if toggled_on:
+		graphics_menu.show()
+	else:
+		graphics_menu.hide()
 
 func _on_quit_game_pressed():
 	get_tree().quit()
