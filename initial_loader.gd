@@ -1,5 +1,7 @@
 extends Node3D
 
+#compile shaders
+
 const FLOATING_RUSHER = preload("res://Scenes/Behaviors/floating_rusher.tscn")
 const IMPACT_EXPLODER = preload("res://Scenes/Behaviors/impact_exploder.tscn")
 const NON_PREDICTIVE_SHOOTING = preload("res://Scenes/Behaviors/non_predictive_shooting.tscn")
@@ -60,10 +62,39 @@ var resources = [
 	PLAYER
 ]
 
+var next_scene = "res://main.tscn"
+
+@onready var color_rect = $CanvasLayer/LoadingScreen/ColorRect
+@onready var screen_bg_1 = $CanvasLayer/LoadingScreen/ScreenBG1
+@onready var title = $CanvasLayer/LoadingScreen/Title
+@onready var version_number = $CanvasLayer/LoadingScreen/VersionNumber
+@onready var loading_text = $CanvasLayer/LoadingScreen/LoadingText
+@onready var loading_helper = $CanvasLayer/LoadingScreen/LoadingHelper
+@onready var loading_bar = $CanvasLayer/LoadingScreen/LoadingBar
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for resource in resources:
-		resource.instantiate()
+	print("SHADERCOMPILE")
+	ResourceLoader.load_threaded_request(next_scene)
+	version_number.text = "Version: Alpha " + str(ProjectSettings.get_setting("application/config/version"))
 
-func _physics_process(_delta):
-	pass
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	var progress = []
+	ResourceLoader.load_threaded_get_status(next_scene, progress)
+	loading_bar.value = progress[0] * 100
+	loading_text.text = str(int(progress[0] * 100)) + "%"
+
+	if progress[0] == 1:
+		var packed_scene = ResourceLoader.load_threaded_get(next_scene)
+		get_tree().change_scene_to_packed(packed_scene)
+
+# Called when the node enters the scene tree for the first time.
+#func _ready():
+	#for resource in resources:
+		#resource.instantiate()
+	#pass
+
+#func _physics_process(_delta):
+	#pass

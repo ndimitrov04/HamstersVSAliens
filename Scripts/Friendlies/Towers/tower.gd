@@ -1,5 +1,8 @@
 extends RigidBody3D
 
+@onready var lower_detail = $Model/LowerDetail
+@onready var base_hitbox = $BaseHitbox
+
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
 @onready var max_hp : int = get_meta("hp")
@@ -9,9 +12,11 @@ extends RigidBody3D
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 @onready var build_spot = null
 
+signal base_exploded
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	connect("base_exploded", _on_base_exploded)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
@@ -19,6 +24,8 @@ func _physics_process(_delta):
 		hp = max_hp
 	
 	if hp <= fallpoint:
+		if lower_detail:
+			detach_base()
 		axis_lock_linear_x = false
 		axis_lock_linear_y = false
 		axis_lock_linear_z = false
@@ -30,8 +37,21 @@ func _physics_process(_delta):
 		queue_free()
 
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
-	add_sibling(explosion)
-	explosion.global_position = global_position
-	explosion.amount = 256
-	explosion.emitting = true
+	visual_explosion(self, explosion)
 	hp -= damage
+	
+func visual_explosion(detail, explosion = EXPLOSION.instantiate()):
+	if detail != null:
+		detail.add_sibling(explosion)
+		explosion.global_position = global_position
+		explosion.amount = 256
+		explosion.emitting = true
+		if detail == lower_detail:
+			emit_signal("base_exploded")
+
+func detach_base():
+	visual_explosion(lower_detail)
+
+func _on_base_exploded():
+	lower_detail.queue_free()
+	base_hitbox.queue_free()

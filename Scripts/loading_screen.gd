@@ -5,10 +5,11 @@ extends Control
 @onready var loading_bar = $LoadingBar
 @onready var loading_text = $LoadingText
 
-var next_scene = "res://main.tscn"
+var next_scene = "res://initial_loader.tscn"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("LOADINIT")
 	ResourceLoader.load_threaded_request(next_scene)
 	version_number.text = "Version: Alpha " + str(ProjectSettings.get_setting("application/config/version"))
 

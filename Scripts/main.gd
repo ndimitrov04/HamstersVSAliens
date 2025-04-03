@@ -23,7 +23,9 @@ var enemy_pool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	print("START IN 1")
 	await get_tree().create_timer(1).timeout
+	print("START")
 	enemy_pool = [UFO, SEEKER, DESTROYER, RUSHER, SHIELDER, CARRIER]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

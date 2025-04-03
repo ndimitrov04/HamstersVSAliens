@@ -11,15 +11,15 @@ config_version=5
 [application]
 
 config/name="HamstersVSAliens"
-config/version="0.12"
+config/version="0.125"
 run/main_scene="res://loading_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Textures/icon.svg"
+run/version="0.125"
 
 [autoload]
 
 ObjectTypes="*res://Scripts/Globals/object_types.gd"
-InitialLoader="*res://initial_loader.gd"
 
 [display]
 

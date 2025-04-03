@@ -31,13 +31,13 @@
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o32dh"]
 panorama = ExtResource("2_w3a3p")
 
-[sub_resource type="Sky" id="Sky_i2hom"]
+[sub_resource type="Sky" id="Sky_bimhq"]
 sky_material = SubResource("PanoramaSkyMaterial_o32dh")
 
 [sub_resource type="Environment" id="Environment_3wlby"]
 background_mode = 2
 background_color = Color(0.321728, 0.321728, 0.321728, 1)
-sky = SubResource("Sky_i2hom")
+sky = SubResource("Sky_bimhq")
 ambient_light_sky_contribution = 0.5
 tonemap_mode = 2
 tonemap_exposure = 0.8
@@ -77,18 +77,18 @@ size = Vector3(1024, 1024, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_y638d"]
 size = Vector3(1024, 1024, 1)
 
-[sub_resource type="Gradient" id="Gradient_x83lq"]
+[sub_resource type="Gradient" id="Gradient_vipdm"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_utlep"]
-gradient = SubResource("Gradient_x83lq")
+gradient = SubResource("Gradient_vipdm")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_453sd"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ui3eg"]
 albedo_color = Color(0, 0.235294, 1, 1)
 albedo_texture = SubResource("GradientTexture1D_utlep")
 
 [sub_resource type="BoxMesh" id="BoxMesh_r2pmk"]
-material = SubResource("StandardMaterial3D_453sd")
+material = SubResource("StandardMaterial3D_ui3eg")
 size = Vector3(10, 2, 10)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ob41k"]
@@ -97,11 +97,13 @@ points = PackedVector3Array(5.07837, 1.14286, 5.07738, -4.71563, -1, -4.71471, -
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ulucw"]
 load_path = "res://.godot/imported/circle2.png-faece47545d191e97b6728f4f63a4903.ctex"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lu1qe"]
-load_path = "res://.godot/imported/circle.png-d6ddc4d26962473d396774eef7099ce5.ctex"
+[sub_resource type="Gradient" id="Gradient_5pe1r"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uhqrv"]
-size = Vector2(50, 225)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5xo5r"]
+gradient = SubResource("Gradient_5pe1r")
+width = 50
+height = 255
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wd501"]
 size = Vector2(64, 64)
@@ -115,7 +117,7 @@ size = Vector2(64, 64)
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ab5nm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yk2cw"]
-bg_color = Color(0.215686, 0.313726, 0.388235, 0.756863)
+bg_color = Color(0.215686, 0.313726, 0.388235, 0.780392)
 corner_radius_top_left = 290
 corner_detail = 12
 shadow_size = 10
@@ -146,7 +148,7 @@ script = ExtResource("1_u31re")
 environment = SubResource("Environment_3wlby")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.957822, -0.269163, 0.100636, 0, 0.350207, 0.936672, -0.28736, -0.897166, 0.335436, -1.06494, 0, -0.00962663)
+transform = Transform3D(0.957823, -0.269162, 0.100636, 0, 0.350207, 0.936672, -0.28736, -0.897166, 0.335436, -1.06494, 0, -0.00962663)
 light_color = Color(1, 1, 0.964706, 1)
 shadow_enabled = true
 
@@ -357,17 +359,16 @@ value = 100.0
 fill_mode = 5
 texture_under = ExtResource("14_0c7be")
 texture_progress = ExtResource("15_qn8vp")
+tint_progress = Color(0.960784, 0.0901961, 0.12549, 1)
 
 [node name="SpeedBar" type="TextureProgressBar" parent="HUD"]
 anchors_preset = -1
-anchor_left = -0.017
-anchor_top = 1.015
-anchor_right = -0.017
-anchor_bottom = 1.015
-offset_left = 384.64
-offset_top = -0.200073
-offset_right = 2304.64
-offset_bottom = 1919.8
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 352.0
+offset_top = 15.9999
+offset_right = 2272.0
+offset_bottom = 1936.0
 rotation = 3.14159
 scale = Vector2(0.2, 0.2)
 max_value = 25.0
@@ -377,7 +378,8 @@ fill_mode = 4
 radial_initial_angle = 40.0
 radial_fill_degrees = 280.0
 texture_under = SubResource("CompressedTexture2D_ulucw")
-texture_progress = SubResource("CompressedTexture2D_lu1qe")
+texture_progress = ExtResource("15_qn8vp")
+tint_progress = Color(0.960784, 0.0901961, 0.12549, 1)
 
 [node name="OverheatBar" type="TextureProgressBar" parent="HUD"]
 anchors_preset = -1
@@ -389,8 +391,10 @@ offset_left = 0.959991
 offset_top = -223.84
 offset_right = 50.96
 offset_bottom = 1.15991
+value = 50.0
 fill_mode = 3
-texture_progress = SubResource("PlaceholderTexture2D_uhqrv")
+texture_progress = SubResource("GradientTexture2D_5xo5r")
+tint_progress = Color(0.972549, 0.823529, 0.0627451, 1)
 
 [node name="HPLabel" type="Label" parent="HUD"]
 anchors_preset = -1
