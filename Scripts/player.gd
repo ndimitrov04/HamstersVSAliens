@@ -14,6 +14,7 @@ extends RigidBody3D
 @onready var shot_cd_timer = $ShotCDTimer
 @onready var heat_cd_timer = $HeatCDTimer
 @onready var homing_cooldown = $HomingCooldown
+@onready var sfx = $SFX
 
 @onready var hud = $"../../HUD"
 @onready var player_data = $"../../HUD/PlayerData"
@@ -176,6 +177,9 @@ func _physics_process(delta):
 		"OnFloor?: " + str(floor_detector.is_colliding()) + "\n" +
 		"Heat: " + str(heat)
 		)
+		
+	if not floor_detector.is_colliding():
+		sfx.landed = false
 
 func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseMotion:

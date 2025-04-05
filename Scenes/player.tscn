@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://gjbquahrqxek"]
+[gd_scene load_steps=16 format=3 uid="uid://gjbquahrqxek"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_djtqc"]
 [ext_resource type="Texture2D" uid="uid://ueu2h64vm5oc" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Color.jpg" id="2_n8vo3"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bgvck04r4ikm5" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Roughness.jpg" id="5_xt6ph"]
 [ext_resource type="PackedScene" uid="uid://cmddgxrpyrq4e" path="res://Scenes/ModelScenes/space_humster.tscn" id="6_d3n84"]
 [ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="7_jmvwl"]
+[ext_resource type="Script" path="res://Scripts/player_sfx.gd" id="8_7rkmc"]
+[ext_resource type="AudioStream" uid="uid://7vhx4ncla4kn" path="res://SFX/Player/rollmix_grass.mp3" id="8_x4kfw"]
+[ext_resource type="AudioStream" uid="uid://7tm6mj8sbbfw" path="res://SFX/Player/landing-on-grass-40650.mp3" id="10_sje6q"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3nabx"]
 
@@ -98,6 +101,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.12691, 0)
 top_level = true
 texture_albedo = ExtResource("7_jmvwl")
 
+[node name="SFX" type="Node3D" parent="."]
+script = ExtResource("8_7rkmc")
+
+[node name="RollSFX" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("8_x4kfw")
+volume_db = 25.0
+bus = &"SFX"
+attenuation_filter_db = 0.0
+parameters/looping = true
+
+[node name="LandSFX" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("10_sje6q")
+volume_db = 33.081
+max_polyphony = 5
+bus = &"SFX"
+attenuation_filter_db = 0.0
+
+[node name="LastLand" type="Timer" parent="SFX"]
+wait_time = 0.5
+one_shot = true
+
 [node name="ShotCDTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
@@ -111,6 +135,7 @@ wait_time = 3.0
 one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="." to="SFX" method="_on_player_body_entered"]
 [connection signal="timeout" from="ShotCDTimer" to="." method="_on_shot_cd_timer_timeout"]
 [connection signal="timeout" from="HeatCDTimer" to="." method="_on_heat_cd_timer_timeout"]
 [connection signal="timeout" from="HomingCooldown" to="." method="_on_homing_cooldown_timeout"]

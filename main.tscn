@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=55 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
@@ -97,10 +97,18 @@ points = PackedVector3Array(5.07837, 1.14286, 5.07738, -4.71563, -1, -4.71471, -
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ulucw"]
 load_path = "res://.godot/imported/circle2.png-faece47545d191e97b6728f4f63a4903.ctex"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5paqf"]
+load_path = "res://.godot/imported/circle.png-d6ddc4d26962473d396774eef7099ce5.ctex"
+
 [sub_resource type="Gradient" id="Gradient_5pe1r"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5xo5r"]
+gradient = SubResource("Gradient_5pe1r")
+width = 50
+height = 255
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i2ro3"]
 gradient = SubResource("Gradient_5pe1r")
 width = 50
 height = 255
@@ -359,10 +367,10 @@ value = 100.0
 fill_mode = 5
 texture_under = ExtResource("14_0c7be")
 texture_progress = ExtResource("15_qn8vp")
-tint_progress = Color(0.960784, 0.0901961, 0.12549, 1)
+tint_progress = Color(1.63645e-06, 0.602254, 0.294757, 1)
 
 [node name="SpeedBar" type="TextureProgressBar" parent="HUD"]
-anchors_preset = -1
+anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 352.0
@@ -373,13 +381,33 @@ rotation = 3.14159
 scale = Vector2(0.2, 0.2)
 max_value = 25.0
 step = 0.0
-value = 5.0
+value = 25.0
 fill_mode = 4
 radial_initial_angle = 40.0
 radial_fill_degrees = 280.0
 texture_under = SubResource("CompressedTexture2D_ulucw")
 texture_progress = ExtResource("15_qn8vp")
-tint_progress = Color(0.960784, 0.0901961, 0.12549, 1)
+tint_progress = Color(0, 0.407843, 0.545098, 1)
+
+[node name="SpeedBG" type="TextureProgressBar" parent="HUD"]
+z_index = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 352.0
+offset_top = 15.9999
+offset_right = 2272.0
+offset_bottom = 1936.0
+rotation = 3.14159
+scale = Vector2(0.2, 0.2)
+max_value = 25.0
+step = 0.0
+value = 25.0
+fill_mode = 4
+radial_initial_angle = 320.0
+radial_fill_degrees = 80.0
+texture_progress = SubResource("CompressedTexture2D_5paqf")
+tint_progress = Color(2.52686e-07, 0.157018, 0.220162, 1)
 
 [node name="OverheatBar" type="TextureProgressBar" parent="HUD"]
 anchors_preset = -1
@@ -387,14 +415,31 @@ anchor_left = 0.187
 anchor_top = 0.948
 anchor_right = 0.187
 anchor_bottom = 0.948
-offset_left = 0.959991
-offset_top = -223.84
-offset_right = 50.96
-offset_bottom = 1.15991
+offset_left = -23.04
+offset_top = -245.84
+offset_right = 26.96
+offset_bottom = 9.15997
 value = 50.0
 fill_mode = 3
 texture_progress = SubResource("GradientTexture2D_5xo5r")
-tint_progress = Color(0.972549, 0.823529, 0.0627451, 1)
+tint_progress = Color(0.837482, 0.371346, 0, 1)
+
+[node name="OverheatBG" type="TextureProgressBar" parent="HUD"]
+z_index = -1
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.948
+anchor_right = 0.187
+anchor_bottom = 0.948
+offset_left = -23.04
+offset_top = -245.84
+offset_right = 26.96
+offset_bottom = 9.15997
+min_value = 100.0
+value = 100.0
+fill_mode = 3
+texture_progress = SubResource("GradientTexture2D_i2ro3")
+tint_progress = Color(0, 0.156863, 0.219608, 1)
 
 [node name="HPLabel" type="Label" parent="HUD"]
 anchors_preset = -1
