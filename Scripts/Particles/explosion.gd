@@ -1,10 +1,13 @@
 extends GPUParticles3D
 
 @onready var omni_light_3d = $OmniLight3D
+@onready var sfx = $SFX
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	await Engine.get_main_loop().process_frame
+	sfx.volume_db = self.amount / 1024
+	sfx.play()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

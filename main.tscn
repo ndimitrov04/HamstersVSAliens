@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=56 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
@@ -9,8 +9,9 @@
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_vld6k"]
 [ext_resource type="Texture2D" uid="uid://cv4dhypx5e5h6" path="res://Textures/Terrain/TerrainTextures/main_slot0_albedo_bump.png" id="6_7bisy"]
 [ext_resource type="Texture2D" uid="uid://cljf22e7es47q" path="res://Textures/Terrain/tiny_treats_grass_texture.png" id="7_grkdp"]
-[ext_resource type="Texture2D" uid="uid://c3vmhecg0ki5k" path="res://Textures/Terrain/TerrainTextures/main_slot0_normal_roughness.png" id="8_nu4qe"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="9_0hr8h"]
+[ext_resource type="Texture2D" uid="uid://diuqp64ii2nta" path="res://Textures/Terrain/rocks_normal.png" id="9_00k7w"]
+[ext_resource type="Texture2D" uid="uid://rcf2d2o11120" path="res://Textures/Terrain/grass_normal.png" id="10_t53f7"]
 [ext_resource type="Texture2D" uid="uid://bo7j0h6gor4bu" path="res://ImportedModels/Terrain/GrassLow/grass_noaa.png" id="10_y7bhy"]
 [ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="11_27fkr"]
 [ext_resource type="AudioStream" uid="uid://com0mloe5wxnu" path="res://Music/wuthering_tights.mp3" id="12_ejmyd"]
@@ -38,7 +39,6 @@ sky_material = SubResource("PanoramaSkyMaterial_o32dh")
 background_mode = 2
 background_color = Color(0.321728, 0.321728, 0.321728, 1)
 sky = SubResource("Sky_bimhq")
-ambient_light_sky_contribution = 0.5
 tonemap_mode = 2
 tonemap_exposure = 0.8
 ssao_light_affect = 0.11
@@ -63,7 +63,7 @@ textures = [[], []]
 [sub_resource type="Resource" id="Resource_ukbfh"]
 script = ExtResource("5_vld6k")
 mode = 0
-textures = [[ExtResource("6_7bisy"), ExtResource("7_grkdp")], [ExtResource("8_nu4qe"), null]]
+textures = [[ExtResource("6_7bisy"), ExtResource("7_grkdp")], [ExtResource("9_00k7w"), ExtResource("10_t53f7")]]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_s66cy"]
 size = Vector3(1, 1024, 1024)
@@ -156,9 +156,12 @@ script = ExtResource("1_u31re")
 environment = SubResource("Environment_3wlby")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.957823, -0.269162, 0.100636, 0, 0.350207, 0.936672, -0.28736, -0.897166, 0.335436, -1.06494, 0, -0.00962663)
-light_color = Color(1, 1, 0.964706, 1)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.06494, 123.69, -0.00962663)
+light_color = Color(1, 1, 0.803922, 1)
+light_angular_distance = 0.1
 shadow_enabled = true
+shadow_bias = 1.0
+shadow_reverse_cull_face = true
 
 [node name="BTerrain" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -300, 0)
@@ -193,10 +196,10 @@ custom_globalmap_shader = null
 texture_set = SubResource("Resource_ukbfh")
 render_layers = 1
 cast_shadow = 1
-shader_params/u_ground_uv_scale_per_texture = Vector4(20, 20, 20, 2)
+shader_params/u_ground_uv_scale_per_texture = Vector4(20, 20, 20, 1)
 shader_params/u_depth_blending = false
 shader_params/u_triplanar = false
-shader_params/u_tile_reduction = Vector4(1, 1, 1, 1)
+shader_params/u_tile_reduction = Vector4(0, 0, 0, 0)
 shader_params/u_globalmap_blend_start = 0.0
 shader_params/u_globalmap_blend_distance = 0.0
 shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)

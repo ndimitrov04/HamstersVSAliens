@@ -2,6 +2,10 @@ extends Node3D
 
 @onready var roll_sfx = $RollSFX
 @onready var land_sfx = $LandSFX
+@onready var homing_hit_sfx = $HomingHitSFX
+@onready var wind_sfx = $WindSFX
+@onready var hit_sfx = $HitSFX
+@onready var jump_sfx = $JumpSFX
 
 @onready var last_land = $LastLand
 
@@ -27,10 +31,23 @@ func _process(_delta):
 								abs(get_parent().angular_velocity.z),
 								0.1
 								) / 16
+								
+	wind_sfx.volume_db = max(	abs(get_parent().linear_velocity.x), 
+								abs(get_parent().linear_velocity.y), 
+								abs(get_parent().linear_velocity.z),
+								0
+								) - 20
+								
+	wind_sfx.pitch_scale = max(	abs(get_parent().linear_velocity.x), 
+								abs(get_parent().linear_velocity.y), 
+								abs(get_parent().linear_velocity.z),
+								0.1
+								) / 32
 
 func _on_player_body_entered(body):
 	if body.name == "HTerrain":
 		if not land_sfx.playing and last_land.is_stopped() and not landed:
 			land_sfx.play()
+			hit_sfx.play()
 			last_land.start()
 			landed = true

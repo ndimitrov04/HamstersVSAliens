@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmsn7elnqj675"]
+[gd_scene load_steps=7 format=3 uid="uid://bmsn7elnqj675"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_b5jsb"]
 [ext_resource type="PackedScene" uid="uid://0l8puhefj486" path="res://Scenes/ModelScenes/ufo_model.tscn" id="1_yquw7"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="2_didkb"]
+[ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="4_5fdo6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fn527"]
 absorbent = true
@@ -47,6 +48,13 @@ no_depth_test = true
 fixed_size = true
 text = "Right Click me to start"
 metadata/gold = 0
+
+[node name="HoverSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_5fdo6")
+volume_db = -2.0
+autoplay = true
+bus = &"SFX"
+doppler_tracking = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]

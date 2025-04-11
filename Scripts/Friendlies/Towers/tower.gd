@@ -2,6 +2,7 @@ extends RigidBody3D
 
 @onready var lower_detail = $Model/LowerDetail
 @onready var base_hitbox = $BaseHitbox
+@onready var drop_sfx = $DropSFX
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
@@ -55,3 +56,7 @@ func detach_base():
 func _on_base_exploded():
 	lower_detail.queue_free()
 	base_hitbox.queue_free()
+
+func _on_body_entered(body):
+	if body.name == "HTerrain":
+		drop_sfx.play()

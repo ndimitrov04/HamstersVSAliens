@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://do61aq0und06o"]
+[gd_scene load_steps=14 format=3 uid="uid://do61aq0und06o"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/Towers/tower.gd" id="1_vjfje"]
 [ext_resource type="Material" uid="uid://bdnweei7bh06j" path="res://Materials/Towers/glossy1.tres" id="2_imxmj"]
 [ext_resource type="PackedScene" uid="uid://dc8chlfwy0dk2" path="res://ImportedModels/Tower1/Low Building.glb" id="3_pgmi8"]
+[ext_resource type="AudioStream" uid="uid://dox3u464h02um" path="res://SFX/Particles/explosion-322491.mp3" id="4_4ics8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nec7y"]
 rough = true
@@ -99,5 +100,12 @@ shape = SubResource("ConvexPolygonShape3D_gpenl")
 [node name="BaseHitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -29.4052, 0)
 shape = SubResource("SphereShape3D_5hwtk")
+
+[node name="DropSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_4ics8")
+unit_size = 40.0
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 
 [editable path="Model/UpperDetail"]

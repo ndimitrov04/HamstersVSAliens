@@ -111,6 +111,7 @@ func _physics_process(delta):
 		#print(jumpInertia)
 		#print((jump_power * jumpInertia))
 		apply_central_impulse(Vector3(0,1,0) * ((jump_power + jump_buff) * jumpInertia) * delta)
+		sfx.jump_sfx.play()
 
 	if Input.is_action_pressed("shoot") and heat < max_heat:
 		if not shot_cooldown:
@@ -194,6 +195,7 @@ func homing_attack(homingRepeat : int = 175, homing_refresh : float = 0.01):
 	homing_target = enemy_detector.get_collider(0)
 	for i in range(0,homingRepeat):
 		if target_hit:
+			sfx.homing_hit_sfx.play()
 			homing_cooldown.start()
 			break
 		if homing_target:

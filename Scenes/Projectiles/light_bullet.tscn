@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://f6fuvx7c2ywn"]
+[gd_scene load_steps=7 format=3 uid="uid://f6fuvx7c2ywn"]
 
 [ext_resource type="Script" path="res://Scripts/Projectiles/light_bullet.gd" id="1_e2pc3"]
+[ext_resource type="AudioStream" uid="uid://c0byoj3py4vho" path="res://SFX/Projectiles/612877__sonically_sound__laser-1.ogg" id="2_ohdut"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hoq7w"]
 
@@ -39,6 +40,14 @@ shape = SubResource("ConvexPolygonShape3D_fwimi")
 wait_time = 2.0
 one_shot = true
 autostart = true
+
+[node name="SFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_ohdut")
+volume_db = 60.0
+unit_size = 20.0
+max_db = 6.0
+autoplay = true
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

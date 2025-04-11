@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b8bnvg37tfgo2"]
+[gd_scene load_steps=10 format=3 uid="uid://b8bnvg37tfgo2"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_vj3ff"]
 [ext_resource type="PackedScene" uid="uid://ch7l4a7iegb8w" path="res://Scenes/Enemies/carrier_minion.tscn" id="2_yf5xf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_4wgiv"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="5_vjcwl"]
 [ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_5yrh6"]
+[ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="7_i3eg0"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fn527"]
 bounce = 0.5
@@ -62,6 +63,13 @@ script = ExtResource("5_vjcwl")
 
 [node name="ShootPoint" parent="NonPredictiveShooting" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.51861, -0.0139613)
+
+[node name="HoverSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_i3eg0")
+volume_db = 2.0
+autoplay = true
+bus = &"SFX"
+doppler_tracking = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]

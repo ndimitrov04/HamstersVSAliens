@@ -15,11 +15,18 @@ extends Node3D
 @onready var hud = $HUD
 @onready var next_wave = $NextWave
 
+@onready var world_environment = $WorldEnvironment
+@onready var directional_light_3d = $DirectionalLight3D
+
 const MAPRADIUS = 500
 const SKYBOUNDS = [20,35]
 
 var current_wave : int = 0
 var enemy_pool
+
+var sun_rotation_x : float = 290
+#var sun_speed : float = 0.00001
+var sun_speed : float = 0.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -27,6 +34,7 @@ func _ready():
 	await get_tree().create_timer(1).timeout
 	print("START")
 	enemy_pool = [UFO, SEEKER, DESTROYER, RUSHER, SHIELDER, CARRIER]
+	directional_light_3d.rotation_degrees.x = 290
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -36,6 +44,24 @@ func _process(_delta):
 	)
 	if enemies.get_child_count() <= 0 and next_wave.is_stopped():
 		new_wave()
+	
+	
+	#Control day/night cycle
+	#Control sun/moon angle
+	if directional_light_3d.rotation_degrees.x < -360:
+		directional_light_3d.rotation_degrees.x = 0
+	if directional_light_3d.rotation_degrees.x > 0:
+		directional_light_3d.rotation_degrees.x = 0
+	directional_light_3d.rotation_degrees.x -= sun_speed
+	#print(directional_light_3d.rotation_degrees.x)
+	#print((((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90) / 2)
+	#Control sky light intensity
+	if abs(directional_light_3d.rotation_degrees.x) < 180:
+		world_environment.environment.background_energy_multiplier = (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
+		directional_light_3d.light_energy = (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
+	if abs(directional_light_3d.rotation_degrees.x) > 180:
+		world_environment.environment.background_energy_multiplier = 1 - (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
+		directional_light_3d.light_energy = 1 - (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
 
 func new_wave():
 	level_up.initiate_upgrade_phase()
