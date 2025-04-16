@@ -93,6 +93,13 @@ metadata/targets = NodePath("../../Enemies")
 metadata/shield = 300
 metadata/not_followable = true
 
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55021, 0)
+light_color = Color(0.596078, 0.313726, 0.545098, 1)
+light_energy = 150.0
+light_bake_mode = 0
+omni_range = 25.0
+
 [node name="Shield" type="Area3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 collision_layer = 133

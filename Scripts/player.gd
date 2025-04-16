@@ -3,7 +3,8 @@ extends RigidBody3D
 @onready var twist_pivot := $TwistPivot
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 #@onready var camera = $TwistPivot/PitchPivot/Camera
-@onready var camera = $TwistPivot/PitchPivot/SpringArm3D/Camera
+@onready var camera = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera
+@onready var trauma_detector = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector
 @onready var floor_detector = $FloorDetector
 @onready var enemy_detector = $Ship/EnemyDetector
 @onready var floor_marker = $FloorMarker

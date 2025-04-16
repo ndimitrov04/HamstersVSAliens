@@ -35,6 +35,27 @@ metadata/track_player = false
 metadata/gold = 20
 metadata/max_bullets = 4
 
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, 3.36943, 0)
+light_color = Color(0.596078, 0.313726, 0.545098, 1)
+light_energy = 100.0
+light_bake_mode = 0
+omni_range = 25.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, -4.58629, 0)
+light_color = Color(0.596078, 0.313726, 0.545098, 1)
+light_energy = 100.0
+light_bake_mode = 0
+omni_range = 25.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, 0.976118, -9.53002)
+light_color = Color(0.596078, 0.313726, 0.545098, 1)
+light_energy = 100.0
+light_bake_mode = 0
+omni_range = 25.0
+
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(-150, 0, -1.31134e-05, 0, 150, 0, 1.31134e-05, 0, -150, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_vcvwm")

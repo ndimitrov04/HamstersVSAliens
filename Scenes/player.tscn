@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://gjbquahrqxek"]
+[gd_scene load_steps=23 format=3 uid="uid://gjbquahrqxek"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_djtqc"]
 [ext_resource type="Texture2D" uid="uid://ueu2h64vm5oc" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Color.jpg" id="2_n8vo3"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://marg6fodv0lh" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Metalness.jpg" id="3_vhms8"]
 [ext_resource type="Texture2D" uid="uid://bgvck04r4ikm5" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Roughness.jpg" id="5_xt6ph"]
 [ext_resource type="PackedScene" uid="uid://cmddgxrpyrq4e" path="res://Scenes/ModelScenes/space_humster.tscn" id="6_d3n84"]
+[ext_resource type="Script" path="res://Scripts/camera.gd" id="7_afnwk"]
 [ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="7_jmvwl"]
 [ext_resource type="Script" path="res://Scripts/player_sfx.gd" id="8_7rkmc"]
 [ext_resource type="AudioStream" uid="uid://7vhx4ncla4kn" path="res://SFX/Player/rollmix_grass.mp3" id="8_x4kfw"]
@@ -44,6 +45,12 @@ points = PackedVector3Array(-0.59932, -0.028661, 0, -0.596505, -0.028661, 0.0586
 [sub_resource type="SphereShape3D" id="SphereShape3D_i3mnr"]
 radius = 3.0
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iqwkw"]
+noise_type = 0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iweh1"]
+radius = 1.0
+
 [node name="Player" type="RigidBody3D"]
 collision_layer = 131
 collision_mask = 131
@@ -75,6 +82,18 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 [node name="ShootPoint" type="Node3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.26126)
 
+[node name="OmniLight3D" type="OmniLight3D" parent="Ship"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.673033, 1.95781, -5.37778)
+light_color = Color(0.690196, 1, 1, 1)
+light_energy = 10.0
+light_bake_mode = 0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Ship"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -3.98408, 5.02673)
+light_color = Color(0.690196, 1, 1, 1)
+light_energy = 10.0
+light_bake_mode = 0
+
 [node name="TwistPivot" type="Node3D" parent="."]
 top_level = true
 
@@ -86,8 +105,18 @@ collision_mask = 255
 spring_length = 1.705
 margin = 0.15
 
-[node name="Camera" type="Camera3D" parent="TwistPivot/PitchPivot/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 1.045, 0, 0)
+[node name="TraumaDetector" type="Area3D" parent="TwistPivot/PitchPivot/SpringArm3D"]
+collision_layer = 255
+collision_mask = 255
+script = ExtResource("7_afnwk")
+noise = SubResource("FastNoiseLite_iqwkw")
+
+[node name="Hitbox" type="CollisionShape3D" parent="TwistPivot/PitchPivot/SpringArm3D/TraumaDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 0, 0, 0)
+shape = SubResource("SphereShape3D_iweh1")
+
+[node name="Camera" type="Camera3D" parent="TwistPivot/PitchPivot/SpringArm3D/TraumaDetector"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0.3, 0, 0)
 current = true
 fov = 90.0
 

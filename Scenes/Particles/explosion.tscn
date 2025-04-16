@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://buks2cxcpu5ps"]
+[gd_scene load_steps=9 format=3 uid="uid://buks2cxcpu5ps"]
 
 [ext_resource type="Script" path="res://Scripts/Particles/explosion.gd" id="2_best3"]
 [ext_resource type="AudioStream" uid="uid://dmelhcicwjdul" path="res://SFX/Particles/explosion-6055.mp3" id="2_iqguk"]
+[ext_resource type="Script" path="res://Scripts/trauma_causer.gd" id="3_acpl0"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c00uu"]
 emission_shape = 2
@@ -32,6 +33,9 @@ billboard_mode = 1
 material = SubResource("StandardMaterial3D_h42sq")
 size = Vector2(0.3, 0.3)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_6aftt"]
+radius = 30.0
+
 [node name="Explosion" type="GPUParticles3D"]
 emitting = false
 lifetime = 3.0
@@ -52,4 +56,14 @@ stream = ExtResource("2_iqguk")
 unit_size = 25.0
 bus = &"SFX"
 
+[node name="TraumaCauser" type="Area3D" parent="."]
+collision_layer = 255
+collision_mask = 255
+script = ExtResource("3_acpl0")
+
+[node name="Hitbox" type="CollisionShape3D" parent="TraumaCauser"]
+shape = SubResource("SphereShape3D_6aftt")
+
 [connection signal="finished" from="." to="." method="_on_finished"]
+[connection signal="finished" from="SFX" to="." method="_on_sfx_finished"]
+[connection signal="area_entered" from="TraumaCauser" to="TraumaCauser" method="_on_area_entered"]

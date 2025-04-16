@@ -1,5 +1,7 @@
 extends Node3D
 
+@onready var player = $".."
+
 @onready var roll_sfx = $RollSFX
 @onready var land_sfx = $LandSFX
 @onready var homing_hit_sfx = $HomingHitSFX
@@ -47,6 +49,9 @@ func _process(_delta):
 func _on_player_body_entered(body):
 	if body.name == "HTerrain":
 		if not land_sfx.playing and last_land.is_stopped() and not landed:
+			#trigger screenshake
+			player.trauma_detector.add_trauma(0.8)
+			#play land SFX
 			land_sfx.play()
 			hit_sfx.play()
 			last_land.start()

@@ -140,6 +140,12 @@ metadata/track_player = true
 metadata/gold = 2
 metadata/instant_death = true
 
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.807843, 0.192157, 0.25098, 1)
+light_energy = 15.0
+light_bake_mode = 0
+omni_range = 25.0
+
 [node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4, 0, 3.49691e-07, 0, 4, 0, -3.49691e-07, 0, -4, 0.0441679, 0, -0.159427)
 material_overlay = SubResource("StandardMaterial3D_3fmhi")

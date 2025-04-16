@@ -26,7 +26,8 @@ var enemy_pool
 
 var sun_rotation_x : float = 290
 #var sun_speed : float = 0.00001
-var sun_speed : float = 0.5
+var sun_speed : float = 0.1
+#var sun_speed : float = 0.005
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,7 +35,7 @@ func _ready():
 	await get_tree().create_timer(1).timeout
 	print("START")
 	enemy_pool = [UFO, SEEKER, DESTROYER, RUSHER, SHIELDER, CARRIER]
-	directional_light_3d.rotation_degrees.x = 290
+	directional_light_3d.rotation_degrees.x = -120
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -44,7 +45,6 @@ func _process(_delta):
 	)
 	if enemies.get_child_count() <= 0 and next_wave.is_stopped():
 		new_wave()
-	
 	
 	#Control day/night cycle
 	#Control sun/moon angle
@@ -57,11 +57,13 @@ func _process(_delta):
 	#print((((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90) / 2)
 	#Control sky light intensity
 	if abs(directional_light_3d.rotation_degrees.x) < 180:
-		world_environment.environment.background_energy_multiplier = (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
-		directional_light_3d.light_energy = (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
+		world_environment.environment.background_energy_multiplier = clamp((((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
+		directional_light_3d.light_energy = clamp((((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
+		directional_light_3d.light_color = Color(1, 1, 0.8)
 	if abs(directional_light_3d.rotation_degrees.x) > 180:
-		world_environment.environment.background_energy_multiplier = 1 - (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
-		directional_light_3d.light_energy = 1 - (((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4
+		world_environment.environment.background_energy_multiplier = clamp(1 - (((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
+		directional_light_3d.light_energy = clamp(1 - (((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
+		directional_light_3d.light_color = Color(0, 0.26, 0.42)
 
 func new_wave():
 	level_up.initiate_upgrade_phase()

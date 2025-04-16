@@ -14,6 +14,7 @@ extends RigidBody3D
 
 var alive : bool = true
 var hit_ground : bool = false
+var screenshake_exectued : bool = false
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.ENEMY
 var not_followable : bool = false
 
