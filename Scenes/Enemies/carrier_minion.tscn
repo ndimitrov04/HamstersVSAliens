@@ -43,7 +43,7 @@ metadata/track_player = true
 metadata/gold = 0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17412, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0075593, 1.17412, 2.11269)
 light_color = Color(0.596078, 0.313726, 0.545098, 1)
 light_energy = 100.0
 light_bake_mode = 0

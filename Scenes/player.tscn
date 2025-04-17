@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://gjbquahrqxek"]
+[gd_scene load_steps=29 format=3 uid="uid://gjbquahrqxek"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_djtqc"]
 [ext_resource type="Texture2D" uid="uid://ueu2h64vm5oc" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Color.jpg" id="2_n8vo3"]
@@ -45,11 +45,47 @@ points = PackedVector3Array(-0.59932, -0.028661, 0, -0.596505, -0.028661, 0.0586
 [sub_resource type="SphereShape3D" id="SphereShape3D_i3mnr"]
 radius = 3.0
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_50bm6"]
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.1, 0.1)
+inherit_velocity_ratio = 0.2
+direction = Vector3(0, 0.8, 0)
+spread = 0.0
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nibof"]
+metallic_specular = 0.0
+disable_receive_shadows = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_qhght"]
+material = SubResource("StandardMaterial3D_nibof")
+size = Vector2(0.1, 0.1)
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iqwkw"]
 noise_type = 0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iweh1"]
 radius = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s4els"]
+emission_shape = 2
+emission_sphere_radius = 1.0
+direction = Vector3(0, 0, 1)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjr6q"]
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_ewgyt"]
+material = SubResource("StandardMaterial3D_fjr6q")
+size = Vector3(0.001, 0.002, 0.1)
 
 [node name="Player" type="RigidBody3D"]
 collision_layer = 131
@@ -94,6 +130,12 @@ light_color = Color(0.690196, 1, 1, 1)
 light_energy = 10.0
 light_bake_mode = 0
 
+[node name="SpeedParticles" type="GPUParticles3D" parent="Ship"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -2.00652, 3.1217)
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_50bm6")
+draw_pass_1 = SubResource("QuadMesh_qhght")
+
 [node name="TwistPivot" type="Node3D" parent="."]
 top_level = true
 
@@ -116,9 +158,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 1.49012e-08, 0, -1.49012e-08, 1, 0, 0, 0)
 shape = SubResource("SphereShape3D_iweh1")
 
 [node name="Camera" type="Camera3D" parent="TwistPivot/PitchPivot/SpringArm3D/TraumaDetector"]
-transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0.3, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 0)
 current = true
 fov = 90.0
+
+[node name="ParticlePivot" type="Node3D" parent="TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 1.345, 1, 0)
+top_level = true
+
+[node name="SpeedLines" type="GPUParticles3D" parent="TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.305)
+amount = 96
+lifetime = 3.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_s4els")
+draw_pass_1 = SubResource("BoxMesh_ewgyt")
 
 [node name="FloorDetector" type="RayCast3D" parent="."]
 top_level = true

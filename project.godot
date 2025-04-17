@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="HamstersVSAliens"
-config/version="0.135"
+config/version="0.14"
 run/main_scene="res://loading_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Textures/icon.svg"
@@ -29,7 +29,7 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
+enabled=PackedStringArray("res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
 [input]
 

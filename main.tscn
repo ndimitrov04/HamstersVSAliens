@@ -1,16 +1,24 @@
-[gd_scene load_steps=56 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=66 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
 [ext_resource type="Texture2D" uid="uid://xko8qwr5poyp" path="res://Textures/Skyboxes/cloudy_midday_4k.png" id="2_w3a3p"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/BaseClasses/mb_compositor.gd" id="3_dyjhg"]
+[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="3_ik35o"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_qe4bh"]
 [ext_resource type="Resource" path="res://TerrainDataBG/data.hterrain" id="4_7tm3y"]
 [ext_resource type="Resource" path="res://TerrainData/data.hterrain" id="4_gra8q"]
+[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="4_udb3r"]
+[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="5_iob54"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_vld6k"]
 [ext_resource type="Texture2D" uid="uid://cv4dhypx5e5h6" path="res://Textures/Terrain/TerrainTextures/main_slot0_albedo_bump.png" id="6_7bisy"]
+[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="6_vw5er"]
 [ext_resource type="Texture2D" uid="uid://cljf22e7es47q" path="res://Textures/Terrain/tiny_treats_grass_texture.png" id="7_grkdp"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="7_pufwq"]
+[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="8_4rde7"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="9_0hr8h"]
 [ext_resource type="Texture2D" uid="uid://diuqp64ii2nta" path="res://Textures/Terrain/rocks_normal.png" id="9_00k7w"]
+[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="9_af4pr"]
 [ext_resource type="Texture2D" uid="uid://rcf2d2o11120" path="res://Textures/Terrain/grass_normal.png" id="10_t53f7"]
 [ext_resource type="Texture2D" uid="uid://bo7j0h6gor4bu" path="res://ImportedModels/Terrain/GrassLow/grass_noaa.png" id="10_y7bhy"]
 [ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="11_27fkr"]
@@ -54,6 +62,36 @@ fog_depth_end = 800.0
 volumetric_fog_density = 0.02
 volumetric_fog_length = 10.0
 volumetric_fog_ambient_inject = 0.5
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_jb7eq"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("7_pufwq")
+tile_max_x_stage = ExtResource("8_4rde7")
+tile_max_y_stage = ExtResource("9_af4pr")
+construct_stage = ExtResource("4_udb3r")
+neighbor_max_stage = ExtResource("5_iob54")
+blur_stage = ExtResource("3_ik35o")
+overlay_stage = ExtResource("6_vw5er")
+perpen_error_threshold = 0.5
+sample_step_multiplier = 16
+step_exponent_modifier = 1.0
+JFA_pass_count = 3
+debug = false
+
+[sub_resource type="Compositor" id="Compositor_cv2fb"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_jb7eq")])
+script = ExtResource("3_dyjhg")
+samples = 16
+intensity = 1.0
+center_fade = 0.0
+framerate_independent = true
+uncapped_independence = false
+target_constant_framerate = 30.0
 
 [sub_resource type="Resource" id="Resource_qmb7o"]
 script = ExtResource("5_vld6k")
@@ -154,6 +192,7 @@ script = ExtResource("1_u31re")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3wlby")
+compositor = SubResource("Compositor_cv2fb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.06494, 123.69, -0.00962663)

@@ -8,6 +8,7 @@ extends Node3D
 @onready var wind_sfx = $WindSFX
 @onready var hit_sfx = $HitSFX
 @onready var jump_sfx = $JumpSFX
+@onready var speed_particles = $"../Ship/SpeedParticles"
 
 @onready var last_land = $LastLand
 
@@ -33,7 +34,7 @@ func _process(_delta):
 								abs(get_parent().angular_velocity.z),
 								0.1
 								) / 16
-								
+	
 	wind_sfx.volume_db = max(	abs(get_parent().linear_velocity.x), 
 								abs(get_parent().linear_velocity.y), 
 								abs(get_parent().linear_velocity.z),

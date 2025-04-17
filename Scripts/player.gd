@@ -4,9 +4,12 @@ extends RigidBody3D
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 #@onready var camera = $TwistPivot/PitchPivot/Camera
 @onready var camera = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera
+@onready var particle_pivot = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot
+@onready var speed_lines = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot/SpeedLines
 @onready var trauma_detector = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector
 @onready var floor_detector = $FloorDetector
 @onready var enemy_detector = $Ship/EnemyDetector
+@onready var speed_particles = $Ship/SpeedParticles
 @onready var floor_marker = $FloorMarker
 @onready var hover_decal = $FloorMarker/HoverDecal
 @onready var sphere = $Sphere
@@ -51,6 +54,8 @@ var heat : int = 0
 var gold : int = 10000
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 var build_spot = null
+var current_speed
+var current_horizontal_speed
 
 var damage_buff : int = 0
 var hp_buff : int = 0
@@ -65,6 +70,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	
+	current_speed = max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z), 0)
+	current_horizontal_speed = max(abs(linear_velocity.x), abs(linear_velocity.z), 0)
+
 	#Detect death
 	if hp <= 0:
 		if not exploded:
@@ -177,11 +185,44 @@ func _physics_process(delta):
 		"Angluar Velocity: " + str(angular_velocity) + "\n" +
 		"Input: " + str(twist_pivot.basis * input * thrust_power * delta) + "\n" +
 		"OnFloor?: " + str(floor_detector.is_colliding()) + "\n" +
-		"Heat: " + str(heat)
+		"Heat: " + str(heat) + "\n" +
+		"Trauma: " + str(trauma_detector.trauma)
 		)
 		
 	if not floor_detector.is_colliding():
 		sfx.landed = false
+	
+	#Simulate speed
+	if current_horizontal_speed > 10:
+		#Spawn dust/dirt particles
+		if floor_detector.is_colliding():
+			speed_particles.emitting = true
+			speed_particles.amount = 64 + current_horizontal_speed * 1.8
+		else:
+			speed_particles.emitting = false
+		
+		#Modify camera FOV based on horizontal speed
+		camera.fov = lerpf(camera.fov, min(150, 90 + current_horizontal_speed * 2 - 20), 0.1)
+	else:
+		speed_particles.emitting = false
+		camera.fov = lerpf(camera.fov, 90, 0.1)
+	
+	particle_pivot.global_position = camera.global_position
+	
+	if current_speed > 15:
+		#Add speed lines
+		speed_lines.emitting = true
+		speed_lines.process_material.initial_velocity_min = current_speed / 5
+		speed_lines.process_material.initial_velocity_max = current_speed / 5
+		#Make speed lines move according to player movement and camera location
+		var target_position = camera.global_position - linear_velocity.normalized()
+		particle_pivot.look_at(target_position, Vector3.UP, true)
+		#Add screenshake on fast movement
+		if trauma_detector.trauma < 0.3:
+			trauma_detector.add_trauma(0.08)
+	else:
+		speed_lines.emitting = false
+
 
 func _unhandled_input(event: InputEvent):
 	if event is InputEventMouseMotion:
