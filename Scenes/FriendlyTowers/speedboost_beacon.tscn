@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cd38ytne4dlvk"]
+[gd_scene load_steps=10 format=3 uid="uid://cd38ytne4dlvk"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/speedboost_area.gd" id="1_1aggo"]
 [ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_hrxe1"]
@@ -27,6 +27,9 @@ rings = 8
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_e6iuu"]
 points = PackedVector3Array(-0.00457, 0.0404226, -0.00635676, 0.000484284, 0.0409857, 0.00769048, -0.000636666, 0.0409857, 0.00769048, -0.000636666, 0.076381, 0.000385439, 0.00666524, 0.0404226, -0.00410688, -0.00737952, 0.0404226, 0.00207099, 0.00610333, 0.0404226, 0.00488073, 0.00160809, 0.0409857, -0.00748095, -0.00176048, 0.076381, 0.00150815, -0.0051319, 0.0404226, 0.00600344, -0.00737952, 0.0409857, -0.00242282, 0.00610333, 0.0482893, 0.00207099, 0.00554143, 0.0482893, -0.00354553, -0.000636666, 0.076381, 0.00150815, -0.00176048, 0.076381, 0.000385439, -0.000636666, 0.0482893, -0.00635676, 0.0027319, 0.0482893, -0.00579243, 0.00497952, 0.0415489, 0.00600344, 0.00722714, 0.0421086, -0.00129714, -0.00625571, 0.0409857, -0.00466972, 0.00610333, 0.0482893, -0.00185998, -0.00681762, 0.0409857, 0.00375654, -0.00288428, 0.0415489, 0.00712764, 0.0027319, 0.0415489, 0.00712764, -0.00288428, 0.0482893, -0.00579243, 0.00441762, 0.0404226, -0.00635676, 0.00722714, 0.0404226, 0.00263234, -0.00737952, 0.0415489, 0.00207099, -0.00176048, 0.0404226, -0.00748095, 0.00441762, 0.0482893, 0.00488073, 0.00385571, 0.0482893, -0.00523108, -0.00457, 0.0482893, -0.00466972)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_rclfy"]
+size = Vector3(0.01, 0.002, 0.01)
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_co83g"]
 radius = 500.0
 
@@ -54,6 +57,10 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -13.9336, 0)
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(300, 0, 0, 0, 300, -1.31134e-05, 0, 1.31134e-05, 300, 0, -13.9336, 0)
 shape = SubResource("ConvexPolygonShape3D_e6iuu")
+
+[node name="Hitbox2" type="CollisionShape3D" parent="."]
+transform = Transform3D(300, 0, 0, 0, 300, -1.31134e-05, 0, 1.31134e-05, 300, -0.000446796, -1.59078, 9.05991e-05)
+shape = SubResource("BoxShape3D_rclfy")
 
 [node name="BoostArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.602364, 0)

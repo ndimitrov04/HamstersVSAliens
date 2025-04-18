@@ -32,6 +32,7 @@ amount = 1
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
+fixed_fps = 5
 process_material = SubResource("ParticleProcessMaterial_wulhj")
 draw_pass_1 = SubResource("BoxMesh_0xtpc")
 script = ExtResource("1_xp34k")
