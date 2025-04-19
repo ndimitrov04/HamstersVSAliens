@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://bi7s0yriu1mso"]
+[gd_scene load_steps=70 format=3 uid="uid://bi7s0yriu1mso"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_u31re"]
 [ext_resource type="PackedScene" uid="uid://gjbquahrqxek" path="res://Scenes/player.tscn" id="2_3iewc"]
@@ -35,6 +35,9 @@
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="23_pjcbg"]
 [ext_resource type="Shader" path="res://Shaders/frostedglass.gdshader" id="23_s3gqi"]
 [ext_resource type="Texture2D" uid="uid://c8w4lu0t7upwi" path="res://Textures/hamster.png" id="23_upoxq"]
+[ext_resource type="PackedScene" uid="uid://b3ew72mqq17x2" path="res://Scenes/NPCTowers/npc_building1.tscn" id="23_w8n5w"]
+[ext_resource type="PackedScene" uid="uid://do61aq0und06o" path="res://Scenes/FriendlyTowers/tower.tscn" id="24_ox0ds"]
+[ext_resource type="PackedScene" uid="uid://bwyq1ro8qs0gr" path="res://Scenes/FriendlyTowers/fast_turret.tscn" id="25_jk0r4"]
 [ext_resource type="Theme" uid="uid://cvujk8weshw6m" path="res://main_theme.tres" id="26_akqyf"]
 [ext_resource type="Script" path="res://Scripts/graphics_menu.gd" id="26_dyul7"]
 [ext_resource type="Texture2D" uid="uid://begmikt57o3l" path="res://Textures/HUD/Icons/turret2.png" id="30_jqm3s"]
@@ -301,6 +304,42 @@ shape = SubResource("ConvexPolygonShape3D_ob41k")
 [node name="Player" parent="Friendlies" instance=ExtResource("2_3iewc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
+[node name="Tower1" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 251.116, 15.3167, 5.26936)
+
+[node name="Tower2" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -237.309, -21.8834, 0)
+
+[node name="Tower3" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.3043, -28.4165, 327.891)
+
+[node name="Tower4" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 289.913, -11.6641, 317.31)
+
+[node name="Tower" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.2675, -3.0818, -341.014)
+
+[node name="Tower5" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -188.42, -15.1189, -274.087)
+
+[node name="Tower7" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.4552, -4.69005, -21.4022)
+
+[node name="Tower6" parent="Friendlies" instance=ExtResource("23_w8n5w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -332.028, -27.3206, 242.426)
+
+[node name="Tower8" parent="Friendlies" instance=ExtResource("24_ox0ds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.6212, -7.15229, 262.764)
+
+[node name="FastTurret" parent="Friendlies" instance=ExtResource("25_jk0r4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.9557, 9.37118, 262.714)
+
+[node name="Tower9" parent="Friendlies" instance=ExtResource("24_ox0ds")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -316.013, 8.94456, -144.682)
+
+[node name="FastTurret2" parent="Friendlies" instance=ExtResource("25_jk0r4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -316.072, 25.468, -144.421)
+
 [node name="Enemies" type="Node3D" parent="."]
 
 [node name="UFO" parent="Enemies" instance=ExtResource("14_qqokl")]
@@ -555,6 +594,7 @@ theme = ExtResource("26_akqyf")
 theme_override_font_sizes/font_size = 64
 
 [node name="BuyMenu" type="Control" parent="HUD"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -603,6 +643,7 @@ theme_override_font_sizes/font_size = 32
 text = "Build Menu"
 
 [node name="LevelUp" type="Panel" parent="HUD"]
+visible = false
 anchors_preset = -1
 anchor_left = 0.533
 anchor_top = 0.415

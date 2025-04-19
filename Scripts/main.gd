@@ -9,6 +9,7 @@ extends Node3D
 @onready var SHIELDER = preload("res://Scenes/Enemies/shielder.tscn")
 
 @onready var enemies = $Enemies
+@onready var friendlies = $Friendlies
 
 @onready var player = $Friendlies/Player
 @onready var level_up = $HUD/LevelUp
@@ -23,6 +24,7 @@ const SKYBOUNDS = [20,35]
 
 var current_wave : int = 0
 var enemy_pool
+var city_hp = 1
 
 var sun_rotation_x : float = 290
 #var sun_speed : float = 0.00001
@@ -64,6 +66,10 @@ func _process(_delta):
 		world_environment.environment.background_energy_multiplier = clamp(1 - (((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
 		directional_light_3d.light_energy = clamp(1 - (((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
 		directional_light_3d.light_color = Color(0, 0.26, 0.42)
+		
+	city_hp = calculate_city_hp()
+	if city_hp <= 0:
+		player.hp = 0
 
 func new_wave():
 	level_up.initiate_upgrade_phase()
@@ -82,3 +88,11 @@ func _on_next_wave_timeout():
 			randf_range(-MAPRADIUS,MAPRADIUS)
 			)
 	hud.update_game_info()
+
+func calculate_city_hp() -> int:
+	var hp = 0
+	for object in friendlies.get_children():
+		if "npc_building" in object:
+			if object.npc_building:
+				hp += object.hp
+	return hp

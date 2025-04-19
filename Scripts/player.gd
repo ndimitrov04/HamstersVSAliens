@@ -1,5 +1,7 @@
 extends RigidBody3D
 
+@onready var main = $"../.."
+
 @onready var twist_pivot := $TwistPivot
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 #@onready var camera = $TwistPivot/PitchPivot/Camera
@@ -177,7 +179,8 @@ func _physics_process(delta):
 		"MaxHP = " + str(max_hp + hp_buff) + "\n" +
 		"Strength = " + str(50 + damage_buff) + "\n" +
 		"Acceleration = " + str(thrust_power + speed_buff) + "\n" +
-		"Jump Power = " + str(jump_power + jump_buff)
+		"Jump Power = " + str(jump_power + jump_buff) + "\n" +
+		"City HP = " + str(main.city_hp)
 	)
 	player_data.text = (
 		"HamstersVSAliens Pre-Alpha Ver " + ProjectSettings.get_setting("application/config/version") + "\n" +
