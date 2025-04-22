@@ -444,6 +444,9 @@ value = 100.0
 fill_mode = 4
 texture_progress = ExtResource("14_j2f1x")
 
+[node name="DangerIndicators" type="Node2D" parent="HUD/Crosshair"]
+position = Vector2(250, 250)
+
 [node name="HPBar" type="TextureProgressBar" parent="HUD"]
 anchors_preset = -1
 anchor_left = 0.871

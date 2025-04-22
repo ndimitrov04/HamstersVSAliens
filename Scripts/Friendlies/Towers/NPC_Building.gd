@@ -4,12 +4,18 @@ extends RigidBody3D
 @onready var base_hitbox = $BaseHitbox
 @onready var drop_sfx = $DropSFX
 @onready var main = $"../.."
+@onready var damage_taken = $DamageTaken
+@onready var player = $"../Player"
+@onready var distress_ping = $DistressPing
+@onready var danger_indicators = $"../../HUD/Crosshair/DangerIndicators"
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
+@onready var DANGER_POINTER = preload("res://Scenes/HUD/danger_pointer.tscn")
 
 @onready var max_hp : int = get_meta("hp")
 @onready var hp : int = get_meta("hp")
 @onready var fallpoint : int = get_meta("fallpoint")
+@onready var pointer = null
 
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 @onready var build_spot = null
@@ -38,10 +44,18 @@ func _physics_process(_delta):
 	if hp <= 0:
 		#build_spot.building = null
 		queue_free()
+		
+	if hp >= 0 and not damage_taken.is_stopped():
+		distress_ping.look_at(player.global_position, Vector3.UP, true)
 
 func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 	visual_explosion(self, explosion)
 	hp -= damage
+	damage_taken.start()
+	if pointer == null:
+		pointer = DANGER_POINTER.instantiate()
+		danger_indicators.add_child(pointer)
+		pointer.point_direction = distress_ping
 	
 func visual_explosion(detail, explosion = EXPLOSION.instantiate()):
 	if detail != null:
@@ -62,3 +76,7 @@ func _on_base_exploded():
 func _on_body_entered(body):
 	if body.name == "HTerrain":
 		drop_sfx.play()
+
+func _on_damage_taken_timeout():
+	if pointer:
+		pointer.queue_free()
