@@ -11,7 +11,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-	if point_direction:
+	if point_direction and self:
 		rotation = camera.global_rotation.y - point_direction.rotation.y
 	
 	if point_direction == null and not free_marked:

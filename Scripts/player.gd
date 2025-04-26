@@ -8,6 +8,7 @@ extends RigidBody3D
 @onready var camera = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera
 @onready var particle_pivot = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot
 @onready var speed_lines = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot/SpeedLines
+@onready var dash_lines = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/DashLines
 @onready var trauma_detector = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector
 @onready var floor_detector = $FloorDetector
 @onready var enemy_detector = $Ship/EnemyDetector
@@ -53,16 +54,21 @@ var max_hp : int = 100
 var hp : int = 100
 var max_heat : int = 100
 var heat : int = 0
+var max_combo : float = 100
+var combo : float = 0
 var gold : int = 10000
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 var build_spot = null
-var current_speed
-var current_horizontal_speed
+var current_speed : float
+var current_horizontal_speed : float
 
 var damage_buff : int = 0
 var hp_buff : int = 0
 var speed_buff : int = 0
 var jump_buff : int = 0
+
+var dash_cost = 10
+var homing_cost = 25
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -99,30 +105,42 @@ func _physics_process(delta):
 	apply_central_force(twist_pivot.basis * input * (thrust_power + speed_buff) * delta * speedboost)
 
 	#Set maximum speed
-	if linear_velocity.x > MAXVELOCITY:
-		linear_velocity.x = MAXVELOCITY
-	elif linear_velocity.x < -MAXVELOCITY:
-		linear_velocity.x = -MAXVELOCITY
+	if linear_velocity.x > MAXVELOCITY + combo / 10:
+		linear_velocity.x = MAXVELOCITY + combo / 10
+	elif linear_velocity.x < -MAXVELOCITY - combo / 10:
+		linear_velocity.x = -MAXVELOCITY - combo / 10
 	if linear_velocity.y > MAXVELOCITY * 3:
 		linear_velocity.y = MAXVELOCITY * 3
 	elif linear_velocity.y < -MAXVELOCITY:
 		linear_velocity.y = -MAXVELOCITY
-	if linear_velocity.z > MAXVELOCITY:
-		linear_velocity.z = MAXVELOCITY
-	elif linear_velocity.z < -MAXVELOCITY:
-		linear_velocity.z = -MAXVELOCITY
+	if linear_velocity.z > MAXVELOCITY + combo / 10:
+		linear_velocity.z = MAXVELOCITY + combo / 10
+	elif linear_velocity.z < -MAXVELOCITY - combo / 10:
+		linear_velocity.z = -MAXVELOCITY - combo / 10
+
+	#Set maximum combo
+	if combo > max_combo:
+		combo = max_combo
+	if combo < 0:
+		combo = 0
 
 	#Stick to ground if on ground
 	if Input.is_action_pressed("floorslide") and floor_detector.is_colliding():
-		apply_central_force(Vector3(0,-1,0) * floor_power * delta)
+		apply_central_force(Vector3.DOWN * floor_power * delta)
 		
 	#Jump if on ground
 	if Input.is_action_just_pressed("jump") and floor_detector.is_colliding():
 		var jumpInertia = max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)) * INERTIAJUMPMULTIPLIER
 		#print(jumpInertia)
 		#print((jump_power * jumpInertia))
-		apply_central_impulse(Vector3(0,1,0) * ((jump_power + jump_buff) * jumpInertia) * delta)
+		apply_central_impulse(Vector3.UP * ((jump_power + jump_buff) * jumpInertia / 1.3) * delta)
 		sfx.jump_sfx.play()
+
+	#Dash toward crosshair (forward)
+	if Input.is_action_just_pressed("dash") and combo > dash_cost:
+		apply_central_impulse(twist_pivot.basis * Vector3.FORWARD * (jump_power * (2.2 + (combo / 150)) * delta))
+		combo -= dash_cost
+		dash_lines.emitting = true
 
 	if Input.is_action_pressed("shoot") and heat < max_heat:
 		if not shot_cooldown:
@@ -138,12 +156,13 @@ func _physics_process(delta):
 		heat -= 1
 
 	#Lock on if looking at enemy and homing attack on right click
-	if enemy_detector.is_colliding() and homing_available:
+	if enemy_detector.is_colliding() and homing_available and combo > homing_cost:
 		var object = enemy_detector.get_collider(0)
 		if "type" in object:
 			if object.type == ObjectTypes.TYPE.ENEMY and object.alive:
 				object.lock_marker.visible = true
 				if Input.is_action_just_pressed("homing"):
+					combo -= homing_cost
 					homing_attack()
 		
 	#if floor_marker.is_colliding():
@@ -189,7 +208,8 @@ func _physics_process(delta):
 		"Input: " + str(twist_pivot.basis * input * thrust_power * delta) + "\n" +
 		"OnFloor?: " + str(floor_detector.is_colliding()) + "\n" +
 		"Heat: " + str(heat) + "\n" +
-		"Trauma: " + str(trauma_detector.trauma)
+		"Trauma: " + str(trauma_detector.trauma) + "\n" +
+		"Combo: " + str(combo)
 		)
 		
 	if not floor_detector.is_colliding():
@@ -205,7 +225,7 @@ func _physics_process(delta):
 			speed_particles.emitting = false
 		
 		#Modify camera FOV based on horizontal speed
-		camera.fov = lerpf(camera.fov, min(150, 90 + current_horizontal_speed * 2 - 20), 0.1)
+		camera.fov = lerpf(camera.fov, min(130, 90 + current_horizontal_speed * 1.5 - 20), 0.1)
 	else:
 		speed_particles.emitting = false
 		camera.fov = lerpf(camera.fov, 90, 0.1)
@@ -287,6 +307,9 @@ func _on_body_entered(body):
 			linear_velocity.y = move_toward(linear_velocity.y, -position.y + body.global_position.y, -abs(position.y - body.global_position.y)*3)
 			linear_velocity.z = move_toward(linear_velocity.z, -position.z + body.global_position.z, -abs(position.z - body.global_position.z)*3)
 			#print("Target hit")
+	if "type" in body:
+		if body.type == ObjectTypes.TYPE.ENEMY:
+			combo += 15
 
 func _on_shot_cd_timer_timeout():
 	shot_cooldown = false
@@ -296,3 +319,22 @@ func _on_heat_cd_timer_timeout():
 
 func _on_homing_cooldown_timeout():
 	homing_available = true
+
+#Collect combo from inertia while out of a homing attack
+func _on_combo_clock_timeout():
+	if not homing_target:
+		if current_horizontal_speed <= 10:
+			combo -= 0.4
+		elif current_horizontal_speed <= 20:
+			combo -= 0.1
+		elif current_horizontal_speed > 22:
+			combo += (current_horizontal_speed / MAXVELOCITY) / 8
+		elif current_horizontal_speed > 27:
+			combo += (current_horizontal_speed / MAXVELOCITY) / 6
+		elif current_horizontal_speed > 30:
+			combo += (current_horizontal_speed / MAXVELOCITY) / 5
+		
+		combo -= 0.05
+		
+		if current_horizontal_speed > 31:
+			hp += 1
