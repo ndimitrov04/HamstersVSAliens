@@ -35,32 +35,35 @@ metadata/track_player = true
 metadata/gold = 10
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.86097, 5.35264)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.14661, 5.35264)
 light_color = Color(0.796078, 0.505882, 0.180392, 1)
 light_energy = 100.0
 light_bake_mode = 0
 omni_range = 25.0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.77742, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.51228, -0.0760844)
 light_color = Color(0.796078, 0.505882, 0.180392, 1)
 light_energy = 100.0
 light_bake_mode = 0
 omni_range = 25.0
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10168, -3.68083)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.10168, -5.81178)
 light_color = Color(0.796078, 0.505882, 0.180392, 1)
 light_energy = 100.0
 light_bake_mode = 0
 omni_range = 25.0
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(-100, 0, -8.74228e-06, 0, 100, 0, 8.74228e-06, 0, -100, 0, 0, 0)
+transform = Transform3D(-200, 0, -3.01992e-05, 0, 200, 0, 3.01992e-05, 0, -200, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_vyynd")
 
 [node name="Model" parent="." instance=ExtResource("3_clpdu")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Spaceship_FinnTheFrog" parent="Model/RootNode" index="0"]
+transform = Transform3D(200, 0, 0, 0, 200, -8.74228e-06, 0, 8.74228e-06, 200, 0, 0, 0)
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false

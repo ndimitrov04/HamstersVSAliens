@@ -5,6 +5,7 @@ extends Node3D
 @onready var roll_sfx = $RollSFX
 @onready var land_sfx = $LandSFX
 @onready var homing_hit_sfx = $HomingHitSFX
+@onready var dash_sfx = $DashSFX
 @onready var wind_sfx = $WindSFX
 @onready var hit_sfx = $HitSFX
 @onready var jump_sfx = $JumpSFX

@@ -7,6 +7,7 @@ extends RigidBody3D
 #@onready var camera = $TwistPivot/PitchPivot/Camera
 @onready var camera = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera
 @onready var particle_pivot = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot
+@onready var dash_particles = $Ship/DashParticles
 @onready var speed_lines = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot/SpeedLines
 @onready var dash_lines = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/DashLines
 @onready var trauma_detector = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector
@@ -138,9 +139,11 @@ func _physics_process(delta):
 
 	#Dash toward crosshair (forward)
 	if Input.is_action_just_pressed("dash") and combo > dash_cost:
-		apply_central_impulse(twist_pivot.basis * Vector3.FORWARD * (jump_power * (2.2 + (combo / 150)) * delta))
+		apply_central_impulse(twist_pivot.basis * Vector3.FORWARD * (jump_power * (2.3 + (combo / 150)) * delta))
 		combo -= dash_cost
+		sfx.dash_sfx.play()
 		dash_lines.emitting = true
+		dash_particles.emitting = true
 
 	if Input.is_action_pressed("shoot") and heat < max_heat:
 		if not shot_cooldown:
@@ -148,7 +151,7 @@ func _physics_process(delta):
 			shot_cooldown = true
 			heat_cooldown = false
 			shot_cd_timer.start()
-			heat += 5
+			heat += 5 - (combo / 25)
 			heat_cd_timer.start()
 	if Input.is_action_just_pressed("debug_shoot"):
 		shoot(DEBUG_ENEMY_BULLET)
@@ -220,7 +223,7 @@ func _physics_process(delta):
 		#Spawn dust/dirt particles
 		if floor_detector.is_colliding():
 			speed_particles.emitting = true
-			speed_particles.amount = 64 + current_horizontal_speed * 1.8
+			speed_particles.amount_ratio = 0.2 + current_horizontal_speed / 10
 		else:
 			speed_particles.emitting = false
 		
@@ -232,7 +235,7 @@ func _physics_process(delta):
 	
 	particle_pivot.global_position = camera.global_position
 	
-	if current_speed > 15:
+	if current_speed > 20:
 		#Add speed lines
 		speed_lines.emitting = true
 		speed_lines.process_material.initial_velocity_min = current_speed / 5
@@ -277,6 +280,7 @@ func homing_attack(homingRepeat : int = 175, homing_refresh : float = 0.01):
 				linear_velocity.y = move_toward(linear_velocity.y, position.y - enemy_position.y, -abs(position.y - enemy_position.y) * 30)
 				linear_velocity.z = move_toward(linear_velocity.z, position.z - enemy_position.z, -abs(position.z - enemy_position.z) * 30)
 		await get_tree().create_timer(homing_refresh).timeout
+	homing_available = true
 	homing_target = null
 	target_hit = false
 	
@@ -324,15 +328,15 @@ func _on_homing_cooldown_timeout():
 func _on_combo_clock_timeout():
 	if not homing_target:
 		if current_horizontal_speed <= 10:
-			combo -= 0.4
+			combo -= 0.2
 		elif current_horizontal_speed <= 20:
-			combo -= 0.1
+			combo -= 0.05
 		elif current_horizontal_speed > 22:
-			combo += (current_horizontal_speed / MAXVELOCITY) / 8
+			combo += (current_horizontal_speed / MAXVELOCITY) / 7
 		elif current_horizontal_speed > 27:
-			combo += (current_horizontal_speed / MAXVELOCITY) / 6
-		elif current_horizontal_speed > 30:
 			combo += (current_horizontal_speed / MAXVELOCITY) / 5
+		elif current_horizontal_speed > 30:
+			combo += (current_horizontal_speed / MAXVELOCITY) / 4
 		
 		combo -= 0.05
 		

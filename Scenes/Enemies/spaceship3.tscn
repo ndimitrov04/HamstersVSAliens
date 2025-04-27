@@ -35,35 +35,35 @@ metadata/track_player = true
 metadata/gold = 5
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.16504, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.7458, 0)
 light_color = Color(0.666667, 0.537255, 0.164706, 1)
 light_energy = 100.0
 light_bake_mode = 0
 omni_range = 9.0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.45944, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0812397, -6.21653, 6.40085)
 light_color = Color(0.666667, 0.537255, 0.164706, 1)
 light_energy = 100.0
 light_bake_mode = 0
 omni_range = 9.0
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.303993, -3.08355)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.303993, -7.33693)
 light_color = Color(0.666667, 0.537255, 0.164706, 1)
 light_energy = 100.0
 light_bake_mode = 0
 omni_range = 9.0
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(-100, 0, -8.74228e-06, 0, 100, 0, 8.74228e-06, 0, -100, 0, 0, 0)
+transform = Transform3D(-200, 0, -3.01992e-05, 0, 200, 0, 3.01992e-05, 0, -200, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_jf6ft")
 
 [node name="Model" parent="." instance=ExtResource("2_q77wl")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Spaceship_BarbaraTheBee" parent="Model/RootNode" index="0"]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+transform = Transform3D(200, 0, 0, 0, 200, 0, 0, 0, 200, 0, 0, 0)
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false

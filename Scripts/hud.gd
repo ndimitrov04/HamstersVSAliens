@@ -1,5 +1,9 @@
 extends CanvasLayer
 
+@onready var ARCADE_GAME_POWER_UP_EPIC_STOCK_MEDIA_1_00_00 = preload("res://SFX/UI/arcade-game-power-up-epic-stock-media-1-00-00.mp3")
+@onready var HOMINGSFX = preload("res://SFX/UI/mobile-game-smash-betacut-1-00-01.mp3")
+@onready var DASHSFX = preload("res://SFX/UI/sci-fi-interface-menu-select-betacut-1-00-01.mp3")
+
 @onready var player = $"../Friendlies/Player"
 @onready var friendlies = $"../Friendlies"
 @onready var enemies = $"../Enemies"
@@ -30,6 +34,11 @@ extends CanvasLayer
 @onready var game_over = $GameOver
 @onready var retry = $GameOver/Retry
 @onready var menu = $Menu
+
+@onready var combo_sfx = $ComboBar/ComboSFX
+
+var dash_sfx_played = false
+var homing_sfx_played = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -69,17 +78,25 @@ func update_player_info():
 	gold.text = "HamsterCoins: " + str(player.gold)
 	
 	if player.combo > player.dash_cost:
-		#play sound
-		shift_1_icon.show()
-		shift_2_icon.show()
+		if not dash_sfx_played:
+			combo_sfx.stream = DASHSFX
+			combo_sfx.play()
+			dash_sfx_played = true
+			shift_1_icon.show()
+			shift_2_icon.show()
 	else:
+		dash_sfx_played = false
 		shift_1_icon.hide()
 		shift_2_icon.hide()
 		
 	if player.combo > player.homing_cost:
-		#play sound
-		rmb_icon.show()
+		if not homing_sfx_played:
+			combo_sfx.stream = HOMINGSFX
+			combo_sfx.play()
+			homing_sfx_played = true
+			rmb_icon.show()
 	else:
+		homing_sfx_played = false
 		rmb_icon.hide()
 
 func _on_retry_pressed():

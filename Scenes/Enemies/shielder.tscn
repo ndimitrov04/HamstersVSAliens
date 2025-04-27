@@ -94,7 +94,7 @@ metadata/shield = 300
 metadata/not_followable = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55021, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.558849, 0)
 light_color = Color(0.596078, 0.313726, 0.545098, 1)
 light_energy = 150.0
 light_bake_mode = 0
@@ -122,11 +122,14 @@ wait_time = 5.0
 autostart = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(-10, 0, 8.74228e-07, 0, 10, 0, -8.74228e-07, 0, -10, -0.0320321, 0, -0.0864483)
+transform = Transform3D(-30, 0, 4.52987e-06, 0, 30, 0, -4.52987e-06, 0, -30, -0.0320321, 0, -0.0864483)
 shape = SubResource("ConvexPolygonShape3D_l4v8a")
 
 [node name="Model" parent="." instance=ExtResource("2_s06ev")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -2.03203, 0, -1.58645)
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -2.03203, 0, -1.58645)
+
+[node name="craft_speederD" parent="Model/RootNode" index="0"]
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, -2, 0, -1.5)
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false

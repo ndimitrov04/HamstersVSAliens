@@ -15,6 +15,7 @@ extends Node3D
 @onready var level_up = $HUD/LevelUp
 @onready var hud = $HUD
 @onready var next_wave = $NextWave
+@onready var wave_notification = $WaveNotification
 
 @onready var world_environment = $WorldEnvironment
 @onready var directional_light_3d = $DirectionalLight3D
@@ -79,6 +80,7 @@ func new_wave():
 func _on_next_wave_timeout():
 	hud.next_wave.hide()
 	current_wave += 1
+	wave_notification.play()
 	for i in range(0, current_wave * 5):
 		var enemy = enemy_pool[randi_range(1,enemy_pool.size()-1)].instantiate()
 		enemies.add_child(enemy)
