@@ -80,6 +80,7 @@ func die(explosion = EXPLOSION.instantiate()):
 	explosion.amount = 256
 	explosion.emitting = true
 	axis_lock_linear_y = false
+	gravity_scale = 1.5
 
 func retarget():
 	var closest_enemy_distance = 9999

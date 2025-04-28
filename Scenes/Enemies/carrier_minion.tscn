@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://f6fuvx7c2ywn" path="res://Scenes/Projectiles/light_bullet.tscn" id="1_ofp63"]
 [ext_resource type="PackedScene" uid="uid://bp1uey4204u3h" path="res://ImportedModels/Spaceships/S1/Spaceship-VSxUAFhzbA.glb" id="3_35yu1"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_nmbe7"]
-[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="5_f45ff"]
+[ext_resource type="PackedScene" uid="uid://coo2loedmu4xs" path="res://Scenes/Behaviors/floating_seeker.tscn" id="5_hlm3t"]
 [ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_slrxw"]
 [ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="7_j2o3m"]
 
@@ -25,10 +25,9 @@ clearcoat_enabled = true
 [node name="CM" type="RigidBody3D"]
 collision_layer = 5
 collision_mask = 5
-axis_lock_linear_y = true
 mass = 150.0
 physics_material_override = SubResource("PhysicsMaterial_u44k2")
-gravity_scale = 1.5
+gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_iaybq")
@@ -83,10 +82,7 @@ texture = ExtResource("4_nmbe7")
 wait_time = 0.1
 autostart = true
 
-[node name="FloatingSeeker" type="Node3D" parent="."]
-script = ExtResource("5_f45ff")
-
-[node name="PauseTimer" type="Timer" parent="FloatingSeeker"]
+[node name="FloatingSeeker" parent="." instance=ExtResource("5_hlm3t")]
 
 [node name="NonPredictiveShooting" parent="." instance=ExtResource("6_slrxw")]
 
@@ -102,7 +98,6 @@ doppler_tracking = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
-[connection signal="timeout" from="FloatingSeeker/PauseTimer" to="FloatingSeeker" method="_on_pause_timer_timeout"]
 
 [editable path="Model"]
 [editable path="NonPredictiveShooting"]

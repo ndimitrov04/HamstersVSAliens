@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bshg5dxiarc82" path="res://Scenes/Projectiles/destroyer_bullet.tscn" id="2_d1qin"]
 [ext_resource type="PackedScene" uid="uid://bp1uey4204u3h" path="res://ImportedModels/Spaceships/S1/Spaceship-VSxUAFhzbA.glb" id="3_clpdu"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_wnlla"]
-[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="5_6d0ob"]
+[ext_resource type="PackedScene" uid="uid://coo2loedmu4xs" path="res://Scenes/Behaviors/floating_seeker.tscn" id="5_vt2tu"]
 [ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_1gmj3"]
 [ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="7_bu7ye"]
 
@@ -17,10 +17,9 @@ points = PackedVector3Array(-0.0109, 0.00202164, -0.0189243, -0.0109, -0.0026522
 [node name="Destroyer" type="RigidBody3D"]
 collision_layer = 5
 collision_mask = 5
-axis_lock_linear_y = true
 mass = 150.0
 physics_material_override = SubResource("PhysicsMaterial_fn527")
-gravity_scale = 1.5
+gravity_scale = 0.0
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_xi10l")
@@ -75,10 +74,10 @@ texture = ExtResource("4_wnlla")
 wait_time = 0.1
 autostart = true
 
-[node name="FloatingSeeker" type="Node3D" parent="."]
-script = ExtResource("5_6d0ob")
+[node name="FloatingSeeker" parent="." instance=ExtResource("5_vt2tu")]
 
-[node name="PauseTimer" type="Timer" parent="FloatingSeeker"]
+[node name="YRetarget" parent="FloatingSeeker" index="1"]
+wait_time = 8.277
 
 [node name="NonPredictiveShooting" parent="." instance=ExtResource("6_1gmj3")]
 
@@ -94,7 +93,7 @@ doppler_tracking = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
-[connection signal="timeout" from="FloatingSeeker/PauseTimer" to="FloatingSeeker" method="_on_pause_timer_timeout"]
 
 [editable path="Model"]
+[editable path="FloatingSeeker"]
 [editable path="NonPredictiveShooting"]

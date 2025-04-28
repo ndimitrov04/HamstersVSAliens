@@ -8,6 +8,7 @@ extends RigidBody3D
 @onready var player = $"../Player"
 @onready var distress_ping = $DistressPing
 @onready var danger_indicators = $"../../HUD/Crosshair/DangerIndicators"
+@onready var warning = $Warning
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 @onready var DANGER_POINTER = preload("res://Scenes/HUD/danger_pointer.tscn")
@@ -56,6 +57,7 @@ func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 		pointer = DANGER_POINTER.instantiate()
 		danger_indicators.add_child(pointer)
 		pointer.point_direction = distress_ping
+		warning.show()
 	
 func visual_explosion(detail, explosion = EXPLOSION.instantiate()):
 	if detail != null:
@@ -80,3 +82,4 @@ func _on_body_entered(body):
 func _on_damage_taken_timeout():
 	if pointer:
 		pointer.queue_free()
+	warning.hide()

@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://b3ew72mqq17x2"]
+[gd_scene load_steps=16 format=3 uid="uid://b3ew72mqq17x2"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/Towers/NPC_Building.gd" id="1_3opeq"]
 [ext_resource type="Material" uid="uid://bdnweei7bh06j" path="res://Materials/Towers/glossy1.tres" id="2_p0k4n"]
 [ext_resource type="PackedScene" uid="uid://dc8chlfwy0dk2" path="res://ImportedModels/Tower1/Low Building.glb" id="3_t34kd"]
 [ext_resource type="AudioStream" uid="uid://dox3u464h02um" path="res://SFX/Particles/explosion-322491.mp3" id="4_gyt36"]
+[ext_resource type="Texture2D" uid="uid://dgxbaanp24hoo" path="res://Textures/HUD/message-24-warning.png" id="4_jfo35"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_nec7y"]
 rough = true
@@ -91,6 +92,17 @@ material_overlay = SubResource("StandardMaterial3D_b1sc6")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Model/LowerDetail"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.26662, 0)
 mesh = SubResource("SphereMesh_5ddvs")
+
+[node name="Warning" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.9426, 0)
+visible = false
+pixel_size = 0.003
+billboard = 1
+transparent = false
+no_depth_test = true
+fixed_size = true
+texture_filter = 0
+texture = ExtResource("4_jfo35")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -7.49799, 0)

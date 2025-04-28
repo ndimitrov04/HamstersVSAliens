@@ -21,7 +21,7 @@ extends Node3D
 @onready var directional_light_3d = $DirectionalLight3D
 
 const MAPRADIUS = 500
-const SKYBOUNDS = [20,35]
+const SKYBOUNDS = [20,40]
 
 var current_wave : int = 0
 var enemy_pool

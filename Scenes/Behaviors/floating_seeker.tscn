@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://coo2loedmu4xs"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_seeker.gd" id="1_d0cr6"]
+
+[node name="FloatingSeeker" type="Node3D"]
+script = ExtResource("1_d0cr6")
+
+[node name="PauseTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="YRetarget" type="Timer" parent="."]
+wait_time = 2.743
+autostart = true
+
+[connection signal="timeout" from="PauseTimer" to="." method="_on_pause_timer_timeout"]
+[connection signal="timeout" from="YRetarget" to="." method="_on_y_retarget_timeout"]
