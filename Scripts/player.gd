@@ -22,6 +22,7 @@ extends RigidBody3D
 @onready var shot_cd_timer = $ShotCDTimer
 @onready var heat_cd_timer = $HeatCDTimer
 @onready var homing_cooldown = $HomingCooldown
+@onready var boosted = $Boosted
 @onready var sfx = $SFX
 
 @onready var hud = $"../../HUD"
@@ -342,3 +343,6 @@ func _on_combo_clock_timeout():
 		
 		if current_horizontal_speed > 31:
 			hp += 1
+
+func _on_boosted_timeout():
+	MAXVELOCITY = 25
