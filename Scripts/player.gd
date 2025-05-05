@@ -45,6 +45,7 @@ var floor_power : float = 120000
 var exploded : bool = false
 
 var speedboost : float = 1
+var inline_boost : Vector3 = Vector3(0,0,0)
 
 var homing_target = null
 var homing_available = true
@@ -104,21 +105,21 @@ func _physics_process(delta):
 	input.x = Input.get_axis("move_left","move_right")
 	input.z = Input.get_axis("move_forward","move_backward")
 	#Move on axes via keyboard input, relative to camera twist
-	apply_central_force(twist_pivot.basis * input * (thrust_power + speed_buff) * delta * speedboost)
+	apply_central_force((twist_pivot.basis * input * (thrust_power + speed_buff) * delta * speedboost) + inline_boost)
 
 	#Set maximum speed
-	if linear_velocity.x > MAXVELOCITY + combo / 10:
-		linear_velocity.x = MAXVELOCITY + combo / 10
-	elif linear_velocity.x < -MAXVELOCITY - combo / 10:
-		linear_velocity.x = -MAXVELOCITY - combo / 10
+	if linear_velocity.x > (MAXVELOCITY + combo / 10) + inline_boost.x:
+		linear_velocity.x = (MAXVELOCITY + combo / 10) + inline_boost.x
+	elif linear_velocity.x < (-MAXVELOCITY - combo / 10) - inline_boost.x:
+		linear_velocity.x = (-MAXVELOCITY - combo / 10) - inline_boost.x
 	if linear_velocity.y > MAXVELOCITY * 3:
 		linear_velocity.y = MAXVELOCITY * 3
 	elif linear_velocity.y < -MAXVELOCITY:
 		linear_velocity.y = -MAXVELOCITY
-	if linear_velocity.z > MAXVELOCITY + combo / 10:
-		linear_velocity.z = MAXVELOCITY + combo / 10
-	elif linear_velocity.z < -MAXVELOCITY - combo / 10:
-		linear_velocity.z = -MAXVELOCITY - combo / 10
+	if linear_velocity.z > (MAXVELOCITY + combo / 10) + inline_boost.z:
+		linear_velocity.z = (MAXVELOCITY + combo / 10) + inline_boost.z
+	elif linear_velocity.z < (-MAXVELOCITY - combo / 10) - inline_boost.z:
+		linear_velocity.z = (-MAXVELOCITY - combo / 10) - inline_boost.z
 
 	#Set maximum combo
 	if combo > max_combo:

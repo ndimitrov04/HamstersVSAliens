@@ -1,0 +1,178 @@
+[gd_scene load_steps=12 format=3 uid="uid://d0pfm5ek5x5j4"]
+
+[ext_resource type="Texture2D" uid="uid://bpggim70wxmnm" path="res://Textures/Halfpipe/Tiles113_1K-JPG_Color.jpg" id="1_a6bxw"]
+[ext_resource type="Script" path="res://Tests/inline_booster.gd" id="1_pi12u"]
+[ext_resource type="Texture2D" uid="uid://bqbe74hd3b1jf" path="res://Textures/Halfpipe/Tiles113_1K-JPG_AmbientOcclusion.jpg" id="2_dcc76"]
+[ext_resource type="Texture2D" uid="uid://1tjv7x61ktio" path="res://Textures/Halfpipe/Tiles113_1K-JPG_NormalGL.jpg" id="3_d6pmo"]
+[ext_resource type="Texture2D" uid="uid://bbbn21l5vva0o" path="res://Textures/Halfpipe/Tiles113_1K-JPG_Roughness.jpg" id="4_1k5n7"]
+[ext_resource type="Texture2D" uid="uid://b5opmgp2gmsbw" path="res://Textures/Halfpipe/fast-forward.png" id="6_02xmj"]
+
+[sub_resource type="Curve3D" id="Curve3D_muyal"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1.27, 0, 0, 4, 0, 0, -1.695, 0, 0, 0, 0, 0, 7, 0, -2, 0, 0, 0, 0, 0, 0, 11, 0, -2),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88eqf"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.235294)
+albedo_texture = ExtResource("1_a6bxw")
+roughness = 0.2
+roughness_texture = ExtResource("4_1k5n7")
+emission_enabled = true
+emission = Color(0.756863, 0.486275, 0.0705882, 1)
+emission_energy_multiplier = 1.5
+normal_enabled = true
+normal_texture = ExtResource("3_d6pmo")
+ao_enabled = true
+ao_light_affect = 0.3
+ao_texture = ExtResource("2_dcc76")
+uv2_triplanar_sharpness = 0.870551
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ekiq"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.235294)
+albedo_texture = ExtResource("1_a6bxw")
+roughness = 0.2
+roughness_texture = ExtResource("4_1k5n7")
+emission_enabled = true
+emission = Color(0.756863, 0.486275, 0.0705882, 1)
+emission_energy_multiplier = 1.5
+normal_enabled = true
+normal_texture = ExtResource("3_d6pmo")
+ao_enabled = true
+ao_light_affect = 0.3
+ao_texture = ExtResource("2_dcc76")
+uv2_triplanar_sharpness = 0.870551
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e6vue"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.235294)
+albedo_texture = ExtResource("1_a6bxw")
+roughness = 0.2
+roughness_texture = ExtResource("4_1k5n7")
+emission_enabled = true
+emission = Color(0.756863, 0.486275, 0.0705882, 1)
+emission_energy_multiplier = 1.5
+normal_enabled = true
+normal_texture = ExtResource("3_d6pmo")
+ao_enabled = true
+ao_light_affect = 0.3
+ao_texture = ExtResource("2_dcc76")
+uv2_triplanar_sharpness = 0.870551
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c6myf"]
+size = Vector3(0.938232, 0.222221, 2)
+
+[node name="BoostTunnelS" type="Path3D"]
+curve = SubResource("Curve3D_muyal")
+
+[node name="BankEdge" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0138659, 0, -1.6972)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1.8, 1, 1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 1
+path_interval = 0.1
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+smooth_faces = true
+material = SubResource("StandardMaterial3D_88eqf")
+
+[node name="BankEdge2" type="CSGPolygon3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10.9861, 0, 0.933087)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1.8, 1, 1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 1
+path_interval = 0.1
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+smooth_faces = true
+material = SubResource("StandardMaterial3D_5ekiq")
+
+[node name="PathMesh" type="CSGPolygon3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0138659, 0, -1.01791)
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 3, 1, 3, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 1
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_local = true
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+smooth_faces = true
+material = SubResource("StandardMaterial3D_e6vue")
+
+[node name="InlineBooster" type="Area3D" parent="."]
+transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 3.544, 2.5, 0.623)
+gravity_space_override = 1
+gravity = 20.0
+script = ExtResource("1_pi12u")
+
+[node name="BoostArea" type="CollisionShape3D" parent="InlineBooster"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223389, -0.408924, -0.089206)
+shape = SubResource("BoxShape3D_c6myf")
+
+[node name="DirectionOverlay" type="Sprite3D" parent="InlineBooster/BoostArea"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2.11758e-22, 0, 1, 1.49012e-08, 0, -0.279578)
+modulate = Color(1, 1, 1, 0.596078)
+pixel_size = 0.001
+axis = 0
+texture = ExtResource("6_02xmj")
+
+[node name="InlineBooster2" type="Area3D" parent="."]
+transform = Transform3D(-1.72073, 0, 2.45746, 0, 3, 0, -2.45746, 0, -1.72073, 5.48248, 2.49262, -0.276748)
+gravity_space_override = 1
+gravity = 20.0
+script = ExtResource("1_pi12u")
+
+[node name="BoostArea" type="CollisionShape3D" parent="InlineBooster2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223389, -0.408924, -0.089206)
+shape = SubResource("BoxShape3D_c6myf")
+
+[node name="DirectionOverlay" type="Sprite3D" parent="InlineBooster2/BoostArea"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+modulate = Color(1, 1, 1, 0.596078)
+pixel_size = 0.001
+axis = 0
+texture = ExtResource("6_02xmj")
+
+[node name="InlineBooster3" type="Area3D" parent="."]
+transform = Transform3D(-1.31134e-07, 0, 3, 0, 3, 0, -3, 0, -1.31134e-07, 8.28686, 2.5, -1.50615)
+gravity_space_override = 1
+gravity = 20.0
+script = ExtResource("1_pi12u")
+
+[node name="BoostArea" type="CollisionShape3D" parent="InlineBooster3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223389, -0.408924, -0.089206)
+shape = SubResource("BoxShape3D_c6myf")
+
+[node name="DirectionOverlay" type="Sprite3D" parent="InlineBooster3/BoostArea"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+modulate = Color(1, 1, 1, 0.596078)
+pixel_size = 0.001
+axis = 0
+texture = ExtResource("6_02xmj")
+
+[connection signal="body_entered" from="InlineBooster" to="InlineBooster" method="_on_body_entered"]
+[connection signal="body_exited" from="InlineBooster" to="InlineBooster" method="_on_body_exited"]
+[connection signal="body_entered" from="InlineBooster2" to="InlineBooster2" method="_on_body_entered"]
+[connection signal="body_exited" from="InlineBooster2" to="InlineBooster2" method="_on_body_exited"]
+[connection signal="body_entered" from="InlineBooster3" to="InlineBooster3" method="_on_body_entered"]
+[connection signal="body_exited" from="InlineBooster3" to="InlineBooster3" method="_on_body_exited"]

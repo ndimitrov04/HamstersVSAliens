@@ -1,0 +1,144 @@
+[gd_scene load_steps=9 format=3 uid="uid://bn7q0cjjpdkxo"]
+
+[ext_resource type="Script" path="res://Tests/inline_booster.gd" id="1_f413i"]
+[ext_resource type="Texture2D" uid="uid://bpggim70wxmnm" path="res://Textures/Halfpipe/Tiles113_1K-JPG_Color.jpg" id="1_ow8o0"]
+[ext_resource type="Texture2D" uid="uid://bqbe74hd3b1jf" path="res://Textures/Halfpipe/Tiles113_1K-JPG_AmbientOcclusion.jpg" id="2_3m2fn"]
+[ext_resource type="Texture2D" uid="uid://1tjv7x61ktio" path="res://Textures/Halfpipe/Tiles113_1K-JPG_NormalGL.jpg" id="3_vl5au"]
+[ext_resource type="Texture2D" uid="uid://bbbn21l5vva0o" path="res://Textures/Halfpipe/Tiles113_1K-JPG_Roughness.jpg" id="4_r4tku"]
+[ext_resource type="Texture2D" uid="uid://b5opmgp2gmsbw" path="res://Textures/Halfpipe/fast-forward.png" id="5_1xbaf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pq0kf"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.235294)
+albedo_texture = ExtResource("1_ow8o0")
+roughness = 0.2
+roughness_texture = ExtResource("4_r4tku")
+emission_enabled = true
+emission = Color(0.756863, 0.486275, 0.0705882, 1)
+emission_energy_multiplier = 1.5
+normal_enabled = true
+normal_texture = ExtResource("3_vl5au")
+ao_enabled = true
+ao_light_affect = 0.3
+ao_texture = ExtResource("2_3m2fn")
+uv2_triplanar_sharpness = 0.870551
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a5b5t"]
+size = Vector3(0.938232, 0.222221, 2)
+
+[node name="BoostTunnelS" type="CSGCombiner3D"]
+
+[node name="Section1" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.149371)
+
+[node name="HalfPipe" type="CSGCylinder3D" parent="Section1"]
+transform = Transform3D(1, 0, 0, 0, 0.0134561, -0.999909, 0, 0.999909, 0.0134561, 0, -0.0803924, -0.0793178)
+sides = 32
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="DirectionOverlay" type="Sprite3D" parent="Section1/HalfPipe"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0.4)
+modulate = Color(1, 1, 1, 0.596078)
+pixel_size = 0.001
+texture = ExtResource("5_1xbaf")
+
+[node name="AntiHalf" type="CSGCylinder3D" parent="Section1"]
+transform = Transform3D(1, 0, 0, 0, 0.0134561, -0.999909, 0, 0.999909, 0.0134561, 0, 0.0428537, -0.0814816)
+operation = 2
+height = 2.00443
+sides = 32
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="AntiEdge" type="CSGBox3D" parent="Section1"]
+transform = Transform3D(1, 0, 0, 0, 0.0134561, -0.999909, 0, 0.999909, 0.0134561, 0, -0.14912, -0.0752086)
+operation = 2
+size = Vector3(1, 2.14746, 0.299927)
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="InlineBooster" type="Area3D" parent="Section1"]
+gravity_space_override = 1
+gravity = 20.0
+script = ExtResource("1_f413i")
+
+[node name="BoostArea" type="CollisionShape3D" parent="Section1/InlineBooster"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223389, -0.408924, -0.089206)
+shape = SubResource("BoxShape3D_a5b5t")
+
+[node name="Section2" type="CSGCombiner3D" parent="."]
+
+[node name="HalfPipe" type="CSGCylinder3D" parent="Section2"]
+transform = Transform3D(0.960064, 0.279753, 0.00376474, 0, 0.0134561, -0.999909, -0.279779, 0.959978, 0.0129188, 0.220625, -0.0803924, 1.85002)
+sides = 32
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="DirectionOverlay" type="Sprite3D" parent="Section2/HalfPipe"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0.4)
+modulate = Color(1, 1, 1, 0.596078)
+pixel_size = 0.001
+texture = ExtResource("5_1xbaf")
+
+[node name="AntiHalf" type="CSGCylinder3D" parent="Section2"]
+transform = Transform3D(0.960064, 0.279753, 0.00376474, 0, 0.0134561, -0.999909, -0.279779, 0.959978, 0.0129188, 0.220019, 0.0428537, 1.84794)
+operation = 2
+height = 2.00443
+sides = 32
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="AntiEdge" type="CSGBox3D" parent="Section2"]
+transform = Transform3D(0.960064, 0.279753, 0.00376474, 0, 0.0134561, -0.999909, -0.279779, 0.959978, 0.0129188, 0.221774, -0.14912, 1.85396)
+operation = 2
+size = Vector3(1, 2.14746, 0.299927)
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="InlineBooster" type="Area3D" parent="Section2"]
+transform = Transform3D(0.960065, 0, 0.279779, 0, 1, 0, -0.279779, 0, 0.960065, 0.242816, 0, 1.92617)
+gravity_space_override = 1
+gravity = 20.0
+script = ExtResource("1_f413i")
+
+[node name="BoostArea" type="CollisionShape3D" parent="Section2/InlineBooster"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223389, -0.408924, -0.089206)
+shape = SubResource("BoxShape3D_a5b5t")
+
+[node name="Section3" type="CSGCombiner3D" parent="."]
+
+[node name="HalfPipe" type="CSGCylinder3D" parent="Section3"]
+transform = Transform3D(0.999763, 0.0217606, 0.000292839, -4.47065e-10, 0.0134561, -0.999909, -0.0217625, 0.999673, 0.0134529, 0.465956, -0.0803924, 3.47492)
+sides = 32
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="DirectionOverlay" type="Sprite3D" parent="Section3/HalfPipe"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0.4)
+modulate = Color(1, 1, 1, 0.596078)
+pixel_size = 0.001
+texture = ExtResource("5_1xbaf")
+
+[node name="AntiHalf" type="CSGCylinder3D" parent="Section3"]
+transform = Transform3D(0.999763, 0.0217606, 0.000292839, -4.47065e-10, 0.0134561, -0.999909, -0.0217625, 0.999673, 0.0134529, 0.465909, 0.0428537, 3.47276)
+operation = 2
+height = 2.00443
+sides = 32
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="AntiEdge" type="CSGBox3D" parent="Section3"]
+transform = Transform3D(0.999763, 0.0217606, 0.000292839, -4.47065e-10, 0.0134561, -0.999909, -0.0217625, 0.999673, 0.0134529, 0.466045, -0.14912, 3.47903)
+operation = 2
+size = Vector3(1, 2.14746, 0.299927)
+material = SubResource("StandardMaterial3D_pq0kf")
+
+[node name="InlineBooster" type="Area3D" parent="Section3"]
+transform = Transform3D(0.999763, 0, 0.0217626, 0, 1, 0, -0.0217626, 0, 0.999763, 0.467682, 0, 3.55422)
+gravity_space_override = 1
+gravity = 20.0
+script = ExtResource("1_f413i")
+
+[node name="BoostArea" type="CollisionShape3D" parent="Section3/InlineBooster"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0223389, -0.408924, -0.089206)
+shape = SubResource("BoxShape3D_a5b5t")
+
+[connection signal="body_entered" from="Section1/InlineBooster" to="Section1/InlineBooster" method="_on_body_entered"]
+[connection signal="body_exited" from="Section1/InlineBooster" to="Section1/InlineBooster" method="_on_body_exited"]
+[connection signal="body_entered" from="Section2/InlineBooster" to="Section2/InlineBooster" method="_on_body_entered"]
+[connection signal="body_exited" from="Section2/InlineBooster" to="Section2/InlineBooster" method="_on_body_exited"]
+[connection signal="body_entered" from="Section3/InlineBooster" to="Section3/InlineBooster" method="_on_body_entered"]
+[connection signal="body_exited" from="Section3/InlineBooster" to="Section3/InlineBooster" method="_on_body_exited"]

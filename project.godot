@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="HamstersVSAliens"
-config/version="0.19"
+config/version="0.195"
 run/main_scene="res://loading_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://Textures/icon.svg"
@@ -30,6 +30,12 @@ window/size/mode=2
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://Tests/": "gray"
+}
 
 [input]
 
