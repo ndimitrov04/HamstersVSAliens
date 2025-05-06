@@ -159,6 +159,7 @@ top_level = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0251245, -0.119159, 0.0921463)
 shape = SubResource("SphereShape3D_i3mnr")
 target_position = Vector3(0, 0, -200)
+collision_mask = 17
 debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="ShootPoint" type="Node3D" parent="Ship"]

@@ -52,6 +52,7 @@ var homing_available = true
 var target_hit : bool = false
 var shot_cooldown : bool = false
 var heat_cooldown : bool = false
+var following : PathFollow3D = null
 
 var max_hp : int = 100
 var hp : int = 100
@@ -107,6 +108,10 @@ func _physics_process(delta):
 	#Move on axes via keyboard input, relative to camera twist
 	apply_central_force((twist_pivot.basis * input * (thrust_power + speed_buff) * delta * speedboost) + inline_boost)
 
+	#Move to follow autocarry
+	if following != null:
+		global_position = following.global_position + Vector3(0,20,0)
+
 	#Set maximum speed
 	if linear_velocity.x > (MAXVELOCITY + combo / 10) + inline_boost.x:
 		linear_velocity.x = (MAXVELOCITY + combo / 10) + inline_boost.x
@@ -132,12 +137,19 @@ func _physics_process(delta):
 		apply_central_force(Vector3.DOWN * floor_power * delta)
 		
 	#Jump if on ground
-	if Input.is_action_just_pressed("jump") and floor_detector.is_colliding():
+	if Input.is_action_just_pressed("jump") and (floor_detector.is_colliding() or following != null):
 		var jumpInertia = max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z)) * INERTIAJUMPMULTIPLIER
 		#print(jumpInertia)
 		#print((jump_power * jumpInertia))
 		apply_central_impulse(Vector3.UP * ((jump_power + jump_buff) * jumpInertia / 1.3) * delta)
 		sfx.jump_sfx.play()
+		if following:
+			apply_central_impulse(Vector3.FORWARD * following.basis * ((jump_power + jump_buff) * jumpInertia / 1.3) * delta)
+			following.hooked = false
+			for trolley in following.get_parent().get_children():
+				if "initial_progress" in trolley:
+					trolley.progress_ratio = trolley.initial_progress
+			following = null
 
 	#Dash toward crosshair (forward)
 	if Input.is_action_just_pressed("dash") and combo > dash_cost:
@@ -159,6 +171,18 @@ func _physics_process(delta):
 		shoot(DEBUG_ENEMY_BULLET)
 	if heat_cooldown and heat > 0:
 		heat -= 1
+
+	#Lock onto hookable object
+	if enemy_detector.is_colliding():
+		var object = enemy_detector.get_collider(0)
+		print(object.name)
+		if "hookable" in object.get_parent():
+			print("Hookable exists")
+			if object.get_parent().hookable:
+				print("Hookable true")
+				object.get_parent().lock_marker.visible = true
+				if Input.is_action_just_pressed("homing"):
+					homing_attack()
 
 	#Lock on if looking at enemy and homing attack on right click
 	if enemy_detector.is_colliding() and homing_available and combo > homing_cost:
