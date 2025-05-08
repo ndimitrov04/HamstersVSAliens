@@ -64,7 +64,7 @@ smooth_faces = true
 material = SubResource("StandardMaterial3D_e6vue")
 
 [node name="FollowPoint" type="PathFollow3D" parent="."]
-transform = Transform3D(0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
+transform = Transform3D(0, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0, 0, 0, 0)
 rotation_mode = 4
 use_model_front = true
 script = ExtResource("1_m7cb5")
@@ -74,7 +74,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -110,7 +109,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -135,7 +133,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
 
 [node name="FollowPoint3" type="PathFollow3D" parent="."]
-transform = Transform3D(0, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0, 25.3716, 0, 0)
+transform = Transform3D(0, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0, 25.3715, 0, 0)
 progress = 25.3715
 rotation_mode = 4
 use_model_front = true
@@ -146,7 +144,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -171,7 +168,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
 
 [node name="FollowPoint4" type="PathFollow3D" parent="."]
-transform = Transform3D(-0.124398, 0, 0.992231, 0, 1, 0, -0.992231, 0, -0.124398, 37.983, 0, -1.23301)
+transform = Transform3D(-0.124398, 0, 0.992231, 0, 1, 0, -0.992231, 0, -0.124398, 37.9829, 0, -1.233)
 progress = 38.0573
 rotation_mode = 4
 use_model_front = true
@@ -182,7 +179,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -207,7 +203,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
 
 [node name="FollowPoint5" type="PathFollow3D" parent="."]
-transform = Transform3D(-0.689154, 8.00073e-09, 0.724614, 0, 1, -1.10413e-08, -0.724614, -7.6092e-09, -0.689154, 49.7952, -4.36808e-08, -4.72637)
+transform = Transform3D(-0.689155, 8.00073e-09, 0.724613, 0, 1, -1.10414e-08, -0.724613, -7.60922e-09, -0.689155, 49.7952, -4.36809e-08, -4.72638)
 progress = 50.7431
 rotation_mode = 4
 use_model_front = true
@@ -218,7 +214,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -243,7 +238,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
 
 [node name="FollowPoint6" type="PathFollow3D" parent="."]
-transform = Transform3D(-0.994436, 1.67816e-09, 0.105329, 0, 1, -1.59325e-08, -0.105329, -1.58439e-08, -0.994436, 56.4414, -2.1362e-07, -15.3333)
+transform = Transform3D(-0.994437, 1.67796e-09, 0.105317, 0, 1, -1.59325e-08, -0.105317, -1.58439e-08, -0.994437, 56.4414, -2.13621e-07, -15.3333)
 progress = 63.4289
 rotation_mode = 4
 use_model_front = true
@@ -254,7 +249,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -279,7 +273,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
 
 [node name="FollowPoint7" type="PathFollow3D" parent="."]
-transform = Transform3D(0.247324, 3.38454e-09, -0.968932, 0, 1, 3.49306e-09, 0.968932, -8.63917e-10, 0.247324, 45.2028, -2.02229e-07, -14.3187)
+transform = Transform3D(0.247323, 3.38454e-09, -0.968932, 0, 1, 3.49305e-09, 0.968932, -8.63916e-10, 0.247323, 45.2028, -2.02229e-07, -14.3187)
 progress = 76.1146
 rotation_mode = 4
 use_model_front = true
@@ -290,7 +284,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -326,7 +319,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint8"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -351,7 +343,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
 
 [node name="FollowPoint9" type="PathFollow3D" parent="."]
-transform = Transform3D(0.266067, 3.62233e-09, -0.963954, 0, 1, 3.75778e-09, 0.963954, -9.99821e-10, 0.266067, 20.6728, -1.10729e-07, -7.84009)
+transform = Transform3D(0.266067, 3.62232e-09, -0.963954, 0, 1, 3.75777e-09, 0.963954, -9.99818e-10, 0.266067, 20.6729, -1.1073e-07, -7.84013)
 progress = 101.486
 rotation_mode = 4
 use_model_front = true
@@ -362,7 +354,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint9"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true
@@ -387,7 +378,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
 
 [node name="FollowPoint10" type="PathFollow3D" parent="."]
-transform = Transform3D(0.292222, 3.94703e-09, -0.956349, 0, 1, 4.12718e-09, 0.956349, -1.20606e-09, 0.292222, 8.48283, -6.11478e-08, -4.32953)
+transform = Transform3D(0.292223, 3.94704e-09, -0.956349, 0, 1, 4.12719e-09, 0.956349, -1.20606e-09, 0.292223, 8.48277, -6.11475e-08, -4.32951)
 progress = 114.172
 rotation_mode = 4
 use_model_front = true
@@ -398,7 +389,6 @@ transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_lg5kh")
 
 [node name="LockMarker" type="Sprite3D" parent="FollowPoint10"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = false
 billboard = 1
 no_depth_test = true

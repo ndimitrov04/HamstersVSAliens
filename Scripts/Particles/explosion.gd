@@ -12,16 +12,10 @@ func _ready():
 	#trauma_causer.trauma_amount = 0.4
 	#trauma_causer.hitbox.shape.radius = 20
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	omni_light_3d.omni_range -= 0.8 * delta
 	omni_light_3d.light_energy -= 0.8 * delta
 
-
 func _on_finished():
 	queue_free()
-
-func _on_sfx_finished():
-	if trauma_causer != null:
-		trauma_causer.queue_free()
