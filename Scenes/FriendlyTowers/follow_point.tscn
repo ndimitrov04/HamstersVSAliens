@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://28k550x3n0q0"]
+
+[ext_resource type="Script" path="res://Tests/autocarry.gd" id="1_o8c0q"]
+[ext_resource type="PackedScene" uid="uid://cr5dm0d4po5tp" path="res://ImportedModels/Grabber/House Single.glb" id="2_6g53u"]
+[ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="2_p4lrg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xj5mp"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.101961)
+metallic = 1.0
+roughness = 0.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2o16v"]
+radius = 0.06
+height = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_8bwt2"]
+radius = 0.6
+height = 1.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l7v0v"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.254902)
+metallic = 0.78
+roughness = 0.1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fj00v"]
+radius = 1.0
+
+[node name="FollowPoint" type="PathFollow3D"]
+transform = Transform3D(-4.37113e-08, 0, 0.999999, 0, 1, 0, -0.999999, 0, -4.37113e-08, 0, 0, 0)
+rotation_mode = 4
+use_model_front = true
+script = ExtResource("1_o8c0q")
+
+[node name="Root Scene" parent="." instance=ExtResource("2_6g53u")]
+transform = Transform3D(0.33, 0, 0, 0, -1.44248e-08, -0.33, 0, 0.33, -1.44248e-08, 0, 0.766848, -0.805531)
+
+[node name="House_Single" parent="Root Scene/RootNode" index="0"]
+material_overlay = SubResource("StandardMaterial3D_xj5mp")
+
+[node name="Holder" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, 1.41152, 0)
+material_overlay = SubResource("StandardMaterial3D_xj5mp")
+mesh = SubResource("CapsuleMesh_2o16v")
+
+[node name="Sphere" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.552289, 0)
+mesh = SubResource("SphereMesh_8bwt2")
+surface_material_override/0 = SubResource("StandardMaterial3D_l7v0v")
+
+[node name="LockMarker" type="Sprite3D" parent="."]
+visible = false
+billboard = 1
+no_depth_test = true
+texture = ExtResource("2_p4lrg")
+
+[node name="LockTimeout" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="Snap" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Snap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_fj00v")
+
+[node name="Detector" type="StaticBody3D" parent="."]
+collision_layer = 16
+collision_mask = 17
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Detector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_fj00v")
+
+[connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
+[connection signal="body_entered" from="Snap" to="." method="_on_snap_body_entered"]
+
+[editable path="Root Scene"]

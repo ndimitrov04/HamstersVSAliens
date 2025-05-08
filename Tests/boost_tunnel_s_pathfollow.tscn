@@ -1,11 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://c05coxcsaalya"]
+[gd_scene load_steps=4 format=3 uid="uid://c05coxcsaalya"]
 
-[ext_resource type="Texture2D" uid="uid://bpggim70wxmnm" path="res://Textures/Halfpipe/Tiles113_1K-JPG_Color.jpg" id="1_jl0ql"]
-[ext_resource type="Script" path="res://Tests/autocarry.gd" id="1_m7cb5"]
-[ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="2_1r8bt"]
-[ext_resource type="Texture2D" uid="uid://bqbe74hd3b1jf" path="res://Textures/Halfpipe/Tiles113_1K-JPG_AmbientOcclusion.jpg" id="2_ca4cg"]
-[ext_resource type="Texture2D" uid="uid://1tjv7x61ktio" path="res://Textures/Halfpipe/Tiles113_1K-JPG_NormalGL.jpg" id="3_gxnqj"]
-[ext_resource type="Texture2D" uid="uid://bbbn21l5vva0o" path="res://Textures/Halfpipe/Tiles113_1K-JPG_Roughness.jpg" id="4_usxy0"]
+[ext_resource type="PackedScene" uid="uid://28k550x3n0q0" path="res://Scenes/FriendlyTowers/follow_point.tscn" id="5_08wnb"]
 
 [sub_resource type="Curve3D" id="Curve3D_muyal"]
 bake_interval = 0.01
@@ -15,41 +10,19 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e6vue"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5tvgr"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0.235294)
-albedo_texture = ExtResource("1_jl0ql")
-roughness = 0.2
-roughness_texture = ExtResource("4_usxy0")
-emission_enabled = true
-emission = Color(0.756863, 0.486275, 0.0705882, 1)
-emission_energy_multiplier = 1.5
-normal_enabled = true
-normal_texture = ExtResource("3_gxnqj")
-ao_enabled = true
-ao_light_affect = 0.3
-ao_texture = ExtResource("2_ca4cg")
-uv2_triplanar_sharpness = 0.870551
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ak28i"]
-transparency = 1
-albedo_color = Color(1, 0, 1, 0.247059)
-emission_enabled = true
-emission = Color(1, 0, 1, 1)
-emission_energy_multiplier = 3.68
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_lg5kh"]
-material = SubResource("StandardMaterial3D_ak28i")
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fj00v"]
-radius = 1.0
+albedo_color = Color(1, 1, 1, 0.101961)
+metallic = 1.0
+roughness = 0.25
 
 [node name="BoostTunnelS" type="Path3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0132208, 2.38419e-07, 0.00692606)
 curve = SubResource("Curve3D_muyal")
 
 [node name="PathMesh" type="CSGPolygon3D" parent="."]
-polygon = PackedVector2Array(0, 0, 0, 1, 3, 1, 3, 0)
+material_overlay = SubResource("StandardMaterial3D_5tvgr")
+polygon = PackedVector2Array(0.0627441, 0.325243, 0.0525386, 0.16392, 0.186554, 0.165592, 0.179184, 0.330627)
 mode = 2
 path_node = NodePath("..")
 path_interval_type = 0
@@ -61,374 +34,32 @@ path_continuous_u = true
 path_u_distance = 1.0
 path_joined = true
 smooth_faces = true
-material = SubResource("StandardMaterial3D_e6vue")
 
-[node name="FollowPoint" type="PathFollow3D" parent="."]
-transform = Transform3D(0, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0, 0, 0, 0)
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
+[node name="FollowPoint" parent="." instance=ExtResource("5_08wnb")]
+transform = Transform3D(4.37114e-08, 0, 0.999999, 0, 1, 0, -0.999999, 0, 4.37114e-08, 0, -1.505, 0)
+v_offset = -1.505
+rotation_mode = 3
 
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint2" type="PathFollow3D" parent="."]
-transform = Transform3D(0, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0, 12.6858, 0, 0)
-progress = 12.6858
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
-
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint2"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint2"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint2"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint2"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint2/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint2"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint2/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint3" type="PathFollow3D" parent="."]
-transform = Transform3D(0, 0, 0.999999, 0, 1, 0, -0.999999, 0, 0, 25.3715, 0, 0)
+[node name="FollowPoint2" parent="." instance=ExtResource("5_08wnb")]
+transform = Transform3D(4.37114e-08, 0, 0.999999, 0, 1, 0, -0.999999, 0, 4.37114e-08, 25.3716, -1.505, 0)
 progress = 25.3715
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
+v_offset = -1.505
+rotation_mode = 3
 
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint3"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint3"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint3"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint3"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint3/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint3"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint3/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint4" type="PathFollow3D" parent="."]
-transform = Transform3D(-0.124398, 0, 0.992231, 0, 1, 0, -0.992231, 0, -0.124398, 37.9829, 0, -1.233)
-progress = 38.0573
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
-
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint4"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint4"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint4"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint4"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint4/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint4"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint4/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint5" type="PathFollow3D" parent="."]
-transform = Transform3D(-0.689155, 8.00073e-09, 0.724613, 0, 1, -1.10414e-08, -0.724613, -7.60922e-09, -0.689155, 49.7952, -4.36809e-08, -4.72638)
+[node name="FollowPoint3" parent="." instance=ExtResource("5_08wnb")]
+transform = Transform3D(-0.689154, 1.10414e-08, 0.724614, 4.4121e-09, 1, -1.10413e-08, -0.724614, -4.41213e-09, -0.689154, 49.7952, -1.505, -4.72637)
 progress = 50.7431
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
+v_offset = -1.505
+rotation_mode = 3
 
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint5"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint5"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint5"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint5"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint5/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint5"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint5/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint6" type="PathFollow3D" parent="."]
-transform = Transform3D(-0.994437, 1.67796e-09, 0.105317, 0, 1, -1.59325e-08, -0.105317, -1.58439e-08, -0.994437, 56.4414, -2.13621e-07, -15.3333)
-progress = 63.4289
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
-
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint6"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint6"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint6"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint6"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint6/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint6"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint6/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint7" type="PathFollow3D" parent="."]
-transform = Transform3D(0.247323, 3.38454e-09, -0.968932, 0, 1, 3.49305e-09, 0.968932, -8.63916e-10, 0.247323, 45.2028, -2.02229e-07, -14.3187)
+[node name="FollowPoint4" parent="." instance=ExtResource("5_08wnb")]
+transform = Transform3D(0.247324, -4.43201e-09, -0.968932, 3.16045e-08, 1, 3.49306e-09, 0.968932, -3.14866e-08, 0.247324, 45.2028, -1.505, -14.3187)
 progress = 76.1146
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
+v_offset = -1.505
+rotation_mode = 3
 
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint7"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint7"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint7"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint7"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint7/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint7"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint7/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint8" type="PathFollow3D" parent="."]
-transform = Transform3D(0.254714, 3.47877e-09, -0.967016, 0, 1, 3.59743e-09, 0.967016, -9.16315e-10, 0.254714, 32.9227, -1.57285e-07, -11.1365)
-progress = 88.8004
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
-
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint8"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint8"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint8"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint8"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint8/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint8"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint8/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint9" type="PathFollow3D" parent="."]
-transform = Transform3D(0.266067, 3.62232e-09, -0.963954, 0, 1, 3.75777e-09, 0.963954, -9.99818e-10, 0.266067, 20.6729, -1.1073e-07, -7.84013)
+[node name="FollowPoint5" parent="." instance=ExtResource("5_08wnb")]
+transform = Transform3D(0.266067, -4.76789e-09, -0.963954, 3.15342e-08, 1, 3.75778e-09, 0.963954, -3.13974e-08, 0.266067, 20.6728, -1.505, -7.84009)
 progress = 101.486
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
-
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint9"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint9"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint9"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint9"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint9/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint9"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint9/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="FollowPoint10" type="PathFollow3D" parent="."]
-transform = Transform3D(0.292223, 3.94704e-09, -0.956349, 0, 1, 4.12719e-09, 0.956349, -1.20606e-09, 0.292223, 8.48277, -6.11475e-08, -4.32951)
-progress = 114.172
-rotation_mode = 4
-use_model_front = true
-script = ExtResource("1_m7cb5")
-
-[node name="DebugFollower" type="MeshInstance3D" parent="FollowPoint10"]
-transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_lg5kh")
-
-[node name="LockMarker" type="Sprite3D" parent="FollowPoint10"]
-visible = false
-billboard = 1
-no_depth_test = true
-texture = ExtResource("2_1r8bt")
-
-[node name="LockTimeout" type="Timer" parent="FollowPoint10"]
-wait_time = 0.1
-autostart = true
-
-[node name="Snap" type="Area3D" parent="FollowPoint10"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint10/Snap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[node name="Detector" type="StaticBody3D" parent="FollowPoint10"]
-collision_layer = 16
-collision_mask = 17
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FollowPoint10/Detector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_fj00v")
-
-[connection signal="timeout" from="FollowPoint/LockTimeout" to="FollowPoint" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint/Snap" to="FollowPoint" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint2/LockTimeout" to="FollowPoint2" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint2/Snap" to="FollowPoint2" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint3/LockTimeout" to="FollowPoint3" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint3/Snap" to="FollowPoint3" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint4/LockTimeout" to="FollowPoint4" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint4/Snap" to="FollowPoint4" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint5/LockTimeout" to="FollowPoint5" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint5/Snap" to="FollowPoint5" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint6/LockTimeout" to="FollowPoint6" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint6/Snap" to="FollowPoint6" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint7/LockTimeout" to="FollowPoint7" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint7/Snap" to="FollowPoint7" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint8/LockTimeout" to="FollowPoint8" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint8/Snap" to="FollowPoint8" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint9/LockTimeout" to="FollowPoint9" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint9/Snap" to="FollowPoint9" method="_on_snap_body_entered"]
-[connection signal="timeout" from="FollowPoint10/LockTimeout" to="FollowPoint10" method="_on_lock_timeout_timeout"]
-[connection signal="body_entered" from="FollowPoint10/Snap" to="FollowPoint10" method="_on_snap_body_entered"]
+v_offset = -1.505
+rotation_mode = 3

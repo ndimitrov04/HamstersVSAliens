@@ -6,6 +6,7 @@ extends RigidBody3D
 @onready var pitch_pivot := $TwistPivot/PitchPivot
 #@onready var camera = $TwistPivot/PitchPivot/Camera
 @onready var camera = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera
+@onready var spring_arm_3d = $TwistPivot/PitchPivot/SpringArm3D
 @onready var particle_pivot = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot
 @onready var dash_particles = $Ship/DashParticles
 @onready var speed_lines = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector/Camera/ParticlePivot/SpeedLines
@@ -33,8 +34,9 @@ extends RigidBody3D
 @onready var BULLET = preload("res://Scenes/Projectiles/light_bullet_friendly.tscn")
 @onready var DEBUG_ENEMY_BULLET = preload("res://Scenes/Projectiles/light_bullet.tscn")
 
-var MAXVELOCITY : int = 25
+var MAXVELOCITY : float = 25
 const INERTIAJUMPMULTIPLIER : float = 0.2
+const DEFAULTSPRINGCAMERA : float = 1.705
 
 var mouse_sensitivity : float = 0.002
 var twist_input : float = 0.0
@@ -110,7 +112,7 @@ func _physics_process(delta):
 
 	#Move to follow autocarry
 	if following != null:
-		global_position = following.global_position + Vector3(0,20,0)
+		global_position = following.sphere.global_position
 
 	#Set maximum speed
 	if linear_velocity.x > (MAXVELOCITY + combo / 10) + inline_boost.x:
@@ -144,7 +146,9 @@ func _physics_process(delta):
 		apply_central_impulse(Vector3.UP * ((jump_power + jump_buff) * jumpInertia / 1.3) * delta)
 		sfx.jump_sfx.play()
 		if following:
-			apply_central_impulse(Vector3.FORWARD * following.basis * ((jump_power + jump_buff) * jumpInertia / 1.3) * delta)
+			apply_central_impulse(following.basis * Vector3.BACK * (following.speed) * (jump_power * (2.3 + (combo / 150)) * delta))
+			MAXVELOCITY = 40
+			boosted.start()
 			following.hooked = false
 			for trolley in following.get_parent().get_children():
 				if "initial_progress" in trolley:
@@ -153,7 +157,7 @@ func _physics_process(delta):
 
 	#Dash toward crosshair (forward)
 	if Input.is_action_just_pressed("dash") and combo > dash_cost:
-		apply_central_impulse(twist_pivot.basis * Vector3.FORWARD * (jump_power * (2.3 + (combo / 150)) * delta))
+		apply_central_impulse(twist_pivot.basis * Vector3.FORWARD * (jump_power * 2.3) * delta)
 		combo -= dash_cost
 		sfx.dash_sfx.play()
 		dash_lines.emitting = true
@@ -349,7 +353,7 @@ func _on_homing_cooldown_timeout():
 
 #Collect combo from inertia while out of a homing attack
 func _on_combo_clock_timeout():
-	if not homing_target:
+	if not homing_target and following == null:
 		if current_horizontal_speed <= 10:
 			combo -= 0.2
 		elif current_horizontal_speed <= 20:
@@ -367,4 +371,7 @@ func _on_combo_clock_timeout():
 			hp += 1
 
 func _on_boosted_timeout():
-	MAXVELOCITY = 25
+	while MAXVELOCITY > 25:
+		MAXVELOCITY -= 0.001 * get_physics_process_delta_time()
+	if MAXVELOCITY < 25:
+		MAXVELOCITY = 25
