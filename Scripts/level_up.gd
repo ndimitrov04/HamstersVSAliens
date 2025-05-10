@@ -1,14 +1,14 @@
 extends Panel
 
 @onready var upgrade_1 = $Upgrade1
-@onready var u_name_1 = $Upgrade1/UName1
-@onready var u_description_1 = $Upgrade1/UDescription1
-@onready var u_image_1 = $Upgrade1/UImage1
+@onready var u_name_1 = $Upgrade1/UName
+@onready var u_description_1 = $Upgrade1/UDescription
+@onready var u_image_1 = $Upgrade1/UImage
 
 @onready var upgrade_2 = $Upgrade2
-@onready var u_name_2 = $Upgrade2/UName2
-@onready var u_description_2 = $Upgrade2/UDescription2
-@onready var u_image_2 = $Upgrade2/UImage2
+@onready var u_name_2 = $Upgrade2/UName
+@onready var u_description_2 = $Upgrade2/UDescription
+@onready var u_image_2 = $Upgrade2/UImage
 
 @onready var PLACEHOLDERIMAGE = preload("res://Textures/Terrain/green.jpg")
 

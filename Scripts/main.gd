@@ -7,6 +7,8 @@ extends Node3D
 @onready var CARRIER = preload("res://Scenes/Enemies/carrier.tscn")
 @onready var RUSHER = preload("res://Scenes/Enemies/rusher.tscn")
 @onready var SHIELDER = preload("res://Scenes/Enemies/shielder.tscn")
+@onready var SPHERE_BOT_R = preload("res://Scenes/Enemies/sphere_bot_r.tscn")
+@onready var SPHERE_BOT_S = preload("res://Scenes/Enemies/sphere_bot_s.tscn")
 
 @onready var enemies = $Enemies
 @onready var friendlies = $Friendlies
@@ -18,7 +20,6 @@ extends Node3D
 @onready var wave_notification = $WaveNotification
 
 @onready var world_environment = $WorldEnvironment
-@onready var directional_light_3d = $DirectionalLight3D
 
 const MAPRADIUS = 500
 const SKYBOUNDS = [20,40]
@@ -27,18 +28,12 @@ var current_wave : int = 0
 var enemy_pool
 var city_hp = 1
 
-var sun_rotation_x : float = 290
-#var sun_speed : float = 0.00001
-var sun_speed : float = 0.1
-#var sun_speed : float = 0.005
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("START IN 1")
 	await get_tree().create_timer(1).timeout
 	print("START")
-	enemy_pool = [UFO, SEEKER, DESTROYER, RUSHER, SHIELDER, CARRIER]
-	directional_light_3d.rotation_degrees.x = -120
+	enemy_pool = [UFO, SEEKER, DESTROYER, RUSHER, SHIELDER, CARRIER, SPHERE_BOT_R, SPHERE_BOT_S]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -48,25 +43,6 @@ func _process(_delta):
 	)
 	if enemies.get_child_count() <= 0 and next_wave.is_stopped():
 		new_wave()
-	
-	#Control day/night cycle
-	#Control sun/moon angle
-	if directional_light_3d.rotation_degrees.x < -360:
-		directional_light_3d.rotation_degrees.x = 0
-	if directional_light_3d.rotation_degrees.x > 0:
-		directional_light_3d.rotation_degrees.x = 0
-	directional_light_3d.rotation_degrees.x -= sun_speed
-	#print(directional_light_3d.rotation_degrees.x)
-	#print((((-1/360) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90) / 2)
-	#Control sky light intensity
-	if abs(directional_light_3d.rotation_degrees.x) < 180:
-		world_environment.environment.background_energy_multiplier = clamp((((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
-		directional_light_3d.light_energy = clamp((((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
-		directional_light_3d.light_color = Color(1, 1, 0.8)
-	if abs(directional_light_3d.rotation_degrees.x) > 180:
-		world_environment.environment.background_energy_multiplier = clamp(1 - (((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
-		directional_light_3d.light_energy = clamp(1 - (((-1/180) * (pow(abs(directional_light_3d.rotation_degrees.x),2)) + abs(directional_light_3d.rotation_degrees.x)) / 90 ) / 4, 0.2, 1)
-		directional_light_3d.light_color = Color(0, 0.26, 0.42)
 		
 	city_hp = calculate_city_hp()
 	if city_hp <= 0:

@@ -53,14 +53,15 @@ func _on_body_entered(body):
 	if body.name == "Player":
 		die()
 	
-	if body.name == "HTerrain":
-		hit_ground = true
-		explosion = EXPLOSION.instantiate()
-		add_sibling(explosion)
-		explosion.global_position = global_position
-		explosion.amount = 256
-		explosion.explosiveness = 0.9
-		explosion.emitting = true
+	if not alive:
+		if body.name == "HTerrain":
+			hit_ground = true
+			explosion = EXPLOSION.instantiate()
+			add_sibling(explosion)
+			explosion.global_position = global_position
+			explosion.amount = 256
+			explosion.explosiveness = 0.9
+			explosion.emitting = true
 
 func _on_lock_timeout_timeout():
 	lock_marker.visible = false
@@ -81,6 +82,9 @@ func die(explosion = EXPLOSION.instantiate()):
 	explosion.emitting = true
 	axis_lock_linear_y = false
 	gravity_scale = 1.5
+	if has_meta("instant_death"):
+		if get_meta("instant_death") == true:
+			hit_ground = true
 
 func retarget():
 	var closest_enemy_distance = 9999
