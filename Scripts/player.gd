@@ -179,11 +179,12 @@ func _physics_process(delta):
 	#Lock onto hookable object
 	if enemy_detector.is_colliding():
 		var object = enemy_detector.get_collider(0)
-		if "hookable" in object.get_parent():
-			if object.get_parent().hookable:
-				object.get_parent().lock_marker.visible = true
-				if Input.is_action_just_pressed("homing"):
-					homing_attack()
+		if object.get_parent():
+			if "hookable" in object.get_parent():
+				if object.get_parent().hookable:
+					object.get_parent().lock_marker.visible = true
+					if Input.is_action_just_pressed("homing"):
+						homing_attack()
 
 	#Lock on if looking at enemy and homing attack on right click
 	if enemy_detector.is_colliding() and homing_available and combo > homing_cost:

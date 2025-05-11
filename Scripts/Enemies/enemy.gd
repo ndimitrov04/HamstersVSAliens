@@ -54,7 +54,7 @@ func _on_body_entered(body):
 		die()
 	
 	if not alive:
-		if body.name == "HTerrain":
+		if body.name == "HTerrain" or body.name == "WorldBorder":
 			hit_ground = true
 			explosion = EXPLOSION.instantiate()
 			add_sibling(explosion)

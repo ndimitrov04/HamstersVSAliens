@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://28k550x3n0q0"]
+[gd_scene load_steps=10 format=3 uid="uid://28k550x3n0q0"]
 
 [ext_resource type="Script" path="res://Tests/autocarry.gd" id="1_o8c0q"]
 [ext_resource type="PackedScene" uid="uid://cr5dm0d4po5tp" path="res://ImportedModels/Grabber/House Single.glb" id="2_6g53u"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="2_p4lrg"]
+[ext_resource type="AudioStream" uid="uid://bhcxniwj0vxc7" path="res://SFX/Ambience/lift.mp3" id="4_m3map"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xj5mp"]
 transparency = 1
@@ -46,6 +47,7 @@ mesh = SubResource("CapsuleMesh_2o16v")
 
 [node name="Sphere" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.552289, 0)
+visible = false
 mesh = SubResource("SphereMesh_8bwt2")
 surface_material_override/0 = SubResource("StandardMaterial3D_l7v0v")
 
@@ -72,6 +74,10 @@ collision_mask = 17
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Detector"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_fj00v")
+
+[node name="SFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_m3map")
+bus = &"SFX"
 
 [connection signal="timeout" from="LockTimeout" to="." method="_on_lock_timeout_timeout"]
 [connection signal="body_entered" from="Snap" to="." method="_on_snap_body_entered"]

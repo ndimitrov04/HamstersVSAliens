@@ -7,7 +7,7 @@ extends Node3D
 
 const MAXVELOCITY = 25
 const INERTIAJUMPMULTIPLIER = 0.2
-const SKYBOUNDS = [30,60]
+const SKYBOUNDS = [20,50]
 
 var thrust_power : float = 60000
 var jump_power : float = 60000
@@ -43,7 +43,7 @@ func _physics_process(delta):
 		input.z = 0
 
 	if get_parent().alive and not paused:
-		get_parent().apply_central_force(input * thrust_power * delta)
+		get_parent().apply_central_force(input * thrust_power * Vector3(1,0.1,1) * delta)
 
 	#Set maximum speed
 	if get_parent().linear_velocity.x > MAXVELOCITY:

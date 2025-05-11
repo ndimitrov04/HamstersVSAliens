@@ -23,6 +23,8 @@ friction = 0.5
 [sub_resource type="SphereMesh" id="SphereMesh_k0g73"]
 radius = 0.6
 height = 1.2
+radial_segments = 32
+rings = 16
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdl5e"]
 transparency = 1
