@@ -1,4 +1,4 @@
-[gd_scene load_steps=147 format=4 uid="uid://cp5ao1tf7qxer"]
+[gd_scene load_steps=148 format=4 uid="uid://cp5ao1tf7qxer"]
 
 [ext_resource type="Script" path="res://initial_loader.gd" id="1_g6ro1"]
 [ext_resource type="Texture2D" uid="uid://xko8qwr5poyp" path="res://Textures/Skyboxes/cloudy_midday_4k.png" id="2_4cng1"]
@@ -44,6 +44,7 @@
 [ext_resource type="PackedScene" uid="uid://bshg5dxiarc82" path="res://Scenes/Projectiles/destroyer_bullet.tscn" id="38_dc8uw"]
 [ext_resource type="PackedScene" uid="uid://crnnckis2lj5s" path="res://Scenes/ModelScenes/spaceship3_model.tscn" id="39_vk4hc"]
 [ext_resource type="PackedScene" uid="uid://0l8puhefj486" path="res://Scenes/ModelScenes/ufo_model.tscn" id="40_1bybj"]
+[ext_resource type="Theme" uid="uid://cvujk8weshw6m" path="res://main_theme.tres" id="45_l00ai"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c00uu"]
 emission_shape = 2
@@ -2767,6 +2768,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("45_l00ai")
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/LoadingScreen"]
 layout_mode = 0

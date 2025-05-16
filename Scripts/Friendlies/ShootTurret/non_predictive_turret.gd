@@ -90,7 +90,8 @@ func die(explosion = EXPLOSION.instantiate()):
 	explosion.amount = 256
 	explosion.emitting = true
 	await get_tree().create_timer(0.5).timeout
-	build_spot.building = null
+	if build_spot != null:
+		build_spot.building = null
 	queue_free()
 
 func _on_shield_regen_timer_timeout():

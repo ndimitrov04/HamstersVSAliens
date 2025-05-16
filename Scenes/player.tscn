@@ -77,7 +77,7 @@ spread = 0.0
 initial_velocity_min = 5.0
 initial_velocity_max = 5.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nibof"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mn8s1"]
 albedo_color = Color(0.705882, 0.227451, 0, 1)
 metallic_specular = 0.0
 emission_enabled = true
@@ -86,7 +86,7 @@ emission_energy_multiplier = 2.5
 disable_receive_shadows = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_xx4p8"]
-material = SubResource("StandardMaterial3D_nibof")
+material = SubResource("StandardMaterial3D_mn8s1")
 size = Vector2(0.1, 0.1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_iqwkw"]
@@ -125,14 +125,14 @@ initial_velocity_min = 1.0
 initial_velocity_max = 1.0
 gravity = Vector3(0, 0, 0)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y2kwh"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hacet"]
 shading_mode = 0
 specular_mode = 2
 disable_ambient_light = true
 disable_fog = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_lt4c3"]
-material = SubResource("StandardMaterial3D_y2kwh")
+material = SubResource("StandardMaterial3D_hacet")
 size = Vector3(0.001, 0.002, 0.1)
 
 [node name="Player" type="RigidBody3D"]

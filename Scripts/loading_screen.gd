@@ -5,7 +5,8 @@ extends Control
 @onready var loading_bar = $LoadingBar
 @onready var loading_text = $LoadingText
 
-var next_scene = "res://initial_loader.tscn"
+#var next_scene = "res://initial_loader.tscn"
+var next_scene = "res://menu_bg.tscn"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

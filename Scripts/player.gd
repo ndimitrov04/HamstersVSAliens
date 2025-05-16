@@ -162,7 +162,7 @@ func _physics_process(delta):
 		sfx.dash_sfx.play()
 		dash_lines.emitting = true
 		dash_particles.emitting = true
-
+	
 	if Input.is_action_pressed("shoot") and heat < max_heat:
 		if not shot_cooldown:
 			shoot(BULLET)
@@ -171,15 +171,18 @@ func _physics_process(delta):
 			shot_cd_timer.start()
 			heat += 5 - (combo / 25)
 			heat_cd_timer.start()
-	if Input.is_action_just_pressed("debug_shoot"):
-		shoot(DEBUG_ENEMY_BULLET)
 	if heat_cooldown and heat > 0:
 		heat -= 1
+
+	if Input.is_action_just_pressed("debug_shoot"):
+		shoot(DEBUG_ENEMY_BULLET)
+	if Input.is_action_just_pressed("debug_axis_lock"):
+		axis_lock_linear_y = true
 
 	#Lock onto hookable object
 	if enemy_detector.is_colliding():
 		var object = enemy_detector.get_collider(0)
-		if object.get_parent():
+		if object:
 			if "hookable" in object.get_parent():
 				if object.get_parent().hookable:
 					object.get_parent().lock_marker.visible = true

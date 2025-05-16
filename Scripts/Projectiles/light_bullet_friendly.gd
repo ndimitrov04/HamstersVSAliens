@@ -9,7 +9,7 @@ extends RigidBody3D
 func _ready():
 	top_level = true
 	linear_velocity = get_parent().linear_velocity
-	await get_tree().create_timer(0.0001).timeout
+	await Engine.get_main_loop().process_frame
 	apply_central_impulse(global_transform.basis * Vector3(0,0,-speed))
 
 func _on_body_entered(body):

@@ -1,0 +1,129 @@
+[gd_scene load_steps=15 format=3 uid="uid://dm7hknvujgk1d"]
+
+[ext_resource type="Script" path="res://Scripts/Friendlies/ShootTurret/predictive_turret.gd" id="1_r63it"]
+[ext_resource type="PackedScene" uid="uid://blul2ix751h0k" path="res://Scenes/Projectiles/light_bullet_friendly.tscn" id="2_cm7o1"]
+[ext_resource type="PackedScene" uid="uid://b0tvm6rfqqyky" path="res://Scenes/ModelScenes/fast_turret.tscn" id="3_b6cdf"]
+[ext_resource type="Script" path="res://Scripts/UniversalBehaviors/hp_projector.gd" id="4_dciq2"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_72t4m"]
+rough = true
+absorbent = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3uv2k"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.270588)
+metallic = 1.0
+roughness = 0.5
+emission_enabled = true
+emission = Color(0.41824, 0.601976, 1, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_hmyru"]
+material = SubResource("StandardMaterial3D_3uv2k")
+radius = 7.0
+height = 14.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2y3yx"]
+size = Vector3(0.55, 0.563576, 0.55)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lhcoy"]
+transparency = 1
+albedo_color = Color(0, 0, 1, 0.470588)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v8jgc"]
+
+[sub_resource type="Gradient" id="Gradient_qsc3r"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0674j"]
+gradient = SubResource("Gradient_qsc3r")
+width = 25
+height = 1
+
+[sub_resource type="Gradient" id="Gradient_wm43g"]
+colors = PackedColorArray(0, 0.670588, 0.341176, 1, 0, 0.670588, 0.341176, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r17se"]
+gradient = SubResource("Gradient_wm43g")
+width = 25
+height = 1
+
+[node name="PredictiveTurret" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.113436, 0)
+collision_layer = 3
+collision_mask = 3
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_72t4m")
+linear_damp = 1.0
+script = ExtResource("1_r63it")
+metadata/turret_node = NodePath("Turret")
+metadata/hp = 150
+metadata/shoot_time = 0.9
+metadata/bullet = ExtResource("2_cm7o1")
+metadata/shield = 150
+
+[node name="Shield" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79916, 0)
+mesh = SubResource("SphereMesh_hmyru")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, -0.0602805, 2.68335, -0.0883215)
+shape = SubResource("BoxShape3D_2y3yx")
+
+[node name="Model" parent="." instance=ExtResource("3_b6cdf")]
+transform = Transform3D(9, 0, 0, 0, 9, 0, 0, 0, 9, 0, 0.183709, 0)
+
+[node name="turret_single" parent="Model/RootNode" index="0"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="turret" parent="Model/RootNode/turret_single" index="0"]
+material_overlay = SubResource("StandardMaterial3D_lhcoy")
+
+[node name="Turret" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85614, 0)
+visible = false
+mesh = SubResource("BoxMesh_v8jgc")
+
+[node name="ShootPoint" type="Node3D" parent="Turret"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0192559, 2.60993, -5.8993)
+
+[node name="HPProjector" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.94293, 0)
+top_level = true
+script = ExtResource("4_dciq2")
+
+[node name="HPBackground" type="Sprite3D" parent="HPProjector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46403, 0)
+billboard = 1
+transparent = false
+no_depth_test = true
+fixed_size = true
+texture = SubResource("GradientTexture2D_0674j")
+
+[node name="HPBar" type="Sprite3D" parent="HPProjector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.46403, 0)
+sorting_offset = 1.0
+billboard = 1
+transparent = false
+no_depth_test = true
+fixed_size = true
+texture = SubResource("GradientTexture2D_r17se")
+
+[node name="ShootTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="ShieldRegenTick" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="ShieldRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="ShieldRegenTick" to="." method="_on_shield_regen_tick_timeout"]
+[connection signal="timeout" from="ShieldRegenTimer" to="." method="_on_shield_regen_timer_timeout"]
+
+[editable path="Model"]

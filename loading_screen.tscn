@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://db5xqjgnyajjd"]
+[gd_scene load_steps=8 format=3 uid="uid://db5xqjgnyajjd"]
 
+[ext_resource type="Theme" uid="uid://cvujk8weshw6m" path="res://main_theme.tres" id="1_qee33"]
 [ext_resource type="Script" path="res://Scripts/loading_screen.gd" id="1_u4lkh"]
 [ext_resource type="Texture2D" uid="uid://c8w4lu0t7upwi" path="res://Textures/hamster.png" id="2_bk5p1"]
 
@@ -24,6 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_qee33")
 script = ExtResource("1_u4lkh")
 
 [node name="ColorRect" type="ColorRect" parent="."]
