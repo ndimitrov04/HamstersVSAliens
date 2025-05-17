@@ -11,9 +11,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-	if point_direction and rotation:
-		rotation = camera.global_rotation.y - point_direction.rotation.y
+	if point_direction != null:
+		rotation = camera.global_rotation.y - point_direction.global_rotation.y
 	
 	if point_direction == null and not free_marked:
 		free_marked = true
+		await get_tree().process_frame
 		queue_free()
