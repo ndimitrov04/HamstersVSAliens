@@ -22,7 +22,7 @@ extends Node3D
 @onready var world_environment = $WorldEnvironment
 
 const MAPRADIUS = 500
-const SKYBOUNDS = [20,40]
+var SKYBOUNDS
 
 var current_wave : int = 0
 var enemy_pool
@@ -30,6 +30,7 @@ var city_hp = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	SKYBOUNDS = get_meta("skybounds")
 	print("START IN 1")
 	await get_tree().create_timer(1).timeout
 	print("START")

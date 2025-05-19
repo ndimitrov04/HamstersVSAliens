@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://baljmjnje4wtv"]
+
+[ext_resource type="Script" path="res://Scripts/UniversalBehaviors/shieldf.gd" id="1_x5r3v"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jo0tq"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.164706)
+roughness = 0.64
+clearcoat_roughness = 0.0
+heightmap_scale = 16.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+backlight_enabled = true
+backlight = Color(0, 0, 0.396078, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_rav1d"]
+material = SubResource("StandardMaterial3D_jo0tq")
+radius = 40.0
+height = 60.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_oxorf"]
+points = PackedVector3Array(16.6805, 6.56025, 34.5476, -3.61742, -5.40929, -38.5758, -3.61632, 5.434, -38.564, -35.9572, -5.37901, 15.5829, 14.2296, -27.852, 1.17403, 23.7148, 23.1311, -8.2987, -23.7148, 23.1311, 8.2987, 35.9572, -5.37901, -15.5829, -33.4058, -11.3163, -14.3147, -8.30512, -23.1226, 23.7332, 35.9572, -5.37901, 15.5829, -25.005, 14.8985, -23.8185, -15.5806, 5.40454, 35.9442, -1.18144, -27.8515, -14.2293, 13.0263, 23.096, 21.3124, -1.18053, 27.8564, -14.2183, 11.9608, -14.9365, 32.2926, 14.2613, 13.6775, -32.0898, 16.6836, -14.8776, -29.7842, -24.9147, -23.122, 2.37177, 32.2828, 14.9583, 11.9571, -38.5654, 5.43419, -3.6089, -26.3571, -5.37696, -28.7593, -9.50703, -21.9672, -24.955, -1.18053, 27.8564, 14.2183, 24.9147, -23.122, 2.37177, -25.005, 14.8985, 23.8185, -14.3538, -6.56209, 35.8807, 35.8709, 6.58527, -14.3469, -1.18281, 16.0373, 33.2452, 15.5853, -5.37983, -35.9551, 1.18144, -27.8515, 14.2293)
+
+[node name="Shield" type="Area3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+collision_layer = 255
+collision_mask = 255
+script = ExtResource("1_x5r3v")
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.5601, 0)
+mesh = SubResource("SphereMesh_rav1d")
+skeleton = NodePath("../..")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.5601, 0)
+shape = SubResource("ConvexPolygonShape3D_oxorf")
+
+[node name="ShieldRegenTick" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="ShieldRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="ShieldRegenTick" to="." method="_on_shield_regen_tick_timeout"]
+[connection signal="timeout" from="ShieldRegenTimer" to="." method="_on_shield_regen_timer_timeout"]

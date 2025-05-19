@@ -90,8 +90,7 @@ mesh = SubResource("BoxMesh_v8jgc")
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0192559, 2.60993, -5.8993)
 
 [node name="HPProjector" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.94293, 0)
-top_level = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.05637, 0)
 script = ExtResource("4_dciq2")
 
 [node name="HPBackground" type="Sprite3D" parent="HPProjector"]

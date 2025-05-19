@@ -10,10 +10,11 @@ extends Area3D
 @onready var shieldHP : int = get_parent().get_meta("shield")
 @onready var max_shieldHP : int = get_parent().get_meta("shield")
 @onready var shield_regen : bool = false
+@onready var block_type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLYBULLET
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
@@ -30,7 +31,7 @@ func _physics_process(_delta):
 
 func _on_body_entered(body):
 	if "type" in body:
-		if body.type == ObjectTypes.TYPE.FRIENDLYBULLET:
+		if body.type == block_type:
 			body.queue_free()
 			shield_regen = false
 			shieldHP -= body.damage
@@ -41,8 +42,9 @@ func _on_body_entered(body):
 			explosion.emitting = true
 
 func _on_shield_regen_timer_timeout():
-	if get_parent().alive:
-		shield_regen = true
+	if "alive" in get_parent():
+		if get_parent().alive:
+			shield_regen = true
 
 func _on_shield_regen_tick_timeout():
 	if shield_regen:

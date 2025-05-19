@@ -4,8 +4,8 @@ extends PathFollow3D
 @onready var sphere = $Sphere
 @onready var sfx = $SFX
 
-const MAXSPEED = 40
-var speed = 10
+const MAXSPEED = 80
+var speed = 20
 
 var hookable : bool = true
 var hooked : bool = false
@@ -23,7 +23,7 @@ func _physics_process(delta):
 		
 		#Move forward
 		if speed < MAXSPEED:
-			speed += 1 * delta
+			speed += 4 * delta
 		progress += speed * delta
 		
 		#Make the cabin sound play at a speed

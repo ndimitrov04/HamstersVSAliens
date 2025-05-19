@@ -10,15 +10,15 @@
 rough = true
 absorbent = true
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gpsnu"]
+points = PackedVector3Array(-1.5, -0.25, -1.5, -1.5, 0.25, -1.5, 1.5, -0.25, -1.5, -1.5, -0.25, 1.5, -1.5, 0.25, 1.5, 1.5, 0.25, -1.5, 1.5, -0.25, 1.5, 1.5, 0.25, 1.5)
+
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0olku"]
 rough = true
 absorbent = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_bp3sq"]
-size = Vector3(2, 0.13, 2)
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bygfm"]
-points = PackedVector3Array(1.01587, 0.0778571, 1.01587, -1.01587, -0.080873, -1.01587, -1.01587, -0.080873, 1.01587, -1.01587, 0.0778571, -1.01587, 1.01587, -0.080873, -1.01587, -1.01587, 0.0778571, 1.01587, 1.01587, -0.080873, 1.01587, 1.01587, 0.0778571, -1.01587)
+size = Vector3(3, 0.5, 3)
 
 [sub_resource type="BoxMesh" id="BoxMesh_fwqsw"]
 size = Vector3(2.9, 10, 2.9)
@@ -61,18 +61,18 @@ script = ExtResource("1_3opeq")
 metadata/hp = 1500
 metadata/fallpoint = 100
 
+[node name="Hitbox2" type="CollisionShape3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 17.1741, 0)
+shape = SubResource("ConvexPolygonShape3D_gpsnu")
+
 [node name="Platform" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.0914, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.7249, 0)
 physics_material_override = SubResource("PhysicsMaterial_0olku")
 
 [node name="Model" type="MeshInstance3D" parent="Platform"]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.234131, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 1.44919, 0)
 mesh = SubResource("BoxMesh_bp3sq")
 surface_material_override/0 = ExtResource("2_p0k4n")
-
-[node name="Hitbox" type="CollisionShape3D" parent="Platform"]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0.234131, 0)
-shape = SubResource("ConvexPolygonShape3D_bygfm")
 
 [node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -7.85579, 0)

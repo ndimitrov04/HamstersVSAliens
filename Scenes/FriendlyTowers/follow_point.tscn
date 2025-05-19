@@ -41,7 +41,7 @@ transform = Transform3D(0.33, 0, 0, 0, -1.44248e-08, -0.33, 0, 0.33, -1.44248e-0
 material_overlay = SubResource("StandardMaterial3D_xj5mp")
 
 [node name="Holder" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, 1.41152, 0)
+transform = Transform3D(1, 0, -1.06581e-14, 0, 1, 0, 1.06581e-14, 0, 1, 0, 1.74982, 0)
 material_overlay = SubResource("StandardMaterial3D_xj5mp")
 mesh = SubResource("CapsuleMesh_2o16v")
 

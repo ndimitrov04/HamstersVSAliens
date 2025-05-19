@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv6yrengaaxfb"
-path="res://.godot/imported/detail.png-5f00d1c879c3922fa213f64429a4b901.ctex"
+uid="uid://f6nsfov4ens7"
+path="res://.godot/imported/splat.png-906da53672e86f2196a961fb708fa687.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://TerrainDataBG/detail.png"
-dest_files=["res://.godot/imported/detail.png-5f00d1c879c3922fa213f64429a4b901.ctex"]
+source_file="res://Terrains/T2/TerrainDataBG/splat.png"
+dest_files=["res://.godot/imported/splat.png-906da53672e86f2196a961fb708fa687.ctex"]
 
 [params]
 

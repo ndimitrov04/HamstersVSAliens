@@ -62,7 +62,7 @@ var resources = [
 	PLAYER
 ]
 
-var next_scene = "res://main.tscn"
+var next_scene = "res://Scenes/Stages/stage_grasslands.tscn"
 
 @onready var color_rect = $CanvasLayer/LoadingScreen/ColorRect
 @onready var screen_bg_1 = $CanvasLayer/LoadingScreen/ScreenBG1

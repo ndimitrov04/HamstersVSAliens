@@ -7,7 +7,7 @@ extends Node3D
 
 const MAXVELOCITY = 25
 const INERTIAJUMPMULTIPLIER = 0.2
-const SKYBOUNDS = [20,50]
+var SKYBOUNDS = [1,1]
 
 var thrust_power : float = 60000
 var jump_power : float = 60000
@@ -18,11 +18,17 @@ var paused : bool = false
 var y_level : float
 
 func _ready():
+	SKYBOUNDS[0] = get_parent().get_parent().get_parent().SKYBOUNDS[0]
+	SKYBOUNDS[1] = get_parent().get_parent().get_parent().SKYBOUNDS[1]
 	randf_range(pause_interval-0.5,pause_interval+0.5)
 	y_level = global_position.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	#Keep enemy from going too high into the air
+	if get_parent().global_position.y >= get_parent().get_parent().get_parent().SKYBOUNDS[1] + 50:
+		get_parent().global_position.y = get_parent().get_parent().get_parent().SKYBOUNDS[1] + 50
+	
 	if get_parent().global_position.x > get_parent().target.global_position.x:
 		input.x = -1
 	elif get_parent().global_position.x < get_parent().target.global_position.x:

@@ -35,6 +35,7 @@ func _physics_process(_delta):
 	#	"Alive?: " + str(alive) + "\n" +
 	#	"HitGround: " + str(hitGround)
 	#)
+	
 	if not target_player:
 		retarget()
 	

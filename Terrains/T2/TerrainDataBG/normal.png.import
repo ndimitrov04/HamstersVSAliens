@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtew0cp2yjvva"
-path="res://.godot/imported/global_albedo.png-a43f43dd38522d7151abc7be337cdab9.ctex"
+uid="uid://vk28e7grrn5"
+path="res://.godot/imported/normal.png-cfb6cd7baa297b9770913004f5cd4750.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://TerrainData/global_albedo.png"
-dest_files=["res://.godot/imported/global_albedo.png-a43f43dd38522d7151abc7be337cdab9.ctex"]
+source_file="res://Terrains/T2/TerrainDataBG/normal.png"
+dest_files=["res://.godot/imported/normal.png-cfb6cd7baa297b9770913004f5cd4750.ctex"]
 
 [params]
 
