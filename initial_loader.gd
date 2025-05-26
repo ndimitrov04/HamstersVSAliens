@@ -17,7 +17,6 @@ const REGENERATION_BEACON = preload("res://Scenes/FriendlyTowers/regeneration_be
 const SPEEDBOOST_BEACON = preload("res://Scenes/FriendlyTowers/speedboost_beacon.tscn")
 const TOWER = preload("res://Scenes/FriendlyTowers/tower.tscn")
 const CARRIER_MODEL = preload("res://Scenes/ModelScenes/carrier_model.tscn")
-const E_45_GLSL = preload("res://Scenes/ModelScenes/e_45_glsl.tscn")
 const FAST_TURRETM = preload("res://Scenes/ModelScenes/fast_turret.tscn")
 const GROUND_BUMP = preload("res://Scenes/ModelScenes/ground_bump.tscn")
 const SPACESHIP_3_MODEL = preload("res://Scenes/ModelScenes/spaceship3_model.tscn")
@@ -47,7 +46,6 @@ var resources = [
 	SPEEDBOOST_BEACON,
 	TOWER,
 	CARRIER_MODEL,
-	E_45_GLSL,
 	FAST_TURRETM,
 	GROUND_BUMP,
 	SPACESHIP_3_MODEL,

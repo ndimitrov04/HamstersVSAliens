@@ -48,6 +48,12 @@ func _process(_delta):
 	city_hp = calculate_city_hp()
 	if city_hp <= 0:
 		player.hp = 0
+		
+	#Dash toward crosshair (forward)
+	if Input.is_action_just_pressed("debug_ka"):
+		for enemy in enemies.get_children():
+			if "hp" in enemy:
+				enemy.hp = 0
 
 func new_wave():
 	level_up.initiate_upgrade_phase()

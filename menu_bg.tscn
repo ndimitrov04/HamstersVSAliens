@@ -1,4 +1,4 @@
-[gd_scene load_steps=144 format=4 uid="uid://dg6h7dygt84mp"]
+[gd_scene load_steps=149 format=4 uid="uid://dg6h7dygt84mp"]
 
 [ext_resource type="Texture2D" uid="uid://c1cfai7bc4nyu" path="res://Textures/Skyboxes/NightSkyHDRI014_8K-TONEMAPPED.jpg" id="1_00wyf"]
 [ext_resource type="Script" path="res://Scripts/Menu/Decorations/menuhamster.gd" id="4_664tm"]
@@ -16,8 +16,10 @@
 [ext_resource type="Texture2D" uid="uid://bgvck04r4ikm5" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Roughness.jpg" id="14_85qnl"]
 [ext_resource type="FontFile" uid="uid://wiksn3w8gwg6" path="res://VCR_OSD_MONO_1.001.ttf" id="14_tmf23"]
 [ext_resource type="StyleBox" uid="uid://3dn5avuw8cxb" path="res://button_flat.tres" id="15_4y0nt"]
+[ext_resource type="Shader" path="res://Shaders/frostedglassblack.gdshader" id="15_i2kdp"]
 [ext_resource type="StyleBox" uid="uid://0mo45cavrc8h" path="res://flatbox.tres" id="16_6v5cf"]
 [ext_resource type="AudioStream" uid="uid://coodpd7842g6o" path="res://Music/Brave Pilots (Menu Screen).ogg" id="17_srmit"]
+[ext_resource type="Script" path="res://credit_text.gd" id="18_b8e0b"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_37jn4"]
 panorama = ExtResource("1_00wyf")
@@ -588,7 +590,10 @@ shader_parameter/blur_amount = 8
 shader_parameter/blur_radius = 1.0
 shader_parameter/blur_direction = Vector2(1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vm000"]
+[sub_resource type="ButtonGroup" id="ButtonGroup_h2rcy"]
+allow_unpress = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2lsyx"]
 shader = ExtResource("13_j8180")
 shader_parameter/blur_type = 0
 shader_parameter/blur_amount = 16
@@ -3456,7 +3461,7 @@ cache/0/25/0/glyphs/69/size = Vector2(15, 21)
 cache/0/25/0/glyphs/69/uv_rect = Rect2(18, 23, 15, 21)
 cache/0/25/0/glyphs/69/texture_idx = 0
 
-[sub_resource type="Image" id="Image_63krn"]
+[sub_resource type="Image" id="Image_56feh"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////Ev///2T///+c////t////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+3////nP///2P///8R////AP///wD///8A////AP///wD///8A////AP///0H///+3////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7b///8/////AP///wD///8A////AP///wD///9B////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/uLi4z1FRUe0rKyv5Kysr+VFRUey6urrP////v////7////8/////AP///wD///8A////Ev///7f///+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v35+ft8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv+BgYHe////v////7X///8Q////AP///wD///9k////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7+4uLjPGhoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xsbG/+7u7vO////v////2H///8A////AP///5z///+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v1FRUe0aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/1JSUuz///+/////m////wD///8A////t////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/Kysr+RoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Kysr+f///7////+2////AP///wD///+3////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////78rKyv5Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8sLCz5////v////7X///8A////AP///5z///+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v1FRUewaGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/1NTU+z///+/////mv///wD///8A////Y////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/urq6zxoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8bGxv/vLy8zv///7////9h////AP///wD///8R////tv///7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/gYGB3hsbG/8aGhr/Ghoa/xoaGv8aGhr/Gxsb/4KCgt3///+/////tP///w////8A////AP///wD///8/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/u7u7zlJSUuwrKyv5LCws+VNTU+y8vLzO////v////7////89////AP///wD///8A////AP///wD///8/////tf///7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+0////Pf///wD///8A////AP///wD///8A////AP///wD///8Q////Yf///5v///+2////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7X///+a////Yf///w////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3466,9 +3471,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_tumgj"]
-image = SubResource("Image_63krn")
+image = SubResource("Image_56feh")
 
-[sub_resource type="Image" id="Image_ey4o4"]
+[sub_resource type="Image" id="Image_40p0o"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////Cf///zH///9N////Wv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9a////Tf///zH///8J////AP///wD///8A////AP///wD///8A////AP///yD///9a////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///1r///8f////AP///wD///8A////AP///wD///8g////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9ev7+/c3d3d5hhYWGoYWFhqHh4eJfBwcFy////Xv///17///8f////AP///wD///8A////Cf///1r///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////XpWVlYZXV1evV1dXr1dXV69XV1evV1dXr1dXV6+WlpaF////Xv///1n///8I////AP///wD///8x////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///16/v79zV1dXr1dXV69XV1evV1dXr1dXV69XV1evV1dXr1hYWK7Dw8Ny////Xv///zD///8A////AP///03///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xnd3d5hXV1evV1dXr1dXV69XV1evV1dXr1dXV69XV1evV1dXr3h4eJf///9e////Tf///wD///8A////Wv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9eYWFhqFdXV69XV1evV1dXr1dXV69XV1evV1dXr1dXV69XV1evYWFhqP///17///9a////AP///wD///9a////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///15hYWGoV1dXr1dXV69XV1evV1dXr1dXV69XV1evV1dXr1dXV69iYmKn////Xv///1n///8A////AP///03///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xnh4eJdXV1evV1dXr1dXV69XV1evV1dXr1dXV69XV1evV1dXr3l5eZb///9e////TP///wD///8A////Mf///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9ewcHBcldXV69XV1evV1dXr1dXV69XV1evV1dXr1dXV69YWFiuw8PDcv///17///8w////AP///wD///8J////Wv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9elpaWhVhYWK5XV1evV1dXr1dXV69XV1evWFhYrpiYmIX///9e////Wf///wj///8A////AP///wD///8f////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9ew8PDcnh4eJdhYWGoYmJip3l5eZbDw8Ny////Xv///17///8e////AP///wD///8A////AP///wD///8f////Wf///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9Z////Hv///wD///8A////AP///wD///8A////AP///wD///8I////MP///03///9a////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///1n///9M////MP///wj///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3478,9 +3483,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_erq51"]
-image = SubResource("Image_ey4o4")
+image = SubResource("Image_40p0o")
 
-[sub_resource type="Image" id="Image_6gdrr"]
+[sub_resource type="Image" id="Image_pgv3p"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////Cf///zH///9N////Wv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9a////Tf///zH///8J////AP///wD///8A////AP///wD///8A////AP///yD///9a////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///1r///8f////AP///wD///8A////AP///wD///8g////Xv///16/v79zd3d3mGFhYahhYWGoeHh4l8HBwXL///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///8f////AP///wD///8A////Cf///1r///9elZWVhldXV69XV1evV1dXr1dXV69XV1evV1dXr5aWloX///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///1n///8I////AP///wD///8x////Xr+/v3NXV1evV1dXr1dXV69XV1evV1dXr1dXV69XV1evWFhYrsPDw3L///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///zD///8A////AP///03///9ed3d3mFdXV69XV1evV1dXr1dXV69XV1evV1dXr1dXV69XV1eveHh4l////17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Tf///wD///8A////Wv///15hYWGoV1dXr1dXV69XV1evV1dXr1dXV69XV1evV1dXr1dXV69hYWGo////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9a////AP///wD///9a////XmFhYahXV1evV1dXr1dXV69XV1evV1dXr1dXV69XV1evV1dXr2JiYqf///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///1n///8A////AP///03///9eeHh4l1dXV69XV1evV1dXr1dXV69XV1evV1dXr1dXV69XV1eveXl5lv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////TP///wD///8A////Mf///17BwcFyV1dXr1dXV69XV1evV1dXr1dXV69XV1evV1dXr1hYWK7Dw8Ny////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///8w////AP///wD///8J////Wv///16WlpaFWFhYrldXV69XV1evV1dXr1dXV69YWFiumJiYhf///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Wf///wj///8A////AP///wD///8f////Xv///17Dw8NyeHh4l2FhYahiYmKneXl5lsPDw3L///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///8e////AP///wD///8A////AP///wD///8f////Wf///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9Z////Hv///wD///8A////AP///wD///8A////AP///wD///8I////MP///03///9a////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///1n///9M////MP///wj///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3490,9 +3495,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_irnpg"]
-image = SubResource("Image_6gdrr")
+image = SubResource("Image_pgv3p")
 
-[sub_resource type="Image" id="Image_c7dpj"]
+[sub_resource type="Image" id="Image_dfjmk"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////Ev///2T///+c////t////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+3////nP///2P///8R////AP///wD///8A////AP///wD///8A////AP///0H///+3////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7b///8/////AP///wD///8A////AP///wD///9B////v////7+4uLjPUVFR7SsrK/krKyv5UVFR7Lq6us////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////8/////AP///wD///8A////Ev///7f///+/fn5+3xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/4GBgd7///+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7X///8Q////AP///wD///9k////v7i4uM8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Gxsb/7u7u87///+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////2H///8A////AP///5z///+/UVFR7RoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/UlJS7P///7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////m////wD///8A////t////78rKyv5Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8rKyv5////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+2////AP///wD///+3////vysrK/kaGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/ywsLPn///+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7X///8A////AP///5z///+/UVFR7BoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/U1NT7P///7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////mv///wD///8A////Y////7+6urrPGhoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xsbG/+8vLzO////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////9h////AP///wD///8R////tv///7+BgYHeGxsb/xoaGv8aGhr/Ghoa/xoaGv8bGxv/goKC3f///7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////tP///w////8A////AP///wD///8/////v////7+7u7vOUlJS7CsrK/ksLCz5U1NT7Ly8vM7///+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////89////AP///wD///8A////AP///wD///8/////tf///7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+0////Pf///wD///8A////AP///wD///8A////AP///wD///8Q////Yf///5v///+2////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7////+/////v////7X///+a////Yf///w////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3502,9 +3507,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_x7gde"]
-image = SubResource("Image_c7dpj")
+image = SubResource("Image_dfjmk")
 
-[sub_resource type="Image" id="Image_r05l4"]
+[sub_resource type="Image" id="Image_uldyl"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AKioqDBoaGkMaGhppGxsbehoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxt6GhoaaRsbG0IuLi4L////AP///wD///8A////AP///wD///8A////AB0dHSwbGxt6GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3oeHh4q////AP///wD///8A////AP///wAdHR0sGhoagBoaGoBQUFCQk5OTraqqqrqqqqq6kpKSrU5OTpAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAeHh4q////AP///wD///8AKioqDBsbG3oaGhqAdXV1n7S0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wHNzc58aGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3kuLi4L////AP///wAaGhpDGhoagFBQUJC0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAs7Ozv0xMTI8aGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG0H///8A////ABoaGmkaGhqAk5OTrbS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAkpKSrRoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGxsbaP///wD///8AGxsbehoaGoCqqqq6tLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMCqqqq6GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxt6////AP///wAbGxt6GhoagKqqqrq0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wKqqqrkaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3n///8A////ABoaGmkaGhqAkpKSrbS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAkZGRrBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGxsbZ////wD///8AGxsbQhoaGoBOTk6QtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLOzs79MTEyPGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxtB////AP///wAuLi4LGxsbehoaGoBzc3Ofs7Ozv7S0tMC0tLTAtLS0wLS0tMCzs7O/c3NznhoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGxsbeTMzMwr///8A////AP///wAeHh4qGhoagBoaGoBMTEyPkpKSraqqqrqqqqq5kZGRrExMTI8aGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAfHx8p////AP///wD///8A////AP///wAeHh4qGxsbeRoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxt5Hx8fKf///wD///8A////AP///wD///8A////AP///wAuLi4LGxsbQRsbG2gbGxt6GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3kbGxtnGxsbQTMzMwr///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3514,9 +3519,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_sfkyh"]
-image = SubResource("Image_r05l4")
+image = SubResource("Image_uldyl")
 
-[sub_resource type="Image" id="Image_rtp02"]
+[sub_resource type="Image" id="Image_se7g6"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AKioqBh4eHiIcHBw1HR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR09HBwcNR8fHyEqKioG////AP///wD///8A////AP///wD///8A////ACIiIhYdHR09HBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT0kJCQV////AP///wD///8A////AP///wAiIiIWHBwcQBwcHEBPT09NhoaGY5eXl2yXl5dshYWFYk1NTUwcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAkJCQV////AP///wD///8AKioqBh0dHT0cHBxAcXFxWKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcG9vb1ccHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT0qKioG////AP///wAeHh4iHBwcQE9PT02goKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcE1NTUwcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB8fHyH///8A////ABwcHDUcHBxAhoaGY6CgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwhYWFYhwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHR0dNP///wD///8AHR0dPRwcHECXl5dsoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCXl5dsHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR09////AP///wAdHR09HBwcQJeXl2ygoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcJeXl2wcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT3///8A////ABwcHDUcHBxAhYWFYqCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwhYWFYhwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHR0dNP///wD///8AHx8fIRwcHEBNTU1MoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHBNTU1MHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAfHx8h////AP///wAqKioGHR0dPRwcHEBvb29XoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwb29vVxwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHR0dPTMzMwX///8A////AP///wAkJCQVHBwcQBwcHEBNTU1MhYWFYpeXl2yXl5dshYWFYk1NTUwcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAkJCQV////AP///wD///8A////AP///wAkJCQVHR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR09JCQkFf///wD///8A////AP///wD///8A////AP///wAqKioGHx8fIR0dHTQdHR09HBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT0dHR00Hx8fITMzMwX///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3526,9 +3531,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_aw7b1"]
-image = SubResource("Image_rtp02")
+image = SubResource("Image_se7g6")
 
-[sub_resource type="Image" id="Image_p2na6"]
+[sub_resource type="Image" id="Image_luasm"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AKioqBh4eHiIcHBw1HR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR09HBwcNR8fHyEqKioG////AP///wD///8A////AP///wD///8A////ACIiIhYdHR09HBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT0kJCQV////AP///wD///8A////AP///wAiIiIWHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAT09PTYaGhmOXl5dsl5eXbIWFhWJNTU1MHBwcQBwcHEAkJCQV////AP///wD///8AKioqBh0dHT0cHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQHFxcVigoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHBvb29XHBwcQB0dHT0qKioG////AP///wAeHh4iHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEBPT09NoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHBNTU1MHBwcQB8fHyH///8A////ABwcHDUcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQIaGhmOgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcIWFhWIcHBxAHR0dNP///wD///8AHR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAl5eXbKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwl5eXbBwcHEAdHR09////AP///wAdHR09HBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHECXl5dsoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCXl5dsHBwcQB0dHT3///8A////ABwcHDUcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQIWFhWKgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcIWFhWIcHBxAHR0dNP///wD///8AHx8fIRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxATU1NTKCgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcKCgoHCgoKBwTU1NTBwcHEAfHx8h////AP///wAqKioGHR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAb29vV6CgoHCgoKBwoKCgcKCgoHCgoKBwoKCgcG9vb1ccHBxAHR0dPTMzMwX///8A////AP///wAkJCQVHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxATU1NTIWFhWKXl5dsl5eXbIWFhWJNTU1MHBwcQBwcHEAkJCQV////AP///wD///8A////AP///wAkJCQVHR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR09JCQkFf///wD///8A////AP///wD///8A////AP///wAqKioGHx8fIR0dHTQdHR09HBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT0dHR00Hx8fITMzMwX///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3538,9 +3543,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_o34ka"]
-image = SubResource("Image_p2na6")
+image = SubResource("Image_luasm")
 
-[sub_resource type="Image" id="Image_qjtqf"]
+[sub_resource type="Image" id="Image_rummv"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AKioqDBoaGkMaGhppGxsbehoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxt6GhoaaRsbG0IuLi4L////AP///wD///8A////AP///wD///8A////AB0dHSwbGxt6GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3oeHh4q////AP///wD///8A////AP///wAdHR0sGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAUFBQkJOTk62qqqq6qqqqupKSkq1OTk6QGhoagBoaGoAeHh4q////AP///wD///8AKioqDBsbG3oaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagHV1dZ+0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMBzc3OfGhoagBsbG3kuLi4L////AP///wAaGhpDGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoBQUFCQtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLOzs79MTEyPGhoagBsbG0H///8A////ABoaGmkaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagJOTk620tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wJKSkq0aGhqAGxsbaP///wD///8AGxsbehoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAqqqqurS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAqqqquhoaGoAbGxt6////AP///wAbGxt6GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoCqqqq6tLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMCqqqq5GhoagBsbG3n///8A////ABoaGmkaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagJKSkq20tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wJGRkawaGhqAGxsbZ////wD///8AGxsbQhoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqATk5OkLS0tMC0tLTAtLS0wLS0tMC0tLTAtLS0wLS0tMCzs7O/TExMjxoaGoAbGxtB////AP///wAuLi4LGxsbehoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAc3Nzn7Ozs7+0tLTAtLS0wLS0tMC0tLTAs7Ozv3Nzc54aGhqAGxsbeTMzMwr///8A////AP///wAeHh4qGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqATExMj5KSkq2qqqq6qqqquZGRkaxMTEyPGhoagBoaGoAfHx8p////AP///wD///8A////AP///wAeHh4qGxsbeRoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxt5Hx8fKf///wD///8A////AP///wD///8A////AP///wAuLi4LGxsbQRsbG2gbGxt6GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3kbGxtnGxsbQTMzMwr///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3550,7 +3555,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_7wmeh"]
-image = SubResource("Image_qjtqf")
+image = SubResource("Image_rummv")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e65ct"]
 content_margin_left = 6.0
@@ -3558,7 +3563,7 @@ content_margin_top = 4.0
 content_margin_right = 6.0
 content_margin_bottom = 4.0
 
-[sub_resource type="Image" id="Image_g2a2l"]
+[sub_resource type="Image" id="Image_lpvc0"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8S/f39ZP///5z+/v63/v7+t////5z9/f1j////Ef///wD///8A////AP///wD///8A////AP///wD///9B/v7+t/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/rb///8/////AP///wD///8A////AP///wD///9B/v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v////z////8A////AP///wD///8S/v7+t/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v61////EP///wD///8A/f39ZP7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v////2H///8A////AP///5z+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6b////AP///wD+/v63/v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+tv///wD///8A/v7+t/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/rX///8A////AP///5z+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6a////AP///wD9/f1j/v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//f39Yf///wD///8A////Ef7+/rb+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+tP///w////8A////AP///wD///8//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+v////z3///8A////AP///wD///8A////AP///z/+/v61/v7+v/7+/r/+/v6//v7+v/7+/r/+/v6//v7+tP///z3///8A////AP///wD///8A////AP///wD///8A////EP///2H+/v6b/v7+tv7+/rX+/v6a/f39Yf///w////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3568,9 +3573,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_bww3q"]
-image = SubResource("Image_g2a2l")
+image = SubResource("Image_lpvc0")
 
-[sub_resource type="Image" id="Image_la6cn"]
+[sub_resource type="Image" id="Image_1buuv"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8J////Mf///03///9a////Wv///03///8x////Cf///wD///8A////AP///wD///8A////AP///wD///8g////Wv///17///9e////Xv///17///9e////Xv///1r///8f////AP///wD///8A////AP///wD///8g////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///x////8A////AP///wD///8J////Wv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9Z////CP///wD///8A////Mf///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///zD///8A////AP///03///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9N////AP///wD///9a////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Wv///wD///8A////Wv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///1n///8A////AP///03///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9M////AP///wD///8x////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////MP///wD///8A////Cf///1r///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Wf///wj///8A////AP///wD///8f////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///x7///8A////AP///wD///8A////AP///x////9Z////Xv///17///9e////Xv///17///9e////Wf///x7///8A////AP///wD///8A////AP///wD///8A////CP///zD///9N////Wv///1n///9M////MP///wj///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3580,9 +3585,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_d03cs"]
-image = SubResource("Image_la6cn")
+image = SubResource("Image_1buuv")
 
-[sub_resource type="Image" id="Image_ee3yl"]
+[sub_resource type="Image" id="Image_r55f0"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8X/v7+hf7+/tH+/v70/v7+9P7+/tH+/v6E////Fv///wD///8A////AP///wD///8A////AP///wD///9X/v7+9P7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/vP///9U////AP///wD///8A////AP///wD///9X/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+/////1T///8A////AP///wD///8X/v7+9P7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7y////Ff///wD///8A/v7+hf7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/oL///8A////AP7+/tH+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7P////AP///wD+/v70/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+8////wD///8A/v7+9P7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/vL///8A////AP7+/tH+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7O////AP///wD+/v6E/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+gf///wD///8A////Fv7+/vP+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+8f///xT///8A////AP///wD///9U/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+/////1H///8A////AP///wD///8A////AP///1T+/v7y/v7+//7+/v/+/v7//v7+//7+/v/+/v7//v7+8f///1H///8A////AP///wD///8A////AP///wD///8A////Ff7+/oL+/v7P/v7+8/7+/vL+/v7O/v7+gf///xT///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3592,9 +3597,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_20ktt"]
-image = SubResource("Image_ee3yl")
+image = SubResource("Image_r55f0")
 
-[sub_resource type="Image" id="Image_n2pti"]
+[sub_resource type="Image" id="Image_1lxa6"]
 data = {
 "data": PackedByteArray("////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AP///wD///9A////QP///wD///8A////QP///0D///8A////AP///0D///9A////AA=="),
 "format": "RGBA8",
@@ -3604,7 +3609,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_veqds"]
-image = SubResource("Image_n2pti")
+image = SubResource("Image_1lxa6")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd33f"]
 content_margin_left = 4.0
@@ -3716,7 +3721,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[sub_resource type="Image" id="Image_fx5hr"]
+[sub_resource type="Image" id="Image_otphg"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////ALOzs5mysrKmuLi4Ev///wD///8A////AP///wC4uLgSsrKyprKyspf///8A////ALKysqaysrLZsbGxs7i4uBL///8A////ALi4uBKysrKzsrKy2bKysqX///8A////ALi4uBKxsbGzsrKy2bGxsbO4uLgSuLi4ErKysrOysrLZsbGxs7S0tBH///8A////AP///wC4uLgSsbGxs7KystmysrLFsrKyxbKystmxsbGztLS0Ef///wD///8A////AP///wD///8AuLi4ErGxsbOysrLZsrKy2bGxsbO0tLQR////AP///wD///8A////AP///wD///8A////ALi4uBKysrKlsrKypbS0tBH///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A"),
 "format": "RGBA8",
@@ -3726,7 +3731,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_jk4wg"]
-image = SubResource("Image_fx5hr")
+image = SubResource("Image_otphg")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7t34t"]
 content_margin_left = 8.0
@@ -3825,7 +3830,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[sub_resource type="Image" id="Image_vf5an"]
+[sub_resource type="Image" id="Image_mxxqh"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8j////mf///77///+/////v////7////+/////v////7////+/////v////77///+Y////If///wD///8A////mf///7////+/////v////7////+/////v////7////+/////v////7////+/////v////5f///8A////AP///77///+/////v////7////+/////v////7////+/////v////7/t7e3D////v////7////++////AP///wD///+/////v////7////+/////v////7////+/////v////7+xsbHRJSUl/LKystH///+/////v////wD///8A////v////7////+/////v////7////+/////v////7+wsLDRICAg/hoaGv9UVFTr////v////7////8A////AP///7////+/////v////7////+/////v////7+wsLDRICAg/hoaGv9OTk7t+Pj4wf///7////+/////AP///wD///+/////v/39/cDe3t7G////v////7+vr6/SICAg/hoaGv9PT0/t+Pj4wf///7////+/////v////wD///8A////v/39/cBaWlrqLS0t+dTU1Miurq7SICAg/hoaGv9PT0/t+Pj4wf///7////+/////v////7////8A////AP///7/o6OjENjY29hoaGv8rKyv6ICAg/hoaGv9RUVHt+Pj4wf///7////+/////v////7////+/////AP///wD///+/////v+Li4sU2Njb2Ghoa/xoaGv9RUVHt+Pj4wf///7////+/////v////7////+/////v////wD///8A////v////7////+/4uLixTY2NvZRUVHs+Pj4wf///7////+/////v////7////+/////v////7////8A////AP///77///+/////v////7/m5ubF+Pj4wf///7////+/////v////7////+/////v////7////+9////AP///wD///+Y////v////7////+/////v////7////+/////v////7////+/////v////7////+/////lv///wD///8A////If///5f///++////v////7////+/////v////7////+/////v////7////+9////lv///yD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3835,9 +3840,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_cetmi"]
-image = SubResource("Image_vf5an")
+image = SubResource("Image_mxxqh")
 
-[sub_resource type="Image" id="Image_nyacj"]
+[sub_resource type="Image" id="Image_xwblm"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8R////TP///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9L////Ef///wD///8A////TP///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///0v///8A////AP///17///9e////Xv///17///9e////Xv///17///9e////Xv///17t7e1j////Xv///17///9e////AP///wD///9e////Xv///17///9e////Xv///17///9e////Xv///165ubl1Xl5eqrm5uXX///9e////Xv///wD///8A////Xv///17///9e////Xv///17///9e////Xv///164uLh2W1tbrVdXV695eXmW////Xv///17///8A////AP///17///9e////Xv///17///9e////Xv///164uLh2W1tbrVdXV691dXWY+Pj4Yf///17///9e////AP///wD///9e////Xv39/V/g4OBo////Xv///164uLh2W1tbrVdXV693d3eY+Pj4Yf///17///9e////Xv///wD///8A////Xv39/V98fHyUYmJip9bW1mq2trZ2W1tbrVdXV693d3eY+Pj4Yf///17///9e////Xv///17///8A////AP///17p6ellZ2dno1dXV69hYWGoW1tbrVdXV693d3eY+Pj4Yf///17///9e////Xv///17///9e////AP///wD///9e////XuTk5GZnZ2ejV1dXr1dXV693d3eY+Pj4Yf///17///9e////Xv///17///9e////Xv///wD///8A////Xv///17///9e5OTkZmdnZ6N4eHiX+Pj4Yf///17///9e////Xv///17///9e////Xv///17///8A////AP///17///9e////Xv///17m5uZm+Pj4Yf///17///9e////Xv///17///9e////Xv///17///9d////AP///wD///9L////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///17///9e////Sv///wD///8A////Ef///0v///9e////Xv///17///9e////Xv///17///9e////Xv///17///9d////Sv///xD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3847,9 +3852,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_5lip2"]
-image = SubResource("Image_nyacj")
+image = SubResource("Image_xwblm")
 
-[sub_resource type="Image" id="Image_d7nf5"]
+[sub_resource type="Image" id="Image_twtck"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8N////YP///4j///+t////rf///4j///9f////C////wD///8A////AP///wD///8A////AP///wD///84////q/7+/sHy8vLM5OTk2eTk5Nny8vLM////wP///6j///8z////AP///wD///8A////AP///wD///84////v/Pz88vOzs70xsbG/8bGxv/Gxsb/xsbG/8/Pz/Pz8/PL////vv///zL///8A////AP///wD///8M////q/Pz88vHx8f+sLCw/1FRUf8rKyv/Kysr/1NTU/+xsbH/x8fH/vPz88v///+o////Cv///wD///8A////Yf7+/sHOzs70sLCw/yUlJf8aGhr/Ghoa/xoaGv8aGhr/Jycn/7Ozs//Pz8/z////wP///2D///8A////AP///4ny8vLMxsbG/1FRUf8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv9WVlb/xsbG//Ly8sz///+a////AP///wD///+u5OTk2cbGxv8rKyv/Ghoa/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Kysr/8bGxv/k5OTZ////tP///wD///8A////reTk5NnGxsb/Kysr/xoaGv8aGhr/Ghoa/xoaGv8aGhr/Ghoa/ywsLP/Gxsb/5OTk2f///7T///8A////AP///4jy8vLMxsbG/1NTU/8aGhr/Ghoa/xoaGv8aGhr/Ghoa/xoaGv9YWFj/xsbG//Ly8sz///+Y////AP///wD///9f////wM/Pz/OysrL/Jycn/xoaGv8aGhr/Ghoa/xoaGv8qKir/tbW1/8/Pz/P////A////Xv///wD///8A////C////6nz8/PLx8fH/rOzs/9WVlb/Kysr/ywsLP9YWFj/tbW1/8jIyP309PTK////pf///wn///8A////AP///wD///80////vvPz88vPz8/zxsbG/8bGxv/Gxsb/xsbG/8/Pz/P09PTK////vf///y7///8A////AP///wD///8A////AP///zL///+o////wPLy8szk5OTZ5OTk2fLy8sz////A////pf///y7///8A////AP///wD///8A////AP///wD///8A////Cv///2D///+a////tP///7T///+Y////Xv///wn///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3859,9 +3864,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_q1yjp"]
-image = SubResource("Image_d7nf5")
+image = SubResource("Image_twtck")
 
-[sub_resource type="Image" id="Image_j4w33"]
+[sub_resource type="Image" id="Image_sx1sr"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8J////Mf///03///9a////Wv///03///8x////Cf///wD///8A////AP///wD///8A////AP///wD///8g////Wv///17///9e////Xv///17///9e////Xv///1r///8f////AP///wD///8A////AP///wD///8g////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///x////8A////AP///wD///8J////Wv///17///9e4ODgaHx8fJRhYWGoYWFhqH19fZPg4OBo////Xv///17///9Z////CP///wD///8A////Mf///17///9e4ODgaF5eXqpXV1evV1dXr1dXV69XV1evX19fqeDg4Gj///9e////Xv///zD///8A////AP///03///9e////Xnx8fJRXV1evV1dXr1dXV69XV1evV1dXr1dXV699fX2T////Xv///17///9N////AP///wD///9a////Xv///15hYWGoV1dXr1dXV69XV1evV1dXr1dXV69XV1evYWFhqP///17///9e////Wv///wD///8A////Wv///17///9eYWFhqFdXV69XV1evV1dXr1dXV69XV1evV1dXr2JiYqf///9e////Xv///1n///8A////AP///03///9e////Xn19fZNXV1evV1dXr1dXV69XV1evV1dXr1dXV69/f3+T////Xv///17///9M////AP///wD///8x////Xv///17g4OBoX19fqVdXV69XV1evV1dXr1dXV69fX1+p4uLiZ////17///9e////MP///wD///8A////Cf///1r///9e////XuDg4Gh9fX2TYWFhqGJiYqd/f3+T4uLiZ////17///9e////Wf///wj///8A////AP///wD///8f////Xv///17///9e////Xv///17///9e////Xv///17///9e////Xv///x7///8A////AP///wD///8A////AP///x////9Z////Xv///17///9e////Xv///17///9e////Wf///x7///8A////AP///wD///8A////AP///wD///8A////CP///zD///9N////Wv///1n///9M////MP///wj///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3871,9 +3876,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_b0l4m"]
-image = SubResource("Image_j4w33")
+image = SubResource("Image_sx1sr")
 
-[sub_resource type="Image" id="Image_10xwn"]
+[sub_resource type="Image" id="Image_2kiau"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAqKioMGhoaQxoaGmkbGxt6GxsbehoaGmkbGxtCLi4uC////wD///8A////AP///wD///8A////AP///wAdHR0sGxsbehoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3oeHh4q////AP///wD///8A////AP///wAdHR0sGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagB4eHir///8A////AP///wAqKioMGxsbehoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxt5Li4uC////wD///8AGhoaQxoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG0H///8A////ABoaGmkaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxto////AP///wAbGxt6GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGxsbev///wD///8AGxsbehoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG3n///8A////ABoaGmkaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAbGxtn////AP///wAbGxtCGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGxsbQf///wD///8ALi4uCxsbG3oaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGxsbeTMzMwr///8A////AP///wAeHh4qGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagB8fHyn///8A////AP///wD///8A////AB4eHiobGxt5GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGxsbeR8fHyn///8A////AP///wD///8A////AP///wD///8ALi4uCxsbG0EbGxtoGxsbehsbG3kbGxtnGxsbQTMzMwr///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3883,9 +3888,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_yg0yd"]
-image = SubResource("Image_10xwn")
+image = SubResource("Image_2kiau")
 
-[sub_resource type="Image" id="Image_l88ta"]
+[sub_resource type="Image" id="Image_nticn"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAqKioGHh4eIhwcHDUdHR09HR0dPRwcHDUfHx8hKioqBv///wD///8A////AP///wD///8A////AP///wAiIiIWHR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT0kJCQV////AP///wD///8A////AP///wAiIiIWHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQCQkJBX///8A////AP///wAqKioGHR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR09KioqBv///wD///8AHh4eIhwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB8fHyH///8A////ABwcHDUcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR00////AP///wAdHR09HBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHR0dPf///wD///8AHR0dPRwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB0dHT3///8A////ABwcHDUcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAdHR00////AP///wAfHx8hHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHx8fIf///wD///8AKioqBh0dHT0cHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHR0dPTMzMwX///8A////AP///wAkJCQVHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQCQkJBX///8A////AP///wD///8A////ACQkJBUdHR09HBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHR0dPSQkJBX///8A////AP///wD///8A////AP///wD///8AKioqBh8fHyEdHR00HR0dPR0dHT0dHR00Hx8fITMzMwX///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3895,9 +3900,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_2m6jk"]
-image = SubResource("Image_l88ta")
+image = SubResource("Image_nticn")
 
-[sub_resource type="Image" id="Image_5iwlk"]
+[sub_resource type="Image" id="Image_rhbwe"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8As7OzHrKysmeysrIu////AP///wD///8A////AP///wC1tbUfsrKyc7KysnOwsLAw////AP///wD///8A////AP///wCwsLAwsrKyc7KysnOwsLAw////AP///wD///8A////AP///wCwsLAwsrKyc7KysnOtra0f////AP///wD///8A////ALW1tTCysrJzsrKyc7W1tR////8A////AP///wC1tbUwsrKyc7KysnOzs7Mv////AP///wD///8AtbW1H7KysnOysrJzs7OzL////wD///8A////AP///wCzs7MesrKyZ7Kysi7///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3907,9 +3912,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_h4xgp"]
-image = SubResource("Image_5iwlk")
+image = SubResource("Image_rhbwe")
 
-[sub_resource type="Image" id="Image_occv7"]
+[sub_resource type="Image" id="Image_n21ut"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AsrKyLrKysmewsLAd////AP///wD///8A////ALW1tTCysrJzsrKyc7W1tR////8A////AP///wC1tbUwsrKyc7KysnOzs7Mv////AP///wD///8AtbW1H7KysnOysrJzs7OzL////wD///8A////AP///wC1tbUfsrKyc7KysnOwsLAw////AP///wD///8A////AP///wCwsLAwsrKyc7KysnOwsLAw////AP///wD///8A////AP///wCwsLAwsrKyc7KysnOtra0f////AP///wD///8A////AP///wCysrIusrKyZ7Ozsx7///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wA="),
 "format": "RGBA8",
@@ -3919,9 +3924,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_wv8fa"]
-image = SubResource("Image_occv7")
+image = SubResource("Image_n21ut")
 
-[sub_resource type="Image" id="Image_ww553"]
+[sub_resource type="Image" id="Image_f15cw"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAhISEXGxsbZxoaGn8aGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGn8bGxtmIiIiFv///wD///8AGxsbZxoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBsbG2X///8A////ABoaGn8aGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhp/////AP///wAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagP///wD///8AGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoD///8A////ABoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqA////AP///wAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagP///wD///8AGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoD///8A////ABoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqA////AP///wAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagP///wD///8AGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoD///8A////ABoaGn8aGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhp/////AP///wAbGxtmGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhqAHBwcZP///wD///8AIiIiFhsbG2UaGhp/GhoagBoaGoAaGhqAGhoagBoaGoAaGhqAGhoagBoaGoAaGhp/HBwcZCQkJBX///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3931,9 +3936,9 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_g5epp"]
-image = SubResource("Image_ww553")
+image = SubResource("Image_f15cw")
 
-[sub_resource type="Image" id="Image_ea2ij"]
+[sub_resource type="Image" id="Image_s7lqy"]
 data = {
 "data": PackedByteArray("////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAqKioMHR0dNBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAeHh4zLi4uC////wD///8AHR0dNBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQB4eHjP///8A////ABwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxA////AP///wAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQP///wD///8AHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHED///8A////ABwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxA////AP///wAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQP///wD///8AHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHED///8A////ABwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxA////AP///wAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQP///wD///8AHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHED///8A////ABwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxA////AP///wAeHh4zHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHh4eMv///wD///8ALi4uCx4eHjMcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHBwcQBwcHEAcHBxAHh4eMi4uLgv///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AA=="),
 "format": "RGBA8",
@@ -3943,7 +3948,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_pda50"]
-image = SubResource("Image_ea2ij")
+image = SubResource("Image_s7lqy")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p28kc"]
 content_margin_left = 4.0
@@ -3963,6 +3968,348 @@ content_margin_top = 0.0
 content_margin_right = 4.0
 content_margin_bottom = 0.0
 color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="Theme" id="Theme_8ep8m"]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/align_to_largest_stylebox = 0
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 3
+Button/font_sizes/font_size = 16
+Button/fonts/font = ExtResource("14_tmf23")
+Button/styles/disabled = SubResource("StyleBoxFlat_klqcm")
+Button/styles/focus = SubResource("StyleBoxFlat_5fart")
+Button/styles/hover = SubResource("StyleBoxFlat_8ooym")
+Button/styles/normal = ExtResource("15_4y0nt")
+Button/styles/pressed = SubResource("StyleBoxFlat_d2avb")
+CheckButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+CheckButton/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+CheckButton/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+CheckButton/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+CheckButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+CheckButton/colors/font_outline_color = Color(0, 0, 0, 1)
+CheckButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+CheckButton/constants/check_v_offset = 0
+CheckButton/constants/h_separation = 4
+CheckButton/constants/outline_size = 0
+CheckButton/font_sizes/font_size = 16
+CheckButton/fonts/font = SubResource("FontFile_wngmd")
+CheckButton/icons/checked = SubResource("ImageTexture_tumgj")
+CheckButton/icons/checked_disabled = SubResource("ImageTexture_erq51")
+CheckButton/icons/checked_disabled_mirrored = SubResource("ImageTexture_irnpg")
+CheckButton/icons/checked_mirrored = SubResource("ImageTexture_x7gde")
+CheckButton/icons/unchecked = SubResource("ImageTexture_sfkyh")
+CheckButton/icons/unchecked_disabled = SubResource("ImageTexture_aw7b1")
+CheckButton/icons/unchecked_disabled_mirrored = SubResource("ImageTexture_o34ka")
+CheckButton/icons/unchecked_mirrored = SubResource("ImageTexture_7wmeh")
+CheckButton/styles/disabled = SubResource("StyleBoxEmpty_e65ct")
+CheckButton/styles/focus = SubResource("StyleBoxFlat_5fart")
+CheckButton/styles/hover = SubResource("StyleBoxEmpty_e65ct")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_e65ct")
+CheckButton/styles/normal = SubResource("StyleBoxEmpty_e65ct")
+CheckButton/styles/pressed = SubResource("StyleBoxEmpty_e65ct")
+HSlider/constants/center_grabber = 0
+HSlider/constants/grabber_offset = 0
+HSlider/icons/grabber = SubResource("ImageTexture_bww3q")
+HSlider/icons/grabber_disabled = SubResource("ImageTexture_d03cs")
+HSlider/icons/grabber_highlight = SubResource("ImageTexture_20ktt")
+HSlider/icons/tick = SubResource("ImageTexture_veqds")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_dd33f")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_0q5uo")
+HSlider/styles/slider = SubResource("StyleBoxFlat_u8kf1")
+ItemList/colors/font_color = Color(0.65, 0.65, 0.65, 1)
+ItemList/colors/font_hovered_color = Color(0.95, 0.95, 0.95, 1)
+ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
+ItemList/colors/font_selected_color = Color(1, 1, 1, 1)
+ItemList/colors/guide_color = Color(0.7, 0.7, 0.7, 0.25)
+ItemList/constants/h_separation = 16
+ItemList/constants/icon_margin = 4
+ItemList/constants/line_separation = 2
+ItemList/constants/outline_size = 3
+ItemList/constants/v_separation = 4
+ItemList/font_sizes/font_size = 16
+ItemList/fonts/font = ExtResource("14_tmf23")
+ItemList/styles/cursor = SubResource("StyleBoxFlat_5fart")
+ItemList/styles/cursor_unfocused = SubResource("StyleBoxFlat_5fart")
+ItemList/styles/focus = SubResource("StyleBoxFlat_5fart")
+ItemList/styles/hovered = SubResource("StyleBoxFlat_fggpj")
+ItemList/styles/panel = ExtResource("16_6v5cf")
+ItemList/styles/selected = SubResource("StyleBoxFlat_xo0or")
+ItemList/styles/selected_focus = SubResource("StyleBoxFlat_hvdvd")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/constants/line_spacing = 3
+Label/constants/outline_size = 4
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
+Label/font_sizes/font_size = 14
+Label/fonts/font = ExtResource("14_tmf23")
+Label/styles/normal = SubResource("StyleBoxEmpty_n4ghb")
+MenuBar/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+MenuBar/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+MenuBar/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+MenuBar/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+MenuBar/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+MenuBar/colors/font_outline_color = Color(0, 0, 0, 1)
+MenuBar/colors/font_pressed_color = Color(1, 1, 1, 1)
+MenuBar/constants/h_separation = 4
+MenuBar/constants/outline_size = 0
+MenuBar/font_sizes/font_size = 16
+MenuBar/fonts/font = SubResource("FontFile_wngmd")
+MenuBar/styles/disabled = SubResource("StyleBoxFlat_klqcm")
+MenuBar/styles/hover = SubResource("StyleBoxFlat_bvqb7")
+MenuBar/styles/normal = SubResource("StyleBoxFlat_tetxt")
+MenuBar/styles/pressed = SubResource("StyleBoxFlat_ewbgg")
+MenuButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+MenuButton/colors/font_disabled_color = Color(1, 1, 1, 0.3)
+MenuButton/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+MenuButton/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+MenuButton/colors/font_outline_color = Color(0, 0, 0, 1)
+MenuButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+MenuButton/constants/h_separation = 4
+MenuButton/constants/outline_size = 0
+MenuButton/font_sizes/font_size = 16
+MenuButton/fonts/font = SubResource("FontFile_wngmd")
+MenuButton/styles/disabled = SubResource("StyleBoxFlat_klqcm")
+MenuButton/styles/focus = SubResource("StyleBoxFlat_5fart")
+MenuButton/styles/hover = SubResource("StyleBoxFlat_bvqb7")
+MenuButton/styles/normal = SubResource("StyleBoxFlat_tetxt")
+MenuButton/styles/pressed = SubResource("StyleBoxFlat_ewbgg")
+OptionButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+OptionButton/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+OptionButton/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+OptionButton/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+OptionButton/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+OptionButton/colors/font_outline_color = Color(0, 0, 0, 1)
+OptionButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+OptionButton/constants/arrow_margin = 4
+OptionButton/constants/h_separation = 4
+OptionButton/constants/modulate_arrow = 0
+OptionButton/constants/outline_size = 3
+OptionButton/font_sizes/font_size = 16
+OptionButton/fonts/font = ExtResource("14_tmf23")
+OptionButton/icons/arrow = SubResource("ImageTexture_jk4wg")
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_7t34t")
+OptionButton/styles/disabled_mirrored = SubResource("StyleBoxFlat_lr0wx")
+OptionButton/styles/focus = SubResource("StyleBoxFlat_5fart")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_n4ous")
+OptionButton/styles/hover_mirrored = SubResource("StyleBoxFlat_er11d")
+OptionButton/styles/normal = ExtResource("15_4y0nt")
+OptionButton/styles/normal_mirrored = SubResource("StyleBoxFlat_jbgrk")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_qreun")
+OptionButton/styles/pressed_mirrored = SubResource("StyleBoxFlat_ydsvu")
+Panel/styles/panel = ExtResource("16_6v5cf")
+PopupMenu/colors/font_accelerator_color = Color(0.7, 0.7, 0.7, 0.8)
+PopupMenu/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+PopupMenu/colors/font_disabled_color = Color(0.4, 0.4, 0.4, 0.8)
+PopupMenu/colors/font_hover_color = Color(0.875, 0.875, 0.875, 1)
+PopupMenu/colors/font_outline_color = Color(0, 0, 0, 1)
+PopupMenu/colors/font_separator_color = Color(0.875, 0.875, 0.875, 1)
+PopupMenu/colors/font_separator_outline_color = Color(0, 0, 0, 1)
+PopupMenu/constants/h_separation = 4
+PopupMenu/constants/icon_max_width = 0
+PopupMenu/constants/indent = 10
+PopupMenu/constants/item_end_padding = 2
+PopupMenu/constants/item_start_padding = 2
+PopupMenu/constants/outline_size = 3
+PopupMenu/constants/separator_outline_size = 0
+PopupMenu/constants/v_separation = 4
+PopupMenu/font_sizes/font_separator_size = 16
+PopupMenu/font_sizes/font_size = 16
+PopupMenu/fonts/font = ExtResource("14_tmf23")
+PopupMenu/fonts/font_separator = SubResource("FontFile_wngmd")
+PopupMenu/icons/checked = SubResource("ImageTexture_cetmi")
+PopupMenu/icons/checked_disabled = SubResource("ImageTexture_5lip2")
+PopupMenu/icons/radio_checked = SubResource("ImageTexture_q1yjp")
+PopupMenu/icons/radio_checked_disabled = SubResource("ImageTexture_b0l4m")
+PopupMenu/icons/radio_unchecked = SubResource("ImageTexture_yg0yd")
+PopupMenu/icons/radio_unchecked_disabled = SubResource("ImageTexture_2m6jk")
+PopupMenu/icons/submenu = SubResource("ImageTexture_h4xgp")
+PopupMenu/icons/submenu_mirrored = SubResource("ImageTexture_wv8fa")
+PopupMenu/icons/unchecked = SubResource("ImageTexture_g5epp")
+PopupMenu/icons/unchecked_disabled = SubResource("ImageTexture_pda50")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_p28kc")
+PopupMenu/styles/labeled_separator_left = SubResource("StyleBoxLine_qwd5a")
+PopupMenu/styles/labeled_separator_right = SubResource("StyleBoxLine_qwd5a")
+PopupMenu/styles/panel = ExtResource("16_6v5cf")
+PopupMenu/styles/separator = SubResource("StyleBoxLine_qwd5a")
+
+[sub_resource type="GDScript" id="GDScript_7tqbc"]
+script/source = "extends Panel
+
+@onready var world_environment = $\"../../../WorldEnvironment\"
+
+@onready var fullscreen_option = $Fullscreen/FullscreenOption
+@onready var v_sync_option = $VSync/VSyncOption
+@onready var upscaling_option = $Upscaling/UpscalingOption
+@onready var anti_aliasing_option = $\"Anti-Aliasing/Anti-AliasingOption\"
+@onready var global_illumination_option = $GlobalIllumination/GlobalIlluminationOption
+@onready var bloom_option = $Bloom/BloomOption
+@onready var ambient_occlusion_option = $AmbientOcclusion/AmbientOcclusionOption
+@onready var screen_space_reflections_option = $ScreenSpaceReflections/ScreenSpaceReflectionsOption
+@onready var screen_space_lighting_option = $ScreenSpaceLighting/ScreenSpaceLightingOption
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	hide()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	pass
+
+func _on_fullscreen_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		get_tree().root.set_mode(Window.MODE_WINDOWED)
+	elif index == 1: # Fullscreen
+		get_tree().root.set_mode(Window.MODE_FULLSCREEN)
+	elif index == 2: # Exclusive Fullscreen
+		get_tree().root.set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
+
+func _on_v_sync_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
+	elif index == 1: # Adaptive
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
+	elif index == 2: # Enabled
+		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+
+func _on_upscaling_option_item_selected(index):
+	# Viewport scale mode setting.
+	if index == 0: # Bilinear (Fastest)
+		get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+		# FSR Sharpness is only effective when the scaling mode is FSR 1.0 or 2.2.
+	elif index == 1: # FSR 1.0 (Fast)
+		get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR
+		# FSR Sharpness is only effective when the scaling mode is FSR 1.0 or 2.2.
+		get_viewport().fsr_sharpness = 1
+	elif index == 2: # FSR 2.2 (Fast)
+		get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR2
+		# FSR Sharpness is only effective when the scaling mode is FSR 1.0 or 2.2.
+		get_viewport().fsr_sharpness = 1
+
+func _on_anti_aliasing_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
+		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
+		get_viewport().use_taa = false
+	elif index == 1: # FXAA
+		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
+		get_viewport().screen_space_aa = int(1) as Viewport.ScreenSpaceAA
+		get_viewport().use_taa = false
+	elif index == 2: # TAA
+		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
+		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
+		get_viewport().use_taa = true
+	elif index == 3: # MSAA 2x
+		get_viewport().msaa_3d = Viewport.MSAA_2X
+		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
+		get_viewport().use_taa = false
+	elif index == 4: # MSAA 4x
+		get_viewport().msaa_3d = Viewport.MSAA_4X
+		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
+		get_viewport().use_taa = false
+
+func _on_global_illumination_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		world_environment.environment.sdfgi_enabled = false
+	if index == 1: # Low
+		world_environment.environment.sdfgi_enabled = true
+		RenderingServer.gi_set_use_half_resolution(true)
+	if index == 2: # High
+		world_environment.environment.sdfgi_enabled = true
+		RenderingServer.gi_set_use_half_resolution(false)
+
+func _on_bloom_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		world_environment.environment.glow_enabled = false
+	if index == 1: # Low
+		world_environment.environment.glow_enabled = true
+		RenderingServer.environment_glow_set_use_bicubic_upscale(false)
+	if index == 2: # High
+		world_environment.environment.glow_enabled = true
+		RenderingServer.environment_glow_set_use_bicubic_upscale(true)
+
+func _on_ambient_occlusion_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		world_environment.environment.ssao_enabled = false
+	if index == 1: # Very Low
+		world_environment.environment.ssao_enabled = true
+		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_VERY_LOW, true, 0.5, 2, 50, 300)
+	if index == 2: # Low
+		world_environment.environment.ssao_enabled = true
+		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_LOW, true, 0.5, 2, 50, 300)
+	if index == 3: # Medium
+		world_environment.environment.ssao_enabled = true
+		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_MEDIUM, true, 0.5, 2, 50, 300)
+	if index == 4: # High
+		world_environment.environment.ssao_enabled = true
+		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_HIGH, true, 0.5, 2, 50, 300)
+	if index == 5: # Ultra
+		world_environment.environment.ssao_enabled = true
+		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_ULTRA, true, 0.5, 2, 50, 300)
+
+func _on_screen_space_reflections_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		world_environment.environment.set_ssr_enabled(false)
+	elif index == 1: # Low
+		world_environment.environment.set_ssr_enabled(true)
+		world_environment.environment.set_ssr_max_steps(8)
+	elif index == 2: # Medium
+		world_environment.environment.set_ssr_enabled(true)
+		world_environment.environment.set_ssr_max_steps(32)
+	elif index == 3: # High
+		world_environment.environment.set_ssr_enabled(true)
+		world_environment.environment.set_ssr_max_steps(56)
+
+func _on_screen_space_lighting_option_item_selected(index):
+	if index == 0: # Disabled (default)
+		world_environment.environment.ssil_enabled = false
+	if index == 1: # Very Low
+		world_environment.environment.ssil_enabled = true
+		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_VERY_LOW, true, 0.5, 4, 50, 300)
+	if index == 2: # Low
+		world_environment.environment.ssil_enabled = true
+		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_LOW, true, 0.5, 4, 50, 300)
+	if index == 3: # Medium
+		world_environment.environment.ssil_enabled = true
+		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_MEDIUM, true, 0.5, 4, 50, 300)
+	if index == 4: # High
+		world_environment.environment.ssil_enabled = true
+		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_HIGH, true, 0.5, 4, 50, 300)
+	if index == 5: # Ultra
+		world_environment.environment.ssil_enabled = true
+		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_ULTRA, true, 0.5, 4, 50, 300)
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d1jns"]
+shader = ExtResource("13_j8180")
+shader_parameter/blur_type = 0
+shader_parameter/blur_amount = 16
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_direction = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vm000"]
+shader = ExtResource("15_i2kdp")
+shader_parameter/blur_type = 0
+shader_parameter/blur_amount = 16
+shader_parameter/blur_radius = 1.0
+shader_parameter/blur_direction = Vector2(1, 1)
+shader_parameter/tint_strength = 0.3
+shader_parameter/alpha = 0.6
 
 [sub_resource type="Theme" id="Theme_777ui"]
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
@@ -4142,160 +4489,6 @@ PopupMenu/styles/labeled_separator_left = SubResource("StyleBoxLine_qwd5a")
 PopupMenu/styles/labeled_separator_right = SubResource("StyleBoxLine_qwd5a")
 PopupMenu/styles/panel = ExtResource("16_6v5cf")
 PopupMenu/styles/separator = SubResource("StyleBoxLine_qwd5a")
-
-[sub_resource type="GDScript" id="GDScript_3jei8"]
-script/source = "extends Panel
-
-@onready var world_environment = $\"../../../WorldEnvironment\"
-
-@onready var fullscreen_option = $Fullscreen/FullscreenOption
-@onready var v_sync_option = $VSync/VSyncOption
-@onready var upscaling_option = $Upscaling/UpscalingOption
-@onready var anti_aliasing_option = $\"Anti-Aliasing/Anti-AliasingOption\"
-@onready var global_illumination_option = $GlobalIllumination/GlobalIlluminationOption
-@onready var bloom_option = $Bloom/BloomOption
-@onready var ambient_occlusion_option = $AmbientOcclusion/AmbientOcclusionOption
-@onready var screen_space_reflections_option = $ScreenSpaceReflections/ScreenSpaceReflectionsOption
-@onready var screen_space_lighting_option = $ScreenSpaceLighting/ScreenSpaceLightingOption
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	hide()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-func _on_fullscreen_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		get_tree().root.set_mode(Window.MODE_WINDOWED)
-	elif index == 1: # Fullscreen
-		get_tree().root.set_mode(Window.MODE_FULLSCREEN)
-	elif index == 2: # Exclusive Fullscreen
-		get_tree().root.set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
-
-func _on_v_sync_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
-	elif index == 1: # Adaptive
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
-	elif index == 2: # Enabled
-		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
-
-func _on_upscaling_option_item_selected(index):
-	# Viewport scale mode setting.
-	if index == 0: # Bilinear (Fastest)
-		get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
-		# FSR Sharpness is only effective when the scaling mode is FSR 1.0 or 2.2.
-	elif index == 1: # FSR 1.0 (Fast)
-		get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR
-		# FSR Sharpness is only effective when the scaling mode is FSR 1.0 or 2.2.
-		get_viewport().fsr_sharpness = 1
-	elif index == 2: # FSR 2.2 (Fast)
-		get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_FSR2
-		# FSR Sharpness is only effective when the scaling mode is FSR 1.0 or 2.2.
-		get_viewport().fsr_sharpness = 1
-
-func _on_anti_aliasing_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
-		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
-		get_viewport().use_taa = false
-	elif index == 1: # FXAA
-		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
-		get_viewport().screen_space_aa = int(1) as Viewport.ScreenSpaceAA
-		get_viewport().use_taa = false
-	elif index == 2: # TAA
-		get_viewport().msaa_3d = Viewport.MSAA_DISABLED
-		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
-		get_viewport().use_taa = true
-	elif index == 3: # MSAA 2x
-		get_viewport().msaa_3d = Viewport.MSAA_2X
-		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
-		get_viewport().use_taa = false
-	elif index == 4: # MSAA 4x
-		get_viewport().msaa_3d = Viewport.MSAA_4X
-		get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
-		get_viewport().use_taa = false
-
-func _on_global_illumination_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		world_environment.environment.sdfgi_enabled = false
-	if index == 1: # Low
-		world_environment.environment.sdfgi_enabled = true
-		RenderingServer.gi_set_use_half_resolution(true)
-	if index == 2: # High
-		world_environment.environment.sdfgi_enabled = true
-		RenderingServer.gi_set_use_half_resolution(false)
-
-func _on_bloom_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		world_environment.environment.glow_enabled = false
-	if index == 1: # Low
-		world_environment.environment.glow_enabled = true
-		RenderingServer.environment_glow_set_use_bicubic_upscale(false)
-	if index == 2: # High
-		world_environment.environment.glow_enabled = true
-		RenderingServer.environment_glow_set_use_bicubic_upscale(true)
-
-func _on_ambient_occlusion_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		world_environment.environment.ssao_enabled = false
-	if index == 1: # Very Low
-		world_environment.environment.ssao_enabled = true
-		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_VERY_LOW, true, 0.5, 2, 50, 300)
-	if index == 2: # Low
-		world_environment.environment.ssao_enabled = true
-		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_LOW, true, 0.5, 2, 50, 300)
-	if index == 3: # Medium
-		world_environment.environment.ssao_enabled = true
-		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_MEDIUM, true, 0.5, 2, 50, 300)
-	if index == 4: # High
-		world_environment.environment.ssao_enabled = true
-		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_HIGH, true, 0.5, 2, 50, 300)
-	if index == 5: # Ultra
-		world_environment.environment.ssao_enabled = true
-		RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_ULTRA, true, 0.5, 2, 50, 300)
-
-func _on_screen_space_reflections_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		world_environment.environment.set_ssr_enabled(false)
-	elif index == 1: # Low
-		world_environment.environment.set_ssr_enabled(true)
-		world_environment.environment.set_ssr_max_steps(8)
-	elif index == 2: # Medium
-		world_environment.environment.set_ssr_enabled(true)
-		world_environment.environment.set_ssr_max_steps(32)
-	elif index == 3: # High
-		world_environment.environment.set_ssr_enabled(true)
-		world_environment.environment.set_ssr_max_steps(56)
-
-func _on_screen_space_lighting_option_item_selected(index):
-	if index == 0: # Disabled (default)
-		world_environment.environment.ssil_enabled = false
-	if index == 1: # Very Low
-		world_environment.environment.ssil_enabled = true
-		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_VERY_LOW, true, 0.5, 4, 50, 300)
-	if index == 2: # Low
-		world_environment.environment.ssil_enabled = true
-		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_LOW, true, 0.5, 4, 50, 300)
-	if index == 3: # Medium
-		world_environment.environment.ssil_enabled = true
-		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_MEDIUM, true, 0.5, 4, 50, 300)
-	if index == 4: # High
-		world_environment.environment.ssil_enabled = true
-		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_HIGH, true, 0.5, 4, 50, 300)
-	if index == 5: # Ultra
-		world_environment.environment.ssil_enabled = true
-		RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_ULTRA, true, 0.5, 4, 50, 300)
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d1jns"]
-shader = ExtResource("13_j8180")
-shader_parameter/blur_type = 0
-shader_parameter/blur_amount = 16
-shader_parameter/blur_radius = 1.0
-shader_parameter/blur_direction = Vector2(1, 1)
 
 [node name="MenuBG" type="Node3D"]
 
@@ -4672,25 +4865,12 @@ theme_override_font_sizes/font_size = 32
 text = "Ver. Alpha: X.XXXX"
 metadata/_edit_use_anchors_ = true
 
-[node name="Crd" type="Label" parent="MenuHUD/MainMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 39.2
-anchor_top = 21.6
-anchor_right = 44.475
-anchor_bottom = 22.2667
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 24
-text = "Created by NikX"
-metadata/_edit_use_anchors_ = true
-
 [node name="MenuPanel" type="Panel" parent="MenuHUD/MainMenu"]
 material = SubResource("ShaderMaterial_8ese1")
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 27.8
-anchor_top = 22.4
+anchor_left = 39.0
+anchor_top = 15.8
 anchor_right = 48.0
 anchor_bottom = 27.0
 metadata/_edit_use_anchors_ = true
@@ -4699,11 +4879,12 @@ metadata/_edit_use_anchors_ = true
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.059406
-anchor_top = 0.130435
-anchor_right = 0.290842
-anchor_bottom = 0.521739
-offset_right = 1.52588e-05
+anchor_left = 0.222222
+anchor_top = 0.0379464
+anchor_right = 0.222222
+anchor_bottom = 0.0379464
+offset_right = 200.0
+offset_bottom = 65.0
 theme_override_font_sizes/font_size = 32
 text = "Play"
 metadata/_edit_use_anchors_ = true
@@ -4712,32 +4893,65 @@ metadata/_edit_use_anchors_ = true
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.388911
-anchor_top = 0.130435
-anchor_right = 0.620347
-anchor_bottom = 0.521739
-offset_right = -3.05176e-05
+anchor_left = 0.222222
+anchor_top = 0.225446
+anchor_right = 0.222222
+anchor_bottom = 0.225446
+offset_right = 200.0
+offset_bottom = 65.0
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
+button_group = SubResource("ButtonGroup_h2rcy")
 text = "Options"
+metadata/_edit_use_anchors_ = true
+
+[node name="Credits" type="Button" parent="MenuHUD/MainMenu/MenuPanel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.222222
+anchor_top = 0.412946
+anchor_right = 0.222222
+anchor_bottom = 0.412946
+offset_right = 200.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 32
+toggle_mode = true
+button_group = SubResource("ButtonGroup_h2rcy")
+text = "Credits"
 metadata/_edit_use_anchors_ = true
 
 [node name="Quit" type="Button" parent="MenuHUD/MainMenu/MenuPanel"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.718257
-anchor_top = 0.130435
-anchor_right = 0.949693
-anchor_bottom = 0.521739
+anchor_left = 0.222222
+anchor_top = 0.600446
+anchor_right = 0.222222
+anchor_bottom = 0.600446
+offset_right = 200.0
+offset_bottom = 65.0
 theme_override_font_sizes/font_size = 32
 text = "Quit"
+metadata/_edit_use_anchors_ = true
+
+[node name="Crd" type="Label" parent="MenuHUD/MainMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 42.2
+anchor_top = 24.6
+anchor_right = 47.475
+anchor_bottom = 25.2667
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Created by NikX"
 metadata/_edit_use_anchors_ = true
 
 [node name="GraphicsMenu" type="Panel" parent="MenuHUD/MainMenu"]
 visible = false
 z_index = 1
-material = SubResource("ShaderMaterial_vm000")
+material = SubResource("ShaderMaterial_2lsyx")
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -1.2
@@ -4745,8 +4959,8 @@ anchor_right = 16.0
 anchor_bottom = 27.4
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_777ui")
-script = SubResource("GDScript_3jei8")
+theme = SubResource("Theme_8ep8m")
+script = SubResource("GDScript_7tqbc")
 metadata/_edit_use_anchors_ = true
 
 [node name="WarningLabel" type="Label" parent="MenuHUD/MainMenu/GraphicsMenu"]
@@ -5269,6 +5483,108 @@ max_value = 4.0
 step = 0.001
 value = 2.0
 
+[node name="Credits" type="Panel" parent="MenuHUD/MainMenu"]
+visible = false
+z_index = 1
+material = SubResource("ShaderMaterial_vm000")
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -1.2
+anchor_right = 16.0
+anchor_bottom = 27.4
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_777ui")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="MenuHUD/MainMenu/Credits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.49
+anchor_top = 0.111
+anchor_right = 0.49
+anchor_bottom = 0.111
+offset_left = -65.6
+offset_top = -14.984
+offset_right = 65.4
+offset_bottom = 14.016
+theme_override_font_sizes/font_size = 32
+text = "Credits"
+
+[node name="CreditText" type="RichTextLabel" parent="MenuHUD/MainMenu/Credits"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.037
+anchor_top = 0.154
+anchor_right = 0.037
+anchor_bottom = 0.154
+offset_left = 0.32
+offset_top = -0.17601
+offset_right = 600.32
+offset_bottom = 823.824
+bbcode_enabled = true
+text = "[b]Programming and game design[/b]
+Nikola /NikX/ Dimitrov
+
+[b]Used Resources[/b]
+[b]3D Models:[/b]
+• [url=https://poly.pizza/bundle/Ultimate-Space-Kit-YWh743lqGX]Ultimate Space Kit by Quaternius via Poly Pizza[/url]
+• [url=https://quaternius.com/packs/stylizednaturemegakit.html]Stylized Nature MegaKit by Quaternius[/url]
+• [url=https://poly.pizza/m/b3Kia9N2fS2/]Clouds by Jarlan Perez [CC-BY] via Poly Pizza[/url]
+• [url=https://poly.pizza/m/mXKbcMPLSS]Turret by Kenney[/url]
+• [url=https://poly.pizza/m/U8c6njvFry]Spacecraft Speeder by Kenney[/url]
+• [url=https://poly.pizza/bundle/City-Kit-0CkvGrBJ0u]City Kit by Kenney via Poly Pizza[/url]
+• [url=https://www.cgtrader.com/free-3d-models/space/other/cartoon-space-humster-astronaut-toy]Cartoon Space Hamster Astronaut Toy by spacepotato[/url]
+• [url=https://poly.pizza/m/2WQIUVj5qr]Mirror by Isa Lousberg[/url]
+• [url=https://creativecommons.org/licenses/by/3.0/]Hover Fighter: Beetle by Aaron Clifford [CC-BY][/url] via [url=https://poly.pizza/m/9teac58P9uv]Poly Pizza[/url]
+• [url=https://tinytreats.itch.io/pretty-park]Tiny Treats - Pretty park set by TinyTreats & KayKit via itch.io[/url]
+• [url=https://www.turbosquid.com/3d-models/lowpoly-stylized-hamster-2191765]Lowpoly stylized Hamster by Lucy_Sail via Turbosquid[/url]
+
+[b]Textures:[/b]
+• [url=https://www.vecteezy.com/png/21612232-cartoon-grass-leaves-clip-art]Cartoon grass leaves clip art Free PNG by Ovidiu Timplaru via Vecteezy[/url]
+• [url=https://www.flaticon.com/free-icon/hamster_2372882?term=hamster&related_id=2372882]Hamster free icon by Smashicons via Flaticon[/url]
+• [url=https://ambientcg.com/a/Pipe004]Pipe004 by ambientCG via ambientCG.com[/url]
+• [url=https://ambientcg.com/a/Tape001]Tape001 by ambientCG via ambientCG.com[/url]
+• [url=https://ambientcg.com/a/Tiles113]Tiles113 by ambientCG via ambientCG.com[/url]
+• [url=https://kenney.nl/assets/1-bit-input-prompts-pixel-16]1-Bit Input Prompts Pixel 16× by Kenney via kenney.nl[/url]
+• [url=https://www.flaticon.com/free-icon/focus-points_9736403?term=crosshair&page=1&position=87&related_id=9736403]Focus Points free icon by Fajrul Fitrianto via Flaticon[/url]
+• [url=https://www.flaticon.com/free-icon/focus_12796947?term=crosshair&page=1&position=57&origin=search&related_id=12796947]Focus free icon by See Icons via Flaticon[/url]
+• [url=https://www.flaticon.com/free-icon/first-aid-kit_862032?term=first-aid-kit&page=1&position=3&origin=search&related_id=862032]First Aid Kit free icon by Good Ware via Flaticon[/url]
+• [url=https://www.flaticon.com/free-icon/turret_6754318?term=turret&page=1&position=2&origin=search&related_id=6754318]Turret free icon by juicy_fish via Flaticon[/url]
+• [url=https://integritysg.gumroad.com/l/low-poly-skies?a=784689267]Beautiful Low Poly Skies by Integrity Software & Games via Gumroad[/url]
+
+[b]Fonts:[/b]
+• [url=https://www.dafont.com/vcr-osd-mono.font]VCR OSD Mono by Riciery Leal via dafont.com[/url]
+
+[b]SFX:[/b]
+• [url=https://freesound.org/s/212025/]Sci-fi Laboratory Ambience by qubodup[/url] — License: Attribution 4.0  
+• [url=https://freesound.org/s/211683/]control_room.wav by Diboz[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/191852/]Kaiju Lab Interior Ambience #1.wav by Vortex4[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/184313/]Cinematic Deep Rumble by swiftoid[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/564436/]Forest Ambience 1.wav by Fester993[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/533014/]chair_lift2.wav by zanox[/url] — License: Attribution 4.0  
+• [url=https://freesound.org/s/213384/]Hover engine by peridactyloptrix[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/209771/]Metal Hit Cartoon by Johnnyfarmer[/url] — License: Creative Commons 0  
+• [url=https://pixabay.com/sound-effects/metal-whoosh-hit-9-201909/]Metal Whoosh Hit 9 by floraphonic via Pixabay[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/207824/]Thump.wav by Macif[/url] — License: Creative Commons 0  
+• [url=https://pixabay.com/sound-effects/explosion-6055/]Explosion by FlashTrauma[/url]  
+• [url=https://freesound.org/s/462958/]Cartoon jump.wav by Bastianhallo[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/511318/]Landing on grass by onehugeeye[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/555062/]Cold Wind Loop by magnuswaker[/url] — License: Creative Commons 0  
+• [url=https://freesound.org/s/168114/]Whoosh woow pt26.wav by Speedenza[/url] — License: Attribution NonCommercial 4.0  
+• [url=https://mixkit.co/free-sound-effects/technology/]Robot positive item acquired by Mixkit[/url]  
+• [url=https://freesound.org/s/688845/]Short Jingle by SilverIllusionist[/url] — License: Attribution 4.0  
+• [url=https://freesound.org/s/322505/]Explosion 6 by LiamG_SFX[/url] — License: Attribution NonCommercial 4.0  
+• [url=https://uppbeat.io/sfx/category/digital-and-ui/ui]Mobile Game Smash by Betacut via Uppbeat[/url]  
+• [url=https://uppbeat.io/sfx/category/digital-and-ui/ui]Sci fi interface menu select by Betacut via Uppbeat[/url]  
+• [url=https://uppbeat.io/sfx/category/digital-and-ui/ui]Arcade game power up by EpicStockMedia via Uppbeat[/url]
+
+[b]Music:[/b]
+• [url=https://opengameart.org/content/space-shooter-music]Space Shooter Music by OBLIDIVM (via OpenGameArt.org)[/url]  
+• [url=http://oblidivmmusic.blogspot.com.es/]OBLIDIVM Blog[/url]
+"
+script = ExtResource("18_b8e0b")
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_srmit")
 volume_db = -15.0
@@ -5277,6 +5593,7 @@ bus = &"Music"
 
 [connection signal="pressed" from="MenuHUD/MainMenu/MenuPanel/PlayButton" to="MenuHUD/MainMenu" method="_on_play_button_pressed"]
 [connection signal="toggled" from="MenuHUD/MainMenu/MenuPanel/Options" to="MenuHUD/MainMenu" method="_on_options_toggled"]
+[connection signal="toggled" from="MenuHUD/MainMenu/MenuPanel/Credits" to="MenuHUD/MainMenu" method="_on_credits_toggled"]
 [connection signal="pressed" from="MenuHUD/MainMenu/MenuPanel/Quit" to="MenuHUD/MainMenu" method="_on_quit_pressed"]
 [connection signal="item_selected" from="MenuHUD/MainMenu/GraphicsMenu/Fullscreen/FullscreenOption" to="MenuHUD/MainMenu/GraphicsMenu" method="_on_fullscreen_option_item_selected"]
 [connection signal="item_selected" from="MenuHUD/MainMenu/GraphicsMenu/VSync/VSyncOption" to="MenuHUD/MainMenu/GraphicsMenu" method="_on_v_sync_option_item_selected"]

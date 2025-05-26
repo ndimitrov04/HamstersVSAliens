@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="HamstersVSAliens"
-config/version="0.245"
+config/version="0.25"
 run/main_scene="res://loading_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://hamster.png"
@@ -98,6 +98,11 @@ dash={
 debug_axis_lock={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":76,"key_label":0,"unicode":108,"location":0,"echo":false,"script":null)
+]
+}
+debug_ka={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":47,"key_label":0,"unicode":47,"location":0,"echo":false,"script":null)
 ]
 }
 

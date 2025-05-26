@@ -12,6 +12,7 @@ var next_scene = "res://initial_loader.tscn"
 @onready var quit = $MenuPanel/Quit
 
 @onready var graphics_menu = $GraphicsMenu
+@onready var credits = $Credits
 
 var progress = []
 
@@ -38,3 +39,9 @@ func _on_options_toggled(toggled_on):
 
 func _on_quit_pressed():
 	get_tree().quit()
+
+func _on_credits_toggled(toggled_on):
+	if toggled_on:
+		credits.show()
+	else:
+		credits.hide()
