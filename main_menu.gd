@@ -1,7 +1,10 @@
 extends Control
 
-#var next_scene = "res://initial_loader.tscn"  #this results in artifacting for some reason. 
-var next_scene = "res://Scenes/Stages/stage_grasslands.tscn"
+var next_scene = "res://initial_loader.tscn"
+# For some reason, adding a booster and/or jumppad to the 
+# shader compilation scene, results in visual artifacts
+# for the entire game?!
+#var next_scene = "res://Scenes/Stages/stage_grasslands.tscn"
 
 @onready var title_panel = $TitlePanel
 @onready var title = $TitlePanel/Title

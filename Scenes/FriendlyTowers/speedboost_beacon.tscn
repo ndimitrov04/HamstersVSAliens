@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cd38ytne4dlvk"]
+[gd_scene load_steps=11 format=3 uid="uid://cd38ytne4dlvk"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/speedboost_area.gd" id="1_1aggo"]
 [ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_hrxe1"]
@@ -32,6 +32,9 @@ size = Vector3(0.01, 0.002, 0.01)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_co83g"]
 radius = 500.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qihua"]
+load_path = "res://.godot/imported/circleg2.png-12a731e319ecf100943f250a4a3a2f4a.s3tc.ctex"
 
 [node name="SpeedboostBeacon" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.98586, 0)
@@ -68,6 +71,15 @@ script = ExtResource("1_1aggo")
 
 [node name="Supportbox" type="CollisionShape3D" parent="BoostArea"]
 shape = SubResource("SphereShape3D_co83g")
+
+[node name="AreaViewer" type="Decal" parent="BoostArea"]
+sorting_offset = 1.0
+size = Vector3(500, 200, 500)
+texture_albedo = SubResource("CompressedTexture2D_qihua")
+emission_energy = 0.5
+modulate = Color(5.96821e-06, 0.657983, 0.998477, 1)
+albedo_mix = 0.3
+cull_mask = 2
 
 [node name="ShieldRegenTick" type="Timer" parent="."]
 wait_time = 0.5

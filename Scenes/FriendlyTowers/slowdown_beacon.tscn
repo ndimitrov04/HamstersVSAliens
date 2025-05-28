@@ -1,0 +1,84 @@
+[gd_scene load_steps=9 format=3 uid="uid://hnr2uthyntx7"]
+
+[ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/slowdown_area.gd" id="1_cyvnf"]
+[ext_resource type="Texture2D" uid="uid://0p70m0k8yjvq" path="res://Textures/HUD/circleg2.png" id="3_2m3xr"]
+[ext_resource type="ArrayMesh" uid="uid://cacd44ot8cv3e" path="res://ImportedModels/Beacon/model.obj" id="3_6cftd"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4wut4"]
+rough = true
+absorbent = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4siy1"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.270588)
+metallic = 1.0
+roughness = 0.5
+emission_enabled = true
+emission = Color(0.41824, 0.601976, 1, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_0eot8"]
+material = SubResource("StandardMaterial3D_4siy1")
+radius = 7.0
+height = 14.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4y2wa"]
+points = PackedVector3Array(0.364698, 0.771721, 0.0329169, -0.54286, -0.385255, -0.0409439, -0.54286, -0.385255, 0.0600249, 0.444554, -0.739602, -0.0663423, 0.0647233, -0.385255, 0.541241, 0.0141347, 0.424796, -0.471467, -0.312335, 0.761461, 0.171609, -0.365592, -0.739602, -0.294199, -0.273412, 0.782942, -0.228888, -0.0617481, -0.739602, 0.439959, 0.039429, -0.739602, -0.446173, 0.444554, -0.385255, 0.31328, 0.176965, 0.77231, 0.315121, 0.44505, -0.26824, -0.25455, -0.26431, -0.258521, 0.490444, 0.199519, 0.768979, -0.318075, -0.239016, 0.424796, -0.420774, -0.41618, -0.739602, 0.16141, -0.0111595, 0.424796, 0.465254, 0.469848, 0.424796, -0.0156497, -0.466873, 0.424796, 0.0095405, -0.466873, -0.385255, 0.31328, -0.279866, -0.371086, -0.430234, -0.492167, -0.359876, -0.24361, 0.241991, 0.424796, 0.389163, 0.52054, -0.385255, 0.0854233, 0.276285, -0.698613, 0.320815, 0.267286, -0.258521, 0.490444, -0.173927, 0.76422, 0.311836, 0.325219, 0.78879, 0.177581, 0.22641, 0.399872, -0.394288, -0.0111595, 0.779451, -0.370181)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ngg41"]
+radius = 500.0
+
+[node name="SlowdownBeacon" type="RigidBody3D"]
+collision_layer = 3
+collision_mask = 3
+mass = 2500.0
+physics_material_override = SubResource("PhysicsMaterial_4wut4")
+script = ExtResource("1_cyvnf")
+metadata/hp = 200
+metadata/fallpoint = 35
+metadata/shield = 1000
+metadata/block_type = 2
+
+[node name="Shield" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79916, 0)
+mesh = SubResource("SphereMesh_0eot8")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.6699, 0)
+
+[node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.602364, 0)
+mesh = ExtResource("3_6cftd")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0.602364, 0)
+shape = SubResource("ConvexPolygonShape3D_4y2wa")
+
+[node name="DebuffArea" type="Area3D" parent="."]
+
+[node name="Debuffbox" type="CollisionShape3D" parent="DebuffArea"]
+shape = SubResource("SphereShape3D_ngg41")
+
+[node name="AreaViewer" type="Decal" parent="DebuffArea"]
+sorting_offset = 1.0
+size = Vector3(500, 200, 500)
+texture_albedo = ExtResource("3_2m3xr")
+emission_energy = 0.5
+modulate = Color(0.978607, 0.442078, 0, 1)
+albedo_mix = 0.6
+cull_mask = 2
+
+[node name="ShieldRegenTick" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="ShieldRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="body_entered" from="DebuffArea" to="." method="_on_debuff_area_body_entered"]
+[connection signal="body_exited" from="DebuffArea" to="." method="_on_debuff_area_body_exited"]
+[connection signal="timeout" from="ShieldRegenTick" to="." method="_on_shield_regen_tick_timeout"]
+[connection signal="timeout" from="ShieldRegenTimer" to="." method="_on_shield_regen_timer_timeout"]

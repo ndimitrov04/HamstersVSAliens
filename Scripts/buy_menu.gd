@@ -11,9 +11,10 @@ const PREDICTIVE_TURRET = preload("res://Scenes/FriendlyTowers/predictive_turret
 const SPEEDBOOST_TOWER = preload("res://Scenes/FriendlyTowers/speedboost_beacon.tscn")
 const REGENERATION_TOWER = preload("res://Scenes/FriendlyTowers/regeneration_beacon.tscn")
 const SHIELD_BEACON = preload("res://Scenes/FriendlyTowers/shield_beacon.tscn")
+const SLOWDOWN_BEACON = preload("res://Scenes/FriendlyTowers/slowdown_beacon.tscn")
 
-const TOWERS = [FAST_TURRET, PREDICTIVE_TURRET, SPEEDBOOST_TOWER, REGENERATION_TOWER, SHIELD_BEACON]
-const PRICES = [40,80,80,150,70]
+const TOWERS = [FAST_TURRET, PREDICTIVE_TURRET, SPEEDBOOST_TOWER, REGENERATION_TOWER, SHIELD_BEACON, SLOWDOWN_BEACON]
+const PRICES = [40,80,80,150,70,100]
 
 const BUILDHEIGHT = 30
 const TOWERHEIGHT = 48
@@ -31,18 +32,19 @@ func _physics_process(_delta):
 		else:
 			tower_list.set_item_disabled(i, false)
 
-func _on_tower_list_item_clicked(index, _at_position, _mouse_button_index):
-	if player.build_spot.building == null:
-		#Spawn tower
-		var tower = TOWER.instantiate()
-		friendlies.add_child(tower)
-		tower.global_position = player.build_spot.global_position + Vector3(0,BUILDHEIGHT,0)
-		#Spawn turret/beacon on top of tower
-		var building = TOWERS[index].instantiate()
-		friendlies.add_child(building)
-		building.global_position = player.build_spot.global_position + Vector3(0,TOWERHEIGHT,0)
-		player.build_spot.building = building
-		building.build_spot = player.build_spot
-		player.gold -= PRICES[index]
-	else:
-		print("BUILDING IN OCCUPIED SPACE!")
+func _on_tower_list_item_clicked(index, _at_position, mouse_button_index):
+	if mouse_button_index == MOUSE_BUTTON_LEFT:
+		if player.build_spot.building == null:
+			#Spawn tower
+			var tower = TOWER.instantiate()
+			friendlies.add_child(tower)
+			tower.global_position = player.build_spot.global_position + Vector3(0,BUILDHEIGHT,0)
+			#Spawn turret/beacon on top of tower
+			var building = TOWERS[index].instantiate()
+			friendlies.add_child(building)
+			building.global_position = player.build_spot.global_position + Vector3(0,TOWERHEIGHT,0)
+			player.build_spot.building = building
+			building.build_spot = player.build_spot
+			player.gold -= PRICES[index]
+		else:
+			print("BUILDING IN OCCUPIED SPACE!")

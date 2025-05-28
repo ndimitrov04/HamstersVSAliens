@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cv5b22ejhfc0d"]
+[gd_scene load_steps=10 format=3 uid="uid://cv5b22ejhfc0d"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/regeneration_area.gd" id="1_e04d0"]
 [ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_gi338"]
@@ -29,6 +29,9 @@ points = PackedVector3Array(0.364698, 0.771721, 0.0329169, -0.54286, -0.385255, 
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_co83g"]
 radius = 500.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eyqg3"]
+load_path = "res://.godot/imported/circleg2.png-12a731e319ecf100943f250a4a3a2f4a.s3tc.ctex"
 
 [node name="RegenerationBeacon" type="RigidBody3D"]
 collision_layer = 3
@@ -66,6 +69,15 @@ autostart = true
 
 [node name="Supportbox" type="CollisionShape3D" parent="BoostArea"]
 shape = SubResource("SphereShape3D_co83g")
+
+[node name="AreaViewer" type="Decal" parent="BoostArea"]
+sorting_offset = 1.0
+size = Vector3(500, 200, 500)
+texture_albedo = SubResource("CompressedTexture2D_eyqg3")
+emission_energy = 0.5
+modulate = Color(0.325047, 0.733543, 0, 1)
+albedo_mix = 0.6
+cull_mask = 2
 
 [node name="ShieldRegenTick" type="Timer" parent="."]
 wait_time = 0.5
