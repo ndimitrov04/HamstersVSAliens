@@ -7,11 +7,13 @@ extends Control
 const TOWER = preload("res://Scenes/FriendlyTowers/tower.tscn")
 
 const FAST_TURRET = preload("res://Scenes/FriendlyTowers/fast_turret.tscn")
+const PREDICTIVE_TURRET = preload("res://Scenes/FriendlyTowers/predictive_turret.tscn")
 const SPEEDBOOST_TOWER = preload("res://Scenes/FriendlyTowers/speedboost_beacon.tscn")
 const REGENERATION_TOWER = preload("res://Scenes/FriendlyTowers/regeneration_beacon.tscn")
+const SHIELD_BEACON = preload("res://Scenes/FriendlyTowers/shield_beacon.tscn")
 
-const TOWERS = [FAST_TURRET, SPEEDBOOST_TOWER, REGENERATION_TOWER]
-const PRICES = [10,20,20]
+const TOWERS = [FAST_TURRET, PREDICTIVE_TURRET, SPEEDBOOST_TOWER, REGENERATION_TOWER, SHIELD_BEACON]
+const PRICES = [40,80,80,150,70]
 
 const BUILDHEIGHT = 30
 const TOWERHEIGHT = 48

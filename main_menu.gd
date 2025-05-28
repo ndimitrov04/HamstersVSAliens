@@ -1,6 +1,7 @@
 extends Control
 
-var next_scene = "res://initial_loader.tscn"
+#var next_scene = "res://initial_loader.tscn"  #this results in artifacting for some reason. 
+var next_scene = "res://Scenes/Stages/stage_grasslands.tscn"
 
 @onready var title_panel = $TitlePanel
 @onready var title = $TitlePanel/Title

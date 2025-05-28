@@ -25,6 +25,7 @@ points = PackedVector3Array(-0.0268873, -0.487145, -0.0151637, 0.00348619, 0.030
 [node name="LightBullet" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 4
+collision_priority = 4.0
 input_ray_pickable = false
 mass = 0.01
 physics_material_override = SubResource("PhysicsMaterial_hoq7w")

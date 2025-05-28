@@ -27,6 +27,7 @@ points = PackedVector3Array(-0.0429879, -0.779441, -0.0242621, 0.00561264, 0.048
 [node name="DestroyerBullet" type="RigidBody3D"]
 collision_layer = 2
 collision_mask = 2
+collision_priority = 4.0
 input_ray_pickable = false
 mass = 0.01
 physics_material_override = SubResource("PhysicsMaterial_s1ap7")

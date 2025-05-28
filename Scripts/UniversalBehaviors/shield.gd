@@ -37,7 +37,7 @@ func _on_body_entered(body):
 			shieldHP -= body.damage
 			var explosion = EXPLOSION.instantiate()
 			add_sibling(explosion)
-			explosion.global_position = global_position
+			explosion.global_position = body.global_position
 			explosion.amount = 64
 			explosion.emitting = true
 

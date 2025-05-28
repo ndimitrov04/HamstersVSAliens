@@ -14,6 +14,10 @@ extends Panel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+	#get_viewport().msaa_3d = Viewport.MSAA_DISABLED
+	#get_viewport().screen_space_aa = int(0) as Viewport.ScreenSpaceAA
+	#get_viewport().use_taa = false
 	hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

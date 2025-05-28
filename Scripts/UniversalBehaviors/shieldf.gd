@@ -1,6 +1,10 @@
 extends Area3D
 
+@onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
+
 @onready var model = $Model
+@onready var model_inside = $ModelInside
+
 @onready var hitbox = $Hitbox
 @onready var shield_regen_tick = $ShieldRegenTick
 @onready var shield_regen_timer = $ShieldRegenTimer
@@ -19,17 +23,28 @@ func _physics_process(_delta):
 	if shieldHP <= 0:
 		shieldHP = 0
 		model.hide()
+		model_inside.hide()
 		monitoring = false
 	else:
 		model.show()
+		model_inside.show()
 		monitoring = true
 		
 	if shieldHP > max_shieldHP:
 		shieldHP = max_shieldHP
 
 func _on_body_entered(body):
+	print("hit")
 	if "type" in body:
+		print("hitbody has type")
 		if body.type == block_type:
+			var explosion = EXPLOSION.instantiate()
+			add_sibling(explosion)
+			explosion.global_position = body.global_position
+			explosion.amount = 256
+			explosion.explosiveness = 0.9
+			explosion.emitting = true
+			print("hitbody has correct block type")
 			body.queue_free()
 			shield_regen = false
 			shieldHP -= body.damage
