@@ -21,7 +21,7 @@ func _ready():
 	SKYBOUNDS[0] = get_parent().get_parent().get_parent().SKYBOUNDS[0]
 	SKYBOUNDS[1] = get_parent().get_parent().get_parent().SKYBOUNDS[1]
 	randf_range(pause_interval-0.5,pause_interval+0.5)
-	y_level = global_position.y
+	y_level = get_parent().global_position.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):

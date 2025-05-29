@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://vj8hgbebtbp"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/floating_strafer.gd" id="1_6v77x"]
+
+[node name="FloatingStrafer" type="Node3D"]
+script = ExtResource("1_6v77x")
+
+[node name="YRetarget" type="Timer" parent="."]
+wait_time = 12.3
+autostart = true
+
+[connection signal="timeout" from="YRetarget" to="." method="_on_y_retarget_timeout"]
