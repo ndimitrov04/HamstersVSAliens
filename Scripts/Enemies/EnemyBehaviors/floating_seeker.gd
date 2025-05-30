@@ -4,8 +4,9 @@ extends Node3D
 @onready var pause_interval = get_parent().get_meta("pause_interval")
 @onready var pause_timer = $PauseTimer
 @onready var y_retarget = $YRetarget
+var main
 
-const MAXVELOCITY = 25
+var MAXVELOCITY : float
 const INERTIAJUMPMULTIPLIER = 0.2
 var SKYBOUNDS = [1,1]
 
@@ -18,6 +19,8 @@ var paused : bool = false
 var y_level : float
 
 func _ready():
+	main = get_parent().get_parent().get_parent()
+	MAXVELOCITY = 25 + main.current_wave / 2
 	SKYBOUNDS[0] = get_parent().get_parent().get_parent().SKYBOUNDS[0]
 	SKYBOUNDS[1] = get_parent().get_parent().get_parent().SKYBOUNDS[1]
 	randf_range(pause_interval-0.5,pause_interval+0.5)

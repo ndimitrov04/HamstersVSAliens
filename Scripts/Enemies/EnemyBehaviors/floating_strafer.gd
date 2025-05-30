@@ -6,8 +6,9 @@ extends Node3D
 
 @onready var pause_interval = get_parent().get_meta("pause_interval")
 @onready var y_retarget = $YRetarget
+var main
 
-const MAXVELOCITY = 30
+var MAXVELOCITY : float
 const INERTIAJUMPMULTIPLIER = 0.2
 var SKYBOUNDS = [1,1]
 
@@ -24,7 +25,8 @@ var strafe_target_coords : Vector3 = Vector3.ZERO
 var started_strafe : bool = false
 
 func _ready():
-	await Engine.get_main_loop().process_frame
+	main = get_parent().get_parent().get_parent()
+	MAXVELOCITY = 27 + main.current_wave / 2
 	SKYBOUNDS[0] = get_parent().get_parent().get_parent().SKYBOUNDS[0] + 60
 	SKYBOUNDS[1] = get_parent().get_parent().get_parent().SKYBOUNDS[1] + 80
 	randf_range(pause_interval-0.5,pause_interval+0.5)

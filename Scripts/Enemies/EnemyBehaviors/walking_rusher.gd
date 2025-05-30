@@ -1,6 +1,8 @@
 extends Node3D
 
-const MAXVELOCITY = 22
+var main
+
+var MAXVELOCITY : float
 const INERTIAJUMPMULTIPLIER = 0.2
 
 var thrust_power : float = 120000
@@ -10,7 +12,8 @@ var floor_power : float = 120000
 var input : Vector3 = Vector3.ZERO
 
 func _ready():
-	pass
+	main = get_parent().get_parent().get_parent()
+	MAXVELOCITY = 27 + main.current_wave / 2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):

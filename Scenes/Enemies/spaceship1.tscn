@@ -31,7 +31,7 @@ metadata/pause_interval = 4.0
 metadata/target_player = false
 metadata/bullet_siblings = false
 metadata/track_player = true
-metadata/gold = 10
+metadata/gold = 5
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.14661, 5.35264)

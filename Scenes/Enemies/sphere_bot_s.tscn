@@ -58,7 +58,7 @@ metadata/pause_interval = 7.0
 metadata/target_player = false
 metadata/bullet_siblings = false
 metadata/track_player = true
-metadata/gold = 5
+metadata/gold = 10
 metadata/instant_death = true
 
 [node name="Ship" type="MeshInstance3D" parent="."]

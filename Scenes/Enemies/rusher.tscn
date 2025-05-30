@@ -137,7 +137,7 @@ metadata/pause_interval = 0.0
 metadata/target_player = true
 metadata/bullet_siblings = false
 metadata/track_player = true
-metadata/gold = 2
+metadata/gold = 15
 metadata/instant_death = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]

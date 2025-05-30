@@ -62,7 +62,7 @@ var max_heat : int = 100
 var heat : int = 0
 var max_combo : float = 100
 var combo : float = 0
-var gold : int = 10000
+var gold : int = 50
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 var build_spot = null
 var current_speed : float

@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@onready var damage = 75
+@onready var damage = 20
 @onready var speed = 0.8
 @onready var type = ObjectTypes.TYPE.BULLET
 

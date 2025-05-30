@@ -2,7 +2,7 @@ extends RigidBody3D
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
-@onready var damage = 75
+@onready var damage = 40
 @onready var speed = 0.8
 @onready var type = ObjectTypes.TYPE.BULLET
 

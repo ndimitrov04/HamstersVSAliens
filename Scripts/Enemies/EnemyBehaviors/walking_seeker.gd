@@ -5,8 +5,9 @@ extends Node3D
 @onready var pause_timer = $PauseTimer
 @onready var y_retarget = $YRetarget
 @onready var floor_detector = $FloorDetector
+var main
 
-const MAXVELOCITY = 25
+var MAXVELOCITY : float
 const INERTIAJUMPMULTIPLIER = 0.2
 const SKYBOUNDS = [30,60]
 
@@ -18,7 +19,8 @@ var input : Vector3 = Vector3.ZERO
 var paused : bool = false
 
 func _ready():
-	pass
+	main = get_parent().get_parent().get_parent()
+	MAXVELOCITY = 25 + main.current_wave / 2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):

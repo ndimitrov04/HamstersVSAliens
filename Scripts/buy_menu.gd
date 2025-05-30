@@ -14,7 +14,7 @@ const SHIELD_BEACON = preload("res://Scenes/FriendlyTowers/shield_beacon.tscn")
 const SLOWDOWN_BEACON = preload("res://Scenes/FriendlyTowers/slowdown_beacon.tscn")
 
 const TOWERS = [FAST_TURRET, PREDICTIVE_TURRET, SPEEDBOOST_TOWER, REGENERATION_TOWER, SHIELD_BEACON, SLOWDOWN_BEACON]
-const PRICES = [40,80,80,150,70,100]
+const PRICES = [35,75,80,150,70,100]
 
 const BUILDHEIGHT = 30
 const TOWERHEIGHT = 48
