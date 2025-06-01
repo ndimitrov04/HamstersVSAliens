@@ -1,6 +1,5 @@
 extends Panel
 
-@onready var music = $"../../Music"
 @onready var player = $"../../Friendlies/Player"
 @onready var version_number = $Design/VersionNumber
 
@@ -8,6 +7,9 @@ extends Panel
 @onready var level_data = $"../LevelData"
 @onready var debug_data = $"../DebugData"
 @onready var graphics_menu = $GraphicsMenu
+@onready var main = $"../.."
+@onready var enemy_list = $"../EnemyList"
+@onready var tower_list = $"../TowerList"
 
 const MUSIC_BUS : int = 1
 
@@ -20,11 +22,13 @@ func _ready():
 func _process(_delta):
 	#Toggle mouse focus
 	if Input.is_action_just_pressed("ui_cancel"):
-		if get_tree().paused:
-			get_tree().paused = false
+		enemy_list.open_button.button_pressed = false
+		tower_list.open_button.button_pressed = false
+		if main.process_mode == ProcessMode.PROCESS_MODE_DISABLED:
+			main.process_mode = ProcessMode.PROCESS_MODE_INHERIT
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
-			get_tree().paused = true
+			main.process_mode = ProcessMode.PROCESS_MODE_DISABLED
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_volume_slider_value_changed(value):

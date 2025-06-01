@@ -204,7 +204,7 @@ top_level = true
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 1.045, 1, 0)
 collision_mask = 255
 spring_length = 1.705
-margin = 0.15
+margin = 1.0
 
 [node name="TraumaDetector" type="Area3D" parent="TwistPivot/PitchPivot/SpringArm3D"]
 collision_layer = 255

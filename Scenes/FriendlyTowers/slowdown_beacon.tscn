@@ -38,7 +38,7 @@ physics_material_override = SubResource("PhysicsMaterial_4wut4")
 script = ExtResource("1_cyvnf")
 metadata/hp = 200
 metadata/fallpoint = 35
-metadata/shield = 1000
+metadata/shield = 300
 metadata/block_type = 2
 
 [node name="Shield" type="MeshInstance3D" parent="."]

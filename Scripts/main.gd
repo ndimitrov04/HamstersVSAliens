@@ -21,6 +21,10 @@ extends Node3D
 @onready var wave_notification = $WaveNotification
 
 @onready var world_environment = $WorldEnvironment
+@onready var enemy_list = $HUD/EnemyList
+@onready var tower_list = $HUD/TowerList
+@onready var open_button = $HUD/EnemyList/OpenButton
+@onready var menu = $HUD/Menu
 
 const MAPRADIUS = 500
 var SKYBOUNDS
@@ -111,9 +115,10 @@ var waves = [
 	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber]
 ]
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	MusicPlayer.stream = MusicPlayer.stage1_music
+	MusicPlayer.play()
 	SKYBOUNDS = get_meta("skybounds")
 	print("START IN 1")
 	await get_tree().create_timer(1).timeout
@@ -122,6 +127,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if not get_tree().paused:
+		tower_list.enemy_panel.hide()
+		enemy_list.enemy_panel.hide()
+	if menu.visible:
+		enemy_list.open_button.button_pressed = false
+		tower_list.open_button.button_pressed = false
+		tower_list.enemy_panel.hide()
+		enemy_list.enemy_panel.hide()
+	
 	hud.level_data.text = (
 		"Current Wave: " + str(current_wave) + "\n" +
 		"Enemies Left: " + str(enemies.get_child_count())
@@ -181,6 +195,7 @@ func _on_next_wave_timeout():
 	else:
 		print("Current wave:")
 		print(waves[current_wave])
+		update_enemy_list()
 		# Random wave generation
 		for enemy_type in waves[current_wave]:
 			# Spawn enemy and give it HP equal to base HP + current wave * 10
@@ -201,3 +216,41 @@ func calculate_city_hp() -> int:
 			if object.npc_building:
 				hp += object.hp
 	return hp
+
+func update_enemy_list():
+	match current_wave:
+		2:
+			enemy_list.unlocked_enemies += 1
+			enemy_list.current_index = enemy_list.unlocked_enemies - 1
+			open_button.button_pressed = true
+			enemy_list.load_entry(enemy_list.current_index)
+		3:
+			enemy_list.unlocked_enemies += 1
+			enemy_list.current_index = enemy_list.unlocked_enemies - 1
+			open_button.button_pressed = true
+			enemy_list.load_entry(enemy_list.current_index)
+		5:
+			enemy_list.unlocked_enemies += 1
+			enemy_list.current_index = enemy_list.unlocked_enemies - 1
+			open_button.button_pressed = true
+			enemy_list.load_entry(enemy_list.current_index)
+		7:
+			enemy_list.unlocked_enemies += 1
+			enemy_list.current_index = enemy_list.unlocked_enemies - 1
+			open_button.button_pressed = true
+			enemy_list.load_entry(enemy_list.current_index)
+		9:
+			enemy_list.unlocked_enemies += 1
+			enemy_list.current_index = enemy_list.unlocked_enemies - 1
+			open_button.button_pressed = true
+			enemy_list.load_entry(enemy_list.current_index)
+		10:
+			enemy_list.unlocked_enemies += 1
+			enemy_list.current_index = enemy_list.unlocked_enemies - 1
+			open_button.button_pressed = true
+			enemy_list.load_entry(enemy_list.current_index)
+		12:
+			enemy_list.unlocked_enemies += 1
+			enemy_list.current_index = enemy_list.unlocked_enemies - 1
+			open_button.button_pressed = true
+			enemy_list.load_entry(enemy_list.current_index)

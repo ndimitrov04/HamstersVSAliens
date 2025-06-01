@@ -22,6 +22,8 @@ var progress = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	MusicPlayer.stream = MusicPlayer.menu_music
+	MusicPlayer.play()
 	print("LOADINIT2")
 	ResourceLoader.load_threaded_request(next_scene)
 	version_number.text = "Version: Alpha " + str(ProjectSettings.get_setting("application/config/version"))
@@ -32,6 +34,7 @@ func _process(_delta):
 
 func _on_play_button_pressed():
 	if progress[0] == 1:
+		MusicPlayer.stop()
 		var packed_scene = ResourceLoader.load_threaded_get(next_scene)
 		get_tree().change_scene_to_packed(packed_scene)
 
