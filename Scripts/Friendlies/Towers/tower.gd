@@ -4,6 +4,8 @@ extends RigidBody3D
 @onready var base_hitbox = $BaseHitbox
 @onready var drop_sfx = $DropSFX
 
+@onready var b_model = $Model/UpperDetail/BModel
+
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
 @onready var max_hp : int = get_meta("hp")

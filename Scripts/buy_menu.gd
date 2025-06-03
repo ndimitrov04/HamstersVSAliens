@@ -1,8 +1,10 @@
 extends Control
 
+@onready var hud = $".."
 @onready var tower_list = $TowerList
 @onready var friendlies = $"../../Friendlies"
 @onready var player = $"../../Friendlies/Player"
+@onready var upgrade_menu = $"../UpgradeMenu"
 
 const TOWER = preload("res://Scenes/FriendlyTowers/tower.tscn")
 
@@ -45,6 +47,13 @@ func _on_tower_list_item_clicked(index, _at_position, mouse_button_index):
 			building.global_position = player.build_spot.global_position + Vector3(0,TOWERHEIGHT,0)
 			player.build_spot.building = building
 			building.build_spot = player.build_spot
+			building.tower = tower
 			player.gold -= PRICES[index]
+			hide()
+			hud.upgrade_menu.upgrade_description_1.text = building.upgrade_description_1
+			hud.upgrade_menu.upgrade_description_2.text = building.upgrade_description_2
+			hud.upgrade_menu.upgrade_button_1.text = "Upgrade: " + str(building.upgrade_cost_1) + "G" 
+			hud.upgrade_menu.upgrade_button_2.text = "Upgrade: " + str(building.upgrade_cost_2) + "G" 
+			upgrade_menu.show()
 		else:
 			print("BUILDING IN OCCUPIED SPACE!")

@@ -25,6 +25,26 @@ extends RigidBody3D
 
 @onready var bullet_speed
 
+@onready var build_type : ObjectTypes.BUILDTYPE = ObjectTypes.BUILDTYPE.FASTTURRET
+
+var tower = null
+
+var upgraded : bool = false
+var upgrade_cost_1 = 45
+var upgrade_cost_2 = 25
+var upgrade_description_1 = "Faster shooting speed"
+var upgrade_description_2 = "Stronger shield"
+
+func upgrade1():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color("ff0909")
+	shoot_timer.wait_time /= 2
+	
+func upgrade2():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color("387248")
+	max_shield += 150
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	shoot_timer.wait_time = randf_range(get_meta("shoot_time")-0.5,get_meta("shoot_time")+0.5)

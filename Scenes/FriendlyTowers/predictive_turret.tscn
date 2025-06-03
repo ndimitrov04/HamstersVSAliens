@@ -1,13 +1,195 @@
-[gd_scene load_steps=15 format=3 uid="uid://dm7hknvujgk1d"]
+[gd_scene load_steps=21 format=3 uid="uid://dm7hknvujgk1d"]
 
-[ext_resource type="Script" path="res://Scripts/Friendlies/ShootTurret/predictive_turret.gd" id="1_r63it"]
-[ext_resource type="PackedScene" uid="uid://blul2ix751h0k" path="res://Scenes/Projectiles/light_bullet_friendly.tscn" id="2_cm7o1"]
+[ext_resource type="Script" path="res://Scripts/Projectiles/light_bullet_friendly.gd" id="1_kmcgm"]
+[ext_resource type="AudioStream" uid="uid://c0byoj3py4vho" path="res://SFX/Projectiles/612877__sonically_sound__laser-1.ogg" id="2_kl8gm"]
 [ext_resource type="PackedScene" uid="uid://b0tvm6rfqqyky" path="res://Scenes/ModelScenes/fast_turret.tscn" id="3_b6cdf"]
 [ext_resource type="Script" path="res://Scripts/UniversalBehaviors/hp_projector.gd" id="4_dciq2"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_72t4m"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lyhsy"]
 rough = true
 absorbent = true
+
+[sub_resource type="GDScript" id="GDScript_3ey8v"]
+script/source = "extends RigidBody3D
+
+@onready var BULLET = get_meta(\"bullet\")
+@onready var EXPLOSION = preload(\"res://Scenes/Particles/explosion.tscn\")
+
+@onready var turret = get_node(get_meta(\"turret_node\"))
+@onready var gun_model = $Model/RootNode/turret_single/turret
+@onready var shoot_timer = $ShootTimer
+@onready var shoot_point = $Turret/ShootPoint
+@onready var hp_projector = $HPProjector
+@onready var hp_bar = $HPProjector/HPBar
+@onready var shield_regen_timer = $ShieldRegenTimer
+@onready var shield_model = $Shield
+
+@onready var targeted_enemy = null
+@onready var max_hp : int = get_meta(\"hp\")
+@onready var hp : int = get_meta(\"hp\")
+@onready var max_shield : int = get_meta(\"shield\")
+@onready var shield : int = get_meta(\"shield\")
+@onready var shield_regen : bool = false
+@onready var alive : bool = true
+
+@onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
+@onready var build_spot = null
+
+@onready var bullet_speed
+
+@onready var build_type : ObjectTypes.BUILDTYPE = ObjectTypes.BUILDTYPE.FASTTURRET
+
+var tower = null
+
+var upgraded : bool = false
+var upgrade_cost_1 = 45
+var upgrade_cost_2 = 25
+var upgrade_description_1 = \"Faster shooting speed\"
+var upgrade_description_2 = \"Stronger shield\"
+
+func upgrade1():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color(\"ff0909\")
+	shoot_timer.wait_time /= 2
+	
+func upgrade2():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color(\"387248\")
+	max_shield += 150
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	shoot_timer.wait_time = randf_range(get_meta(\"shoot_time\")-0.5,get_meta(\"shoot_time\")+0.5)
+	var testbullet = BULLET.instantiate()
+	add_child(testbullet)
+	bullet_speed = testbullet.speed
+	testbullet.queue_free()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(_delta):
+	if hp > max_hp:
+		hp = max_hp
+	
+	if shield <= 0:
+		shield = 0
+		shield_model.hide()
+	else:
+		shield_model.show()
+		
+	if shield > max_shield:
+		shield = max_shield
+	
+	if hp <= 0:
+		die()
+	
+	if alive and targeted_enemy != null and bullet_speed != null:
+		if \"type\" in targeted_enemy:
+			if targeted_enemy.type == ObjectTypes.TYPE.ENEMY:
+				var bullet_travel_time : float = predict_bullet_travel_time(targeted_enemy.global_position, bullet_speed)
+				var predicted_enemy_position : Vector3 = predict_enemy_location(targeted_enemy, bullet_travel_time)
+				
+				#print(\"EnemyPos: \" + str(targeted_enemy.global_position))
+				#print(\"EnemyVel: \" + str(targeted_enemy.linear_velocity))
+				#print(\"PredictPos: \" + str(predicted_enemy_position))
+				turret.look_at(predicted_enemy_position)
+				gun_model.look_at(predicted_enemy_position,Vector3.UP,true)
+
+func predict_bullet_travel_time(enemy_position, b_speed) -> float:
+	return global_position.distance_to(enemy_position) / (b_speed)
+
+# Predicts where the enemy will be after 1 frame of movement
+# Because GODOT's velocity is calculated in units per second:
+# resultPos = startPos + velocity*time   			// returns where the object will be after 1 second
+# resultPos = startPos + ((velocity*delta)*time) 	// returns where the object will be after 1 frame
+func predict_enemy_location(enemy, bullet_travel_time) -> Vector3:
+	return enemy.global_position + ((enemy.linear_velocity * get_process_delta_time()) * bullet_travel_time)
+
+func shoot():
+	var bullet = BULLET.instantiate()
+	add_child(bullet)
+	bullet.speed = 4
+	bullet.global_position = shoot_point.global_position
+	bullet.global_rotation = turret.global_rotation
+
+func retarget():
+	var closest_enemy_distance = 9999
+	var closest_enemy = null
+	for enemy in get_tree().root.get_child(get_tree().root.get_child_count()-1).enemies.get_children():
+		var distance_to_enemy = abs(position.x - enemy.global_position.x) + abs(position.y - enemy.global_position.y) + abs(position.z - enemy.global_position.z)
+		if distance_to_enemy < closest_enemy_distance:
+			closest_enemy_distance = distance_to_enemy
+			closest_enemy = enemy
+	targeted_enemy = closest_enemy
+
+func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
+	add_child(explosion)
+	explosion.global_position = global_position
+	shield_regen = false
+	shield_regen_timer.start()
+	if shield <= 0:
+		hp -= damage
+		explosion.amount = 256
+		explosion.emitting = true
+	else:
+		shield -= damage
+		explosion.amount = 64
+		explosion.emitting = true
+
+func die(explosion = EXPLOSION.instantiate()):
+	alive = false
+	add_sibling(explosion)
+	explosion.global_position = global_position
+	explosion.amount = 256
+	explosion.emitting = true
+	await get_tree().create_timer(0.5).timeout
+	if build_spot != null:
+		build_spot.building = null
+	queue_free()
+
+func _on_shoot_timer_timeout():
+	if alive and targeted_enemy:
+		shoot()
+	retarget()
+
+func _on_shield_regen_timer_timeout():
+	shield_regen = true
+
+func _on_shield_regen_tick_timeout():
+	if shield_regen:
+		shield += 10
+"
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hoq7w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sh2uq"]
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.803922, 0, 0, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 6.0
+rim_enabled = true
+backlight = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_axf8s"]
+material = SubResource("StandardMaterial3D_sh2uq")
+radial_segments = 6
+rings = 3
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nblpn"]
+points = PackedVector3Array(-0.0268873, -0.487145, -0.0151637, 0.00348619, 0.030316, 0.485435, 0.018437, 0.0599001, 0.464554, -0.422107, 0.0303772, -0.243208, 0.427589, 0.015088, -0.242262, -0.0268873, 0.487145, -0.0151637, -0.422107, 0.0303772, 0.243208, 0.00348619, 0.030316, -0.485436, 0.427589, -0.015088, 0.242262, -0.0116461, -0.348844, 0.348844, 0.304673, -0.346306, -0.180702, -0.300111, -0.349173, -0.182148, 0.304673, 0.346306, 0.180702, -0.300111, 0.349173, 0.182148, -0.0116461, 0.348844, -0.348844, 0.304673, 0.346306, -0.180702, -0.300111, -0.349173, 0.182148, 0.304673, -0.346306, 0.180702, -0.0116461, -0.348845, -0.348845, -0.300111, 0.349173, -0.182148, -0.0116461, 0.348845, 0.348845, -0.422107, -0.0303772, 0.243208, 0.00348619, -0.030316, 0.485436, -0.422107, -0.0303772, -0.243208, 0.00348619, -0.105943, -0.454124, 0.0185473, 0.483114, 0.0300764, 0.0185461, -0.483076, 0.0301686, 0.427589, -0.015088, -0.242262, 0.427589, 0.015088, 0.242262, 0.0940588, -0.452543, -0.0603138, 0.0940417, 0.452552, -0.0603024, -0.0263555, -0.0148982, -0.478615)
+
+[sub_resource type="PackedScene" id="PackedScene_aan17"]
+_bundled = {
+"conn_count": 2,
+"conns": PackedInt32Array(1073741829, 1073741828, 33, 32, 2, 0, 0, 1073741831, 1073741830, 35, 34, 2, 0, 0),
+"editable_instances": [],
+"names": PackedStringArray("LightBullet", "RigidBody3D", "collision_layer", "collision_mask", "collision_priority", "input_ray_pickable", "mass", "physics_material_override", "gravity_scale", "lock_rotation", "contact_monitor", "max_contacts_reported", "script", "Model", "MeshInstance3D", "mesh", "Hitbox", "CollisionShape3D", "shape", "Timer", "Timer", "wait_time", "one_shot", "autostart", "SFX", "AudioStreamPlayer3D", "stream", "volume_db", "unit_size", "max_db", "autoplay", "bus", "_on_body_entered", "body_entered", "_on_timer_timeout", "timeout"),
+"node_count": 5,
+"node_paths": [NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("."), NodePath("Timer")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 11, 2, 0, 3, 1, 4, 2, 5, 3, 6, 4, 7, 5, 8, 6, 9, 7, 10, 8, 11, 9, 12, 10, 0, 1073741824, 0, 14, 13, -1, 1, 15, 11, 0, 1073741825, 0, 17, 16, -1, 1, 18, 12, 0, 1073741826, 0, 20, 19, -1, 3, 21, 13, 22, 14, 23, 15, 0, 1073741827, 0, 25, 24, -1, 6, 26, 16, 27, 17, 28, 18, 29, 19, 30, 20, 31, 21, 0),
+"variants": [4, 4, 4.0, false, 0.01, SubResource("PhysicsMaterial_hoq7w"), 0.1, true, true, 1, ExtResource("1_kmcgm"), SubResource("SphereMesh_axf8s"), SubResource("ConvexPolygonShape3D_nblpn"), 2.0, true, true, ExtResource("2_kl8gm"), 60.0, 20.0, 6.0, true, &"SFX"],
+"version": 3
+}
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3uv2k"]
 transparency = 1
@@ -55,13 +237,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.113436, 0)
 collision_layer = 3
 collision_mask = 3
 mass = 1000.0
-physics_material_override = SubResource("PhysicsMaterial_72t4m")
+physics_material_override = SubResource("PhysicsMaterial_lyhsy")
 linear_damp = 1.0
-script = ExtResource("1_r63it")
+script = SubResource("GDScript_3ey8v")
 metadata/turret_node = NodePath("Turret")
 metadata/hp = 150
 metadata/shoot_time = 0.9
-metadata/bullet = ExtResource("2_cm7o1")
+metadata/bullet = SubResource("PackedScene_aan17")
 metadata/shield = 150
 
 [node name="Shield" type="MeshInstance3D" parent="."]

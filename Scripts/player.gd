@@ -177,7 +177,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("debug_shoot"):
 		shoot(DEBUG_ENEMY_BULLET)
 	if Input.is_action_just_pressed("debug_axis_lock"):
-		axis_lock_linear_y = true
+		if axis_lock_linear_y:
+			axis_lock_linear_y = false
+		else:
+			axis_lock_linear_y = true
+	if Input.is_action_just_pressed("debug_money_cheat"):
+		gold += 10000
 
 	#Lock onto hookable object
 	if enemy_detector.is_colliding():

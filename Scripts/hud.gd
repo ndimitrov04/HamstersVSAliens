@@ -28,12 +28,14 @@ extends CanvasLayer
 @onready var hp_label = $HPLabel
 @onready var gold = $Gold
 @onready var buy_menu = $BuyMenu
+@onready var upgrade_menu = $UpgradeMenu
 @onready var level_up = $LevelUp
 @onready var stats = $Stats
 @onready var next_wave = $NextWave
 @onready var game_over = $GameOver
 @onready var retry = $GameOver/Retry
 @onready var menu = $Menu
+
 
 @onready var combo_sfx = $ComboBar/ComboSFX
 
