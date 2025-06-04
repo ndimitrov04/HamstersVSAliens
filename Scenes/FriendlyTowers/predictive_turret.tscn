@@ -7,7 +7,6 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lyhsy"]
 rough = true
-absorbent = true
 
 [sub_resource type="GDScript" id="GDScript_3ey8v"]
 script/source = "extends RigidBody3D
@@ -233,12 +232,12 @@ width = 25
 height = 1
 
 [node name="PredictiveTurret" type="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.113436, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.82418, 0)
 collision_layer = 3
 collision_mask = 3
 mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_lyhsy")
-linear_damp = 1.0
+linear_damp = 5.0
 script = SubResource("GDScript_3ey8v")
 metadata/turret_node = NodePath("Turret")
 metadata/hp = 150

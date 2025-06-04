@@ -50,10 +50,9 @@ func _on_body_entered(body):
 			shieldHP -= body.damage
 
 func _on_shield_regen_timer_timeout():
-	if "alive" in get_parent():
-		if get_parent().alive:
-			shield_regen = true
+	shield_regen = true
 
 func _on_shield_regen_tick_timeout():
+	print(shield_regen)
 	if shield_regen:
 		shieldHP += 10

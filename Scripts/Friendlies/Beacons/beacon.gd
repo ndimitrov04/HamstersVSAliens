@@ -12,8 +12,33 @@ extends RigidBody3D
 @onready var shield_regen : bool = false
 @onready var shield_regen_timer = $ShieldRegenTimer
 
+@onready var boost_area = $BoostArea
+
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 @onready var build_spot = null
+
+@onready var build_type : ObjectTypes.BUILDTYPE = ObjectTypes.BUILDTYPE.SPEEDBOOST
+
+var tower = null
+
+var upgraded : bool = false
+var upgrade_cost_1 = 35
+var upgrade_cost_2 = 55
+var upgrade_description_1 = "10% Faster acceleration"
+var upgrade_description_2 = "50% Bigger AOE"
+
+func upgrade1():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color("ff0909")
+	boost_area.boosted_boost = 1.2
+	
+func upgrade2():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color("387248")
+	boost_area.supportbox.shape.radius = 300
+	boost_area.area_viewer.size.x = 800
+	boost_area.area_viewer.size.z = 800
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

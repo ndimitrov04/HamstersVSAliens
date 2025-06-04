@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://c4hsokex3qax4"]
 
-[ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_yn0a2"]
+[ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/shield_beacon.gd" id="1_1fq6a"]
 [ext_resource type="PackedScene" uid="uid://baljmjnje4wtv" path="res://Scenes/Behaviors/shieldf.tscn" id="2_60865"]
 [ext_resource type="ArrayMesh" uid="uid://cacd44ot8cv3e" path="res://ImportedModels/Beacon/model.obj" id="2_axyi5"]
 
@@ -32,7 +32,7 @@ collision_layer = 3
 collision_mask = 3
 mass = 2500.0
 physics_material_override = SubResource("PhysicsMaterial_r5ov4")
-script = ExtResource("1_yn0a2")
+script = ExtResource("1_1fq6a")
 metadata/hp = 200
 metadata/fallpoint = 35
 metadata/shield = 1000

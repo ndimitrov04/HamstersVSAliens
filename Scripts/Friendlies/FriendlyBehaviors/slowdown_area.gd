@@ -12,8 +12,36 @@ extends RigidBody3D
 @onready var shield_regen : bool = false
 @onready var shield_regen_timer = $ShieldRegenTimer
 
+@onready var debuff_area = $DebuffArea
+@onready var debuffbox = $DebuffArea/Debuffbox
+@onready var area_viewer = $DebuffArea/AreaViewer
+
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 @onready var build_spot = null
+
+@onready var build_type : ObjectTypes.BUILDTYPE = ObjectTypes.BUILDTYPE.SLOWDOWN
+
+var damp_power = 2
+
+var tower = null
+
+var upgraded : bool = false
+var upgrade_cost_1 = 135
+var upgrade_cost_2 = 100
+var upgrade_description_1 = "50% More enemy speed reduction"
+var upgrade_description_2 = "50% Bigger AOE"
+
+func upgrade1():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color("ff0909")
+	damp_power = 3
+	
+func upgrade2():
+	upgraded = true
+	tower.b_model.material_override.albedo_color = Color("387248")
+	debuffbox.shape.radius = 300
+	area_viewer.size.x = 800
+	area_viewer.size.z = 800
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -47,7 +75,7 @@ func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 func _on_debuff_area_body_entered(body):
 	if "type" in body:
 		if body.type == ObjectTypes.TYPE.ENEMY:
-			body.linear_damp = 2
+			body.linear_damp = damp_power
 
 func _on_debuff_area_body_exited(body):
 	if "type" in body:

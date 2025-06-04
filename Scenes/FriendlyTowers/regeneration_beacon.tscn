@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cv5b22ejhfc0d"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/FriendlyBehaviors/regeneration_area.gd" id="1_e04d0"]
-[ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/beacon.gd" id="1_gi338"]
+[ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/regeneration_beacon.gd" id="1_rk5fu"]
 [ext_resource type="ArrayMesh" uid="uid://cacd44ot8cv3e" path="res://ImportedModels/Beacon/model.obj" id="2_e7w8n"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r5ov4"]
@@ -28,7 +28,7 @@ rings = 8
 points = PackedVector3Array(0.364698, 0.771721, 0.0329169, -0.54286, -0.385255, -0.0409439, -0.54286, -0.385255, 0.0600249, 0.444554, -0.739602, -0.0663423, 0.0647233, -0.385255, 0.541241, 0.0141347, 0.424796, -0.471467, -0.312335, 0.761461, 0.171609, -0.365592, -0.739602, -0.294199, -0.273412, 0.782942, -0.228888, -0.0617481, -0.739602, 0.439959, 0.039429, -0.739602, -0.446173, 0.444554, -0.385255, 0.31328, 0.176965, 0.77231, 0.315121, 0.44505, -0.26824, -0.25455, -0.26431, -0.258521, 0.490444, 0.199519, 0.768979, -0.318075, -0.239016, 0.424796, -0.420774, -0.41618, -0.739602, 0.16141, -0.0111595, 0.424796, 0.465254, 0.469848, 0.424796, -0.0156497, -0.466873, 0.424796, 0.0095405, -0.466873, -0.385255, 0.31328, -0.279866, -0.371086, -0.430234, -0.492167, -0.359876, -0.24361, 0.241991, 0.424796, 0.389163, 0.52054, -0.385255, 0.0854233, 0.276285, -0.698613, 0.320815, 0.267286, -0.258521, 0.490444, -0.173927, 0.76422, 0.311836, 0.325219, 0.78879, 0.177581, 0.22641, 0.399872, -0.394288, -0.0111595, 0.779451, -0.370181)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_co83g"]
-radius = 500.0
+radius = 200.0
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eyqg3"]
 load_path = "res://.godot/imported/circleg2.png-12a731e319ecf100943f250a4a3a2f4a.s3tc.ctex"
@@ -36,9 +36,10 @@ load_path = "res://.godot/imported/circleg2.png-12a731e319ecf100943f250a4a3a2f4a
 [node name="RegenerationBeacon" type="RigidBody3D"]
 collision_layer = 3
 collision_mask = 3
-mass = 2500.0
+mass = 1000.0
 physics_material_override = SubResource("PhysicsMaterial_r5ov4")
-script = ExtResource("1_gi338")
+linear_damp = 4.0
+script = ExtResource("1_rk5fu")
 metadata/hp = 200
 metadata/fallpoint = 35
 metadata/shield = 500
@@ -72,7 +73,7 @@ shape = SubResource("SphereShape3D_co83g")
 
 [node name="AreaViewer" type="Decal" parent="BoostArea"]
 sorting_offset = 1.0
-size = Vector3(500, 200, 500)
+size = Vector3(550, 200, 550)
 texture_albedo = SubResource("CompressedTexture2D_eyqg3")
 emission_energy = 0.5
 modulate = Color(0.325047, 0.733543, 0, 1)
