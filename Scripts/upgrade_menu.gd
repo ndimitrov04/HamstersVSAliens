@@ -10,6 +10,8 @@ extends Control
 @onready var friendlies = $"../../Friendlies"
 @onready var player = $"../../Friendlies/Player"
 
+@onready var sfx = $SFX
+
 var upgradable_tower = null
 
 # Called when the node enters the scene tree for the first time.
@@ -32,8 +34,10 @@ func _on_upgrade_button_1_pressed():
 	upgradable_tower.upgrade1()
 	player.gold -= upgradable_tower.upgrade_cost_1
 	hide()
+	sfx.play()
 
 func _on_upgrade_button_2_pressed():
 	upgradable_tower.upgrade2()
 	player.gold -= upgradable_tower.upgrade_cost_2
 	hide()
+	sfx.play()

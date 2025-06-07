@@ -6,6 +6,8 @@ extends Control
 @onready var player = $"../../Friendlies/Player"
 @onready var upgrade_menu = $"../UpgradeMenu"
 
+@onready var sfx = $SFX
+
 const TOWER = preload("res://Scenes/FriendlyTowers/tower.tscn")
 
 const FAST_TURRET = preload("res://Scenes/FriendlyTowers/fast_turret.tscn")
@@ -55,5 +57,6 @@ func _on_tower_list_item_clicked(index, _at_position, mouse_button_index):
 			hud.upgrade_menu.upgrade_button_1.text = "Upgrade: " + str(building.upgrade_cost_1) + "G" 
 			hud.upgrade_menu.upgrade_button_2.text = "Upgrade: " + str(building.upgrade_cost_2) + "G" 
 			upgrade_menu.show()
+			sfx.play()
 		else:
 			print("BUILDING IN OCCUPIED SPACE!")

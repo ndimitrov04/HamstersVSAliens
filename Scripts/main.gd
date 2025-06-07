@@ -224,33 +224,40 @@ func update_enemy_list():
 			enemy_list.current_index = enemy_list.unlocked_enemies - 1
 			open_button.button_pressed = true
 			enemy_list.load_entry(enemy_list.current_index)
+			enemy_list.new_enemy_sfx.play()
 		3:
 			enemy_list.unlocked_enemies += 1
 			enemy_list.current_index = enemy_list.unlocked_enemies - 1
 			open_button.button_pressed = true
 			enemy_list.load_entry(enemy_list.current_index)
+			enemy_list.new_enemy_sfx.play()
 		5:
 			enemy_list.unlocked_enemies += 1
 			enemy_list.current_index = enemy_list.unlocked_enemies - 1
 			open_button.button_pressed = true
 			enemy_list.load_entry(enemy_list.current_index)
+			enemy_list.new_enemy_sfx.play()
 		7:
 			enemy_list.unlocked_enemies += 1
 			enemy_list.current_index = enemy_list.unlocked_enemies - 1
 			open_button.button_pressed = true
 			enemy_list.load_entry(enemy_list.current_index)
+			enemy_list.new_enemy_sfx.play()
 		9:
 			enemy_list.unlocked_enemies += 1
 			enemy_list.current_index = enemy_list.unlocked_enemies - 1
 			open_button.button_pressed = true
 			enemy_list.load_entry(enemy_list.current_index)
+			enemy_list.new_enemy_sfx.play()
 		10:
 			enemy_list.unlocked_enemies += 1
 			enemy_list.current_index = enemy_list.unlocked_enemies - 1
 			open_button.button_pressed = true
 			enemy_list.load_entry(enemy_list.current_index)
+			enemy_list.new_enemy_sfx.play()
 		12:
 			enemy_list.unlocked_enemies += 1
 			enemy_list.current_index = enemy_list.unlocked_enemies - 1
 			open_button.button_pressed = true
 			enemy_list.load_entry(enemy_list.current_index)
+			enemy_list.new_enemy_sfx.play()
