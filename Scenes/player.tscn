@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://gjbquahrqxek"]
+[gd_scene load_steps=39 format=3 uid="uid://gjbquahrqxek"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_djtqc"]
 [ext_resource type="Texture2D" uid="uid://ueu2h64vm5oc" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Color.jpg" id="2_n8vo3"]
@@ -48,6 +48,26 @@ radius = 0.6
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_i3mnr"]
 radius = 3.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efwx6"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.87451)
+roughness = 0.0
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 16.0
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+refraction_scale = -0.47
+disable_receive_shadows = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vvun7"]
+material = SubResource("StandardMaterial3D_efwx6")
+bottom_radius = 0.4
+height = 400.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kukfb"]
+height = 1600.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_50bm6"]
 emission_shape = 3
@@ -166,6 +186,23 @@ debug_shape_custom_color = Color(1, 0, 0, 1)
 
 [node name="ShootPoint" type="Node3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.26126)
+
+[node name="Laser" type="Node3D" parent="Ship"]
+
+[node name="Mesh" type="MeshInstance3D" parent="Ship/Laser"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -204)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_vvun7")
+skeleton = NodePath("../..")
+
+[node name="Hurtbox" type="Area3D" parent="Ship/Laser"]
+collision_layer = 15
+collision_mask = 15
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/Laser/Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -805)
+shape = SubResource("CapsuleShape3D_kukfb")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.673033, 1.95781, -5.37778)
@@ -313,6 +350,9 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
+[node name="LaserCDTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="HeatCDTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
@@ -329,7 +369,10 @@ autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="." to="SFX" method="_on_player_body_entered"]
+[connection signal="body_entered" from="Ship/Laser/Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="Ship/Laser/Hurtbox" to="." method="_on_hurtbox_body_exited"]
 [connection signal="timeout" from="ShotCDTimer" to="." method="_on_shot_cd_timer_timeout"]
+[connection signal="timeout" from="LaserCDTimer" to="." method="_on_laser_cd_timer_timeout"]
 [connection signal="timeout" from="HeatCDTimer" to="." method="_on_heat_cd_timer_timeout"]
 [connection signal="timeout" from="HomingCooldown" to="." method="_on_homing_cooldown_timeout"]
 [connection signal="timeout" from="ComboClock" to="." method="_on_combo_clock_timeout"]

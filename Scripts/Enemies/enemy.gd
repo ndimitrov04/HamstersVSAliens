@@ -17,8 +17,10 @@ var hit_ground : bool = false
 var screenshake_exectued : bool = false
 var type : ObjectTypes.TYPE = ObjectTypes.TYPE.ENEMY
 var not_followable : bool = false
+var lasered : bool = false #is currently being hit by a laser
+var laser_force : float = 40 #hitpoints of laser
 
-@onready var hp = get_meta("hp")
+@onready var hp : float = get_meta("hp")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,7 +32,7 @@ func _ready():
 		target = $"../../Friendlies/Player"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(_delta):
+func _physics_process(delta):
 	#debug_data.text = (
 	#	"Alive?: " + str(alive) + "\n" +
 	#	"HitGround: " + str(hitGround)
@@ -47,6 +49,9 @@ func _physics_process(_delta):
 		player.gold += get_meta("gold")
 		hud.update_game_info()
 		queue_free()
+	
+	if lasered:
+		hp -= laser_force * delta
 
 func _on_body_entered(body):
 	var explosion

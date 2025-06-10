@@ -35,7 +35,7 @@ extends CanvasLayer
 @onready var game_over = $GameOver
 @onready var retry = $GameOver/Retry
 @onready var menu = $Menu
-
+@onready var weapon_list = $WeaponList
 
 @onready var combo_sfx = $ComboBar/ComboSFX
 

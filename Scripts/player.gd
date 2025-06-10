@@ -20,6 +20,9 @@ extends RigidBody3D
 @onready var sphere = $Sphere
 @onready var ship = $Ship
 @onready var shoot_point = $Ship/ShootPoint
+@onready var laser = $Ship/Laser
+@onready var laser_mesh = $Ship/Laser/Mesh
+@onready var laser_hurtbox = $Ship/Laser/Hurtbox
 @onready var shot_cd_timer = $ShotCDTimer
 @onready var heat_cd_timer = $HeatCDTimer
 @onready var homing_cooldown = $HomingCooldown
@@ -58,8 +61,8 @@ var following : PathFollow3D = null
 
 var max_hp : int = 100
 var hp : int = 100
-var max_heat : int = 100
-var heat : int = 0
+var max_heat : float = 100
+var heat : float = 0
 var max_combo : float = 100
 var combo : float = 0
 var gold : int = 50
@@ -73,13 +76,22 @@ var hp_buff : int = 0
 var speed_buff : int = 0
 var jump_buff : int = 0
 
-var dash_cost = 10
-var homing_cost = 25
+var dash_cost : int = 10
+var homing_cost : int = 25
+
+enum Weapon {PLASMAGUN, LASER, HOMING}
+var unlocked_weapons = [Weapon.PLASMAGUN, Weapon.LASER, Weapon.HOMING]
+#var current_weapon : Weapon = unlocked_weapons[0]
+var current_weapon : Weapon = Weapon.PLASMAGUN
+
+var laser_force : float = 50
+var debug_laser_marker : bool = false #to be used for debugging the laser
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#Capture mouse
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	hud.weapon_list.select(0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
@@ -164,15 +176,41 @@ func _physics_process(delta):
 		dash_particles.emitting = true
 	
 	if Input.is_action_pressed("shoot") and heat < max_heat:
-		if not shot_cooldown:
-			shoot(BULLET)
-			shot_cooldown = true
-			heat_cooldown = false
-			shot_cd_timer.start()
-			heat += 5 - (combo / 25)
-			heat_cd_timer.start()
+		match current_weapon:
+			Weapon.PLASMAGUN:
+				if not shot_cooldown:
+					shoot(BULLET)
+					shot_cooldown = true
+					heat_cooldown = false
+					shot_cd_timer.start()
+					heat += 5 - (combo / 25)
+					heat_cd_timer.start()
+			Weapon.LASER:
+				shoot_laser()
+				heat_cooldown = false
+				heat += 25 * delta - (combo / 250)
+				heat_cd_timer.start()
+	else:
+		laser_mesh.hide()
+		laser_hurtbox.monitoring = false
 	if heat_cooldown and heat > 0:
 		heat -= 1
+
+	if Input.is_action_just_pressed("weapon_1"):
+		current_weapon = Weapon.PLASMAGUN
+		laser_hurtbox.monitoring = false
+		laser_mesh.hide()
+		hud.weapon_list.select(0)
+	if Input.is_action_just_pressed("weapon_2"):
+		if Weapon.LASER in unlocked_weapons:
+			current_weapon = Weapon.LASER
+			hud.weapon_list.select(1)
+	if Input.is_action_just_pressed("weapon_3"):
+		if Weapon.HOMING in unlocked_weapons:
+			laser_hurtbox.monitoring = false
+			laser_mesh.hide()
+			current_weapon = Weapon.HOMING
+			hud.weapon_list.select(2)
 
 	if Input.is_action_just_pressed("debug_shoot"):
 		shoot(DEBUG_ENEMY_BULLET)
@@ -248,7 +286,8 @@ func _physics_process(delta):
 		"OnFloor?: " + str(floor_detector.is_colliding()) + "\n" +
 		"Heat: " + str(heat) + "\n" +
 		"Trauma: " + str(trauma_detector.trauma) + "\n" +
-		"Combo: " + str(combo)
+		"Combo: " + str(combo) + "\n" +
+		"Currently lasering?: " + str(debug_laser_marker)
 		)
 		
 	if not floor_detector.is_colliding():
@@ -338,6 +377,10 @@ func shoot(object):
 	bullet.global_position = shoot_point.global_position
 	bullet.global_rotation = camera.global_rotation
 
+func shoot_laser():
+	laser_mesh.show()
+	laser_hurtbox.monitoring = true
+
 func _on_body_entered(body):
 	if homing_target != null:
 		if body == homing_target:
@@ -353,6 +396,9 @@ func _on_body_entered(body):
 
 func _on_shot_cd_timer_timeout():
 	shot_cooldown = false
+
+func _on_laser_cd_timer_timeout():
+	pass # Replace with function body.
 
 func _on_heat_cd_timer_timeout():
 	heat_cooldown = true
@@ -384,3 +430,16 @@ func _on_boosted_timeout():
 		MAXVELOCITY -= 0.001 * get_physics_process_delta_time()
 	if MAXVELOCITY < 25:
 		MAXVELOCITY = 25
+
+func _on_hurtbox_body_entered(body):
+	if "type" in body:
+		if body.type == ObjectTypes.TYPE.ENEMY:
+			debug_laser_marker = true
+			body.lasered = true
+			body.laser_force = laser_force + damage_buff
+
+func _on_hurtbox_body_exited(body):
+	if "type" in body:
+		if body.type == ObjectTypes.TYPE.ENEMY:
+			debug_laser_marker = false
+			body.lasered = false
