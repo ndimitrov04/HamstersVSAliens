@@ -14,6 +14,7 @@ extends RigidBody3D
 @onready var trauma_detector = $TwistPivot/PitchPivot/SpringArm3D/TraumaDetector
 @onready var floor_detector = $FloorDetector
 @onready var enemy_detector = $Ship/EnemyDetector
+@onready var tesla_lock_on = $Ship/TeslaLockOn
 @onready var speed_particles = $Ship/SpeedParticles
 @onready var floor_marker = $FloorMarker
 @onready var hover_decal = $FloorMarker/HoverDecal
@@ -23,6 +24,7 @@ extends RigidBody3D
 @onready var laser = $Ship/Laser
 @onready var laser_mesh = $Ship/Laser/Mesh
 @onready var laser_hurtbox = $Ship/Laser/Hurtbox
+@onready var lock_ons = $Ship/LockONs
 @onready var shot_cd_timer = $ShotCDTimer
 @onready var heat_cd_timer = $HeatCDTimer
 @onready var homing_cooldown = $HomingCooldown
@@ -36,6 +38,7 @@ extends RigidBody3D
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 @onready var BULLET = preload("res://Scenes/Projectiles/light_bullet_friendly.tscn")
 @onready var DEBUG_ENEMY_BULLET = preload("res://Scenes/Projectiles/light_bullet.tscn")
+@onready var AUTOLASER = preload("res://Scenes/laser.tscn")
 
 var MAXVELOCITY : float = 25
 const INERTIAJUMPMULTIPLIER : float = 0.2
@@ -87,6 +90,8 @@ var current_weapon : Weapon = Weapon.PLASMAGUN
 var laser_force : float = 50
 var debug_laser_marker : bool = false #to be used for debugging the laser
 
+var tesla_objects = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#Capture mouse
@@ -98,7 +103,7 @@ func _physics_process(delta):
 	
 	current_speed = max(abs(linear_velocity.x), abs(linear_velocity.y), abs(linear_velocity.z), 0)
 	current_horizontal_speed = max(abs(linear_velocity.x), abs(linear_velocity.z), 0)
-
+	
 	#Detect death
 	if hp <= 0:
 		if not exploded:
@@ -175,6 +180,8 @@ func _physics_process(delta):
 		dash_lines.emitting = true
 		dash_particles.emitting = true
 	
+	if current_weapon == Weapon.HOMING:
+		track_homing()
 	if Input.is_action_pressed("shoot") and heat < max_heat:
 		match current_weapon:
 			Weapon.PLASMAGUN:
@@ -189,6 +196,10 @@ func _physics_process(delta):
 				shoot_laser()
 				heat_cooldown = false
 				heat += 25 * delta - (combo / 250)
+				heat_cd_timer.start()
+			Weapon.HOMING:
+				heat_cooldown = false
+				heat += 50 * delta - (combo / 220)
 				heat_cd_timer.start()
 	else:
 		laser_mesh.hide()
@@ -228,7 +239,9 @@ func _physics_process(delta):
 		if object:
 			if "hookable" in object.get_parent():
 				if object.get_parent().hookable:
+					#change color here
 					object.get_parent().lock_marker.visible = true
+					object.get_parent().lock_marker.modulate = Color("Red")
 					if Input.is_action_just_pressed("homing"):
 						homing_attack()
 
@@ -238,6 +251,7 @@ func _physics_process(delta):
 		if "type" in object:
 			if object.type == ObjectTypes.TYPE.ENEMY and object.alive:
 				object.lock_marker.visible = true
+				object.lock_marker.modulate = Color("Red")
 				if Input.is_action_just_pressed("homing"):
 					combo -= homing_cost
 					homing_attack()
@@ -380,6 +394,24 @@ func shoot(object):
 func shoot_laser():
 	laser_mesh.show()
 	laser_hurtbox.monitoring = true
+	laser_hurtbox.monitorable = true
+
+func track_homing():
+	for object in tesla_objects:
+		print(object.name)
+		object.lock_marker.visible = true
+		object.lock_marker.modulate = Color("Yellow")
+		#object.get_parent().lock_marker.visible = true
+		if Input.is_action_pressed("shoot") and heat < 100:
+			var autolaser
+			if autolaser == null:
+				autolaser = AUTOLASER.instantiate()
+				lock_ons.add_child(autolaser)
+				autolaser.global_position = ship.global_position
+				autolaser.look_at(object.global_position)
+			else:
+				autolaser.global_position = ship.global_position
+				autolaser.look_at(object.global_position)
 
 func _on_body_entered(body):
 	if homing_target != null:
@@ -443,3 +475,11 @@ func _on_hurtbox_body_exited(body):
 		if body.type == ObjectTypes.TYPE.ENEMY:
 			debug_laser_marker = false
 			body.lasered = false
+
+func _on_tesla_lock_on_body_entered(body):
+	if "type" in body:
+		if body.type == ObjectTypes.TYPE.ENEMY and body.alive:
+			tesla_objects.append(body)
+
+func _on_tesla_lock_on_body_exited(body):
+	tesla_objects.erase(body)

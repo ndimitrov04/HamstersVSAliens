@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://b041ewht1kq7w"]
+
+[ext_resource type="Script" path="res://Scripts/autolaser.gd" id="1_ib65p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efwx6"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.87451)
+roughness = 0.0
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 16.0
+backlight_enabled = true
+backlight = Color(1, 1, 1, 1)
+refraction_scale = -0.47
+disable_receive_shadows = true
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vvun7"]
+material = SubResource("StandardMaterial3D_efwx6")
+bottom_radius = 0.4
+height = 400.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kukfb"]
+height = 1600.0
+
+[node name="Laser" type="Node3D"]
+script = ExtResource("1_ib65p")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -204)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_vvun7")
+skeleton = NodePath("../..")
+
+[node name="Hurtbox" type="Area3D" parent="."]
+collision_layer = 15
+collision_mask = 15
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -805)
+shape = SubResource("CapsuleShape3D_kukfb")
+
+[node name="Timeout" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="Hurtbox" to="." method="_on_hurtbox_body_exited"]
+[connection signal="timeout" from="Timeout" to="." method="_on_timeout_timeout"]

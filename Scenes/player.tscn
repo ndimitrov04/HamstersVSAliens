@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://gjbquahrqxek"]
+[gd_scene load_steps=40 format=3 uid="uid://gjbquahrqxek"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_djtqc"]
 [ext_resource type="Texture2D" uid="uid://ueu2h64vm5oc" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Color.jpg" id="2_n8vo3"]
@@ -48,6 +48,9 @@ radius = 0.6
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_i3mnr"]
 radius = 3.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ohk6s"]
+radius = 400.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efwx6"]
 transparency = 1
@@ -180,9 +183,20 @@ top_level = true
 [node name="EnemyDetector" type="ShapeCast3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0251245, -0.119159, 0.0921463)
 shape = SubResource("SphereShape3D_i3mnr")
-target_position = Vector3(0, 0, -200)
+target_position = Vector3(0, 0, -250)
+max_results = 2
 collision_mask = 17
 debug_shape_custom_color = Color(1, 0, 0, 1)
+
+[node name="TeslaLockOn" type="Area3D" parent="Ship"]
+collision_layer = 0
+collision_mask = 17
+monitorable = false
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/TeslaLockOn"]
+shape = SubResource("SphereShape3D_ohk6s")
 
 [node name="ShootPoint" type="Node3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.26126)
@@ -203,6 +217,8 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/Laser/Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -805)
 shape = SubResource("CapsuleShape3D_kukfb")
+
+[node name="LockONs" type="Node3D" parent="Ship"]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0.673033, 1.95781, -5.37778)
@@ -369,8 +385,8 @@ autostart = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="." to="SFX" method="_on_player_body_entered"]
-[connection signal="body_entered" from="Ship/Laser/Hurtbox" to="." method="_on_hurtbox_body_entered"]
-[connection signal="body_exited" from="Ship/Laser/Hurtbox" to="." method="_on_hurtbox_body_exited"]
+[connection signal="body_entered" from="Ship/TeslaLockOn" to="." method="_on_tesla_lock_on_body_entered"]
+[connection signal="body_exited" from="Ship/TeslaLockOn" to="." method="_on_tesla_lock_on_body_exited"]
 [connection signal="timeout" from="ShotCDTimer" to="." method="_on_shot_cd_timer_timeout"]
 [connection signal="timeout" from="LaserCDTimer" to="." method="_on_laser_cd_timer_timeout"]
 [connection signal="timeout" from="HeatCDTimer" to="." method="_on_heat_cd_timer_timeout"]
