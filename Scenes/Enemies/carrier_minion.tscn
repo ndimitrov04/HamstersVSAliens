@@ -74,8 +74,10 @@ surface_material_override/0 = SubResource("StandardMaterial3D_o86wn")
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false
+pixel_size = 0.0005
 billboard = 1
 no_depth_test = true
+fixed_size = true
 texture = ExtResource("4_nmbe7")
 
 [node name="LockTimeout" type="Timer" parent="."]

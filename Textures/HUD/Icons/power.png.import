@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bl0dl1eq3sv7c"
-path="res://.godot/imported/rocket.png-58311c889eea075433c2e7f75111836d.ctex"
+uid="uid://busde7b7dmixv"
+path="res://.godot/imported/power.png-b990b950529474315e34e4aabcb1dbf7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Textures/HUD/Icons/rocket.png"
-dest_files=["res://.godot/imported/rocket.png-58311c889eea075433c2e7f75111836d.ctex"]
+source_file="res://Textures/HUD/Icons/power.png"
+dest_files=["res://.godot/imported/power.png-b990b950529474315e34e4aabcb1dbf7.ctex"]
 
 [params]
 

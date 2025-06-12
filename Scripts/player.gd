@@ -30,6 +30,8 @@ extends RigidBody3D
 @onready var homing_cooldown = $HomingCooldown
 @onready var boosted = $Boosted
 @onready var sfx = $SFX
+@onready var electricity = $Ship/Electricity
+
 
 @onready var hud = $"../../HUD"
 @onready var player_data = $"../../HUD/PlayerData"
@@ -96,6 +98,9 @@ var tesla_objects = []
 func _ready():
 	#Capture mouse
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	await Engine.get_main_loop().process_frame
+	await Engine.get_main_loop().process_frame
+	await Engine.get_main_loop().process_frame
 	hud.weapon_list.select(0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -180,7 +185,7 @@ func _physics_process(delta):
 		dash_lines.emitting = true
 		dash_particles.emitting = true
 	
-	if current_weapon == Weapon.HOMING:
+	if current_weapon == Weapon.HOMING and heat < max_heat:
 		track_homing()
 	if Input.is_action_pressed("shoot") and heat < max_heat:
 		match current_weapon:
@@ -195,13 +200,12 @@ func _physics_process(delta):
 			Weapon.LASER:
 				shoot_laser()
 				heat_cooldown = false
-				heat += 25 * delta - (combo / 250)
-				heat_cd_timer.start()
-			Weapon.HOMING:
-				heat_cooldown = false
-				heat += 50 * delta - (combo / 220)
+				heat += 20 * delta - (combo / 350)
 				heat_cd_timer.start()
 	else:
+		sfx.laser_sfx.stop()
+		sfx.electric_sfx.stop()
+		electricity.hide()
 		laser_mesh.hide()
 		laser_hurtbox.monitoring = false
 	if heat_cooldown and heat > 0:
@@ -392,6 +396,7 @@ func shoot(object):
 	bullet.global_rotation = camera.global_rotation
 
 func shoot_laser():
+	sfx.laser_sfx.play()
 	laser_mesh.show()
 	laser_hurtbox.monitoring = true
 	laser_hurtbox.monitorable = true
@@ -400,9 +405,13 @@ func track_homing():
 	for object in tesla_objects:
 		print(object.name)
 		object.lock_marker.visible = true
-		object.lock_marker.modulate = Color("Yellow")
+		object.lock_marker.modulate = Color("Cyan")
 		#object.get_parent().lock_marker.visible = true
-		if Input.is_action_pressed("shoot") and heat < 100:
+		if Input.is_action_pressed("shoot") and heat < max_heat and tesla_objects.size() > 0:
+			heat_cooldown = false
+			heat += 40 * get_process_delta_time() - (combo / 400)
+			heat_cd_timer.start()
+			electricity.show()
 			var autolaser
 			if autolaser == null:
 				autolaser = AUTOLASER.instantiate()
@@ -412,6 +421,8 @@ func track_homing():
 			else:
 				autolaser.global_position = ship.global_position
 				autolaser.look_at(object.global_position)
+		else:
+			electricity.hide()
 
 func _on_body_entered(body):
 	if homing_target != null:

@@ -10,6 +10,8 @@ extends Node3D
 @onready var hit_sfx = $HitSFX
 @onready var jump_sfx = $JumpSFX
 @onready var speed_particles = $"../Ship/SpeedParticles"
+@onready var electric_sfx = $ElectricSFX
+@onready var laser_sfx = $LaserSFX
 
 @onready var last_land = $LastLand
 

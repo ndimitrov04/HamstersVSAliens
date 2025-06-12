@@ -1,20 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://b041ewht1kq7w"]
+[gd_scene load_steps=6 format=3 uid="uid://b041ewht1kq7w"]
 
 [ext_resource type="Script" path="res://Scripts/autolaser.gd" id="1_ib65p"]
+[ext_resource type="AudioStream" uid="uid://cmajmwkmnadw" path="res://SFX/Player/531421__resaural__electric-zap-loop.wav" id="2_03yko"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efwx6"]
 transparency = 1
-albedo_color = Color(1, 0, 0, 0.87451)
+albedo_color = Color(0, 1, 1, 0.87451)
 roughness = 0.0
 emission_enabled = true
-emission = Color(1, 0, 0, 1)
+emission = Color(0, 1, 1, 1)
 emission_energy_multiplier = 16.0
 backlight_enabled = true
 backlight = Color(1, 1, 1, 1)
 refraction_scale = -0.47
 disable_receive_shadows = true
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_vvun7"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_xj8ga"]
 material = SubResource("StandardMaterial3D_efwx6")
 bottom_radius = 0.4
 height = 400.0
@@ -28,7 +29,7 @@ script = ExtResource("1_ib65p")
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -204)
 cast_shadow = 0
-mesh = SubResource("CylinderMesh_vvun7")
+mesh = SubResource("CylinderMesh_xj8ga")
 skeleton = NodePath("../..")
 
 [node name="Hurtbox" type="Area3D" parent="."]
@@ -43,6 +44,12 @@ shape = SubResource("CapsuleShape3D_kukfb")
 [node name="Timeout" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="LaserSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_03yko")
+volume_db = -23.694
+autoplay = true
+bus = &"SFX"
 
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
 [connection signal="body_exited" from="Hurtbox" to="." method="_on_hurtbox_body_exited"]

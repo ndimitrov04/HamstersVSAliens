@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://gjbquahrqxek"]
+[gd_scene load_steps=44 format=3 uid="uid://gjbquahrqxek"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_djtqc"]
 [ext_resource type="Texture2D" uid="uid://ueu2h64vm5oc" path="res://Textures/Balls/Ball1/Pipe004_1K-JPG_Color.jpg" id="2_n8vo3"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://Scripts/player_sfx.gd" id="8_7rkmc"]
 [ext_resource type="AudioStream" uid="uid://7vhx4ncla4kn" path="res://SFX/Player/rollmix_grass.mp3" id="8_x4kfw"]
 [ext_resource type="AudioStream" uid="uid://dk2kt36lmmusk" path="res://SFX/Enemies/Generic/metal-whoosh-hit-9-201909.mp3" id="9_q2yum"]
+[ext_resource type="AudioStream" uid="uid://cmajmwkmnadw" path="res://SFX/Player/531421__resaural__electric-zap-loop.wav" id="10_bb4e4"]
+[ext_resource type="AudioStream" uid="uid://cj2on8odp2iia" path="res://SFX/Player/397280__ledhed2222__laser_sustained.wav" id="10_i6hr3"]
 [ext_resource type="AudioStream" uid="uid://7tm6mj8sbbfw" path="res://SFX/Player/landing-on-grass-40650.mp3" id="10_sje6q"]
 [ext_resource type="AudioStream" uid="uid://suyg6fo205wx" path="res://SFX/Player/322505__liamg_sfx__explosion-6.mp3" id="11_qogtc"]
 [ext_resource type="AudioStream" uid="uid://20nrygl1iblf" path="res://SFX/Player/smooth-cold-wind-looped-135538.mp3" id="11_rguvm"]
@@ -51,6 +53,19 @@ radius = 3.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ohk6s"]
 radius = 400.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecdx3"]
+transparency = 1
+albedo_color = Color(0, 1, 1, 0.121569)
+emission_enabled = true
+emission = Color(0.283822, 1, 0.922118, 1)
+emission_energy_multiplier = 2.56
+
+[sub_resource type="SphereMesh" id="SphereMesh_1kmi0"]
+lightmap_size_hint = Vector2i(159, 80)
+material = SubResource("StandardMaterial3D_ecdx3")
+radius = 5.0
+height = 10.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_efwx6"]
 transparency = 1
@@ -198,6 +213,10 @@ gravity_direction = Vector3(0, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/TeslaLockOn"]
 shape = SubResource("SphereShape3D_ohk6s")
 
+[node name="Electricity" type="MeshInstance3D" parent="Ship"]
+visible = false
+mesh = SubResource("SphereMesh_1kmi0")
+
 [node name="ShootPoint" type="Node3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.26126)
 
@@ -314,6 +333,16 @@ texture_albedo = ExtResource("7_jmvwl")
 [node name="SFX" type="Node3D" parent="."]
 script = ExtResource("8_7rkmc")
 
+[node name="LaserSFX" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("10_i6hr3")
+volume_db = -23.0
+bus = &"SFX"
+
+[node name="ElectricSFX" type="AudioStreamPlayer3D" parent="SFX"]
+stream = ExtResource("10_bb4e4")
+volume_db = -8.0
+bus = &"SFX"
+
 [node name="HomingHitSFX" type="AudioStreamPlayer3D" parent="SFX"]
 stream = ExtResource("9_q2yum")
 volume_db = 5.0
@@ -387,6 +416,8 @@ autostart = true
 [connection signal="body_entered" from="." to="SFX" method="_on_player_body_entered"]
 [connection signal="body_entered" from="Ship/TeslaLockOn" to="." method="_on_tesla_lock_on_body_entered"]
 [connection signal="body_exited" from="Ship/TeslaLockOn" to="." method="_on_tesla_lock_on_body_exited"]
+[connection signal="body_entered" from="Ship/Laser/Hurtbox" to="." method="_on_hurtbox_body_entered"]
+[connection signal="body_exited" from="Ship/Laser/Hurtbox" to="." method="_on_hurtbox_body_exited"]
 [connection signal="timeout" from="ShotCDTimer" to="." method="_on_shot_cd_timer_timeout"]
 [connection signal="timeout" from="LaserCDTimer" to="." method="_on_laser_cd_timer_timeout"]
 [connection signal="timeout" from="HeatCDTimer" to="." method="_on_heat_cd_timer_timeout"]

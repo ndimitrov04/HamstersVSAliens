@@ -99,8 +99,10 @@ transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, -2, 0, -1.5)
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false
+pixel_size = 0.0005
 billboard = 1
 no_depth_test = true
+fixed_size = true
 texture = ExtResource("4_vmwjv")
 
 [node name="LockTimeout" type="Timer" parent="."]
