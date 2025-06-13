@@ -1,0 +1,463 @@
+[gd_scene load_steps=3 format=3 uid="uid://3pu32687w0od"]
+
+[ext_resource type="Theme" uid="uid://cvujk8weshw6m" path="res://main_theme.tres" id="1_krm3w"]
+[ext_resource type="Script" path="res://Scripts/graphics_menu.gd" id="2_4guys"]
+
+[node name="GraphicsMenu" type="Panel"]
+visible = false
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.392
+anchor_top = 0.489
+anchor_right = 0.392
+anchor_bottom = 0.489
+offset_left = -1098.88
+offset_top = -789.224
+offset_right = -458.88
+offset_bottom = 338.776
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_krm3w")
+script = ExtResource("2_4guys")
+metadata/_edit_lock_ = true
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_top = 88.0
+offset_right = 640.0
+offset_bottom = 136.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 30
+text = "Graphics Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VSLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 160.0
+offset_right = 640.0
+offset_bottom = 208.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Video Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ESLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 576.0
+offset_right = 640.0
+offset_bottom = 624.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Effect Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Fullscreen" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 159.808
+offset_right = 592.32
+offset_bottom = 223.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="Fullscreen"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Fullscreen"
+vertical_alignment = 1
+
+[node name="FullscreenOption" type="OptionButton" parent="Fullscreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_1/text = "Borderless"
+popup/item_1/id = 1
+popup/item_2/text = "Exclusive Fullscreen"
+popup/item_2/id = 2
+
+[node name="VSync" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 239.808
+offset_right = 592.32
+offset_bottom = 303.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="VSync"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "V-Sync"
+vertical_alignment = 1
+
+[node name="VSyncOption" type="OptionButton" parent="VSync"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 3
+popup/item_0/text = "Disabled"
+popup/item_1/text = "Adaptive"
+popup/item_1/id = 1
+popup/item_2/text = "Enabled"
+popup/item_2/id = 2
+
+[node name="Upscaling" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 319.808
+offset_right = 592.32
+offset_bottom = 383.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="Upscaling"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Upscaling"
+vertical_alignment = 1
+
+[node name="UpscalingOption" type="OptionButton" parent="Upscaling"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 3
+popup/item_0/text = "Disabled"
+popup/item_1/text = "FSR 1"
+popup/item_1/id = 1
+popup/item_2/text = "FSR 2.X"
+popup/item_2/id = 2
+
+[node name="Anti-Aliasing" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 399.808
+offset_right = 592.32
+offset_bottom = 463.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="Anti-Aliasing"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Anti-Aliasing"
+vertical_alignment = 1
+
+[node name="Anti-AliasingOption" type="OptionButton" parent="Anti-Aliasing"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 5
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_1/text = "FXAA (Faster)"
+popup/item_1/id = 1
+popup/item_2/text = "TAA (Fast)"
+popup/item_2/id = 2
+popup/item_3/text = "MSAA 2X (Average)"
+popup/item_3/id = 3
+popup/item_4/text = "MSAA 4X (Slow)"
+popup/item_4/id = 4
+
+[node name="GlobalIllumination" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 575.808
+offset_right = 592.32
+offset_bottom = 639.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="GlobalIllumination"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Global Illumination"
+vertical_alignment = 1
+
+[node name="GlobalIlluminationOption" type="OptionButton" parent="GlobalIllumination"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 3
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_1/text = "Low (Average)"
+popup/item_1/id = 1
+popup/item_2/text = "High (Slow)"
+popup/item_2/id = 2
+
+[node name="Bloom" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 655.808
+offset_right = 592.32
+offset_bottom = 719.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="Bloom"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Bloom"
+vertical_alignment = 1
+
+[node name="BloomOption" type="OptionButton" parent="Bloom"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 3
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_1/text = "Low (Fast)"
+popup/item_1/id = 1
+popup/item_2/text = "High (Slow)"
+popup/item_2/id = 2
+
+[node name="AmbientOcclusion" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 735.808
+offset_right = 592.32
+offset_bottom = 799.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="AmbientOcclusion"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "Ambient Occlusion"
+vertical_alignment = 1
+
+[node name="AmbientOcclusionOption" type="OptionButton" parent="AmbientOcclusion"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 6
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_1/text = "Very Low (Faster)"
+popup/item_1/id = 1
+popup/item_2/text = "Low (Fast)"
+popup/item_2/id = 2
+popup/item_3/text = "Medium (Average)"
+popup/item_3/id = 3
+popup/item_4/text = "High (Slow)"
+popup/item_4/id = 4
+popup/item_5/text = "Ultra (Very Slow)"
+popup/item_5/id = 5
+
+[node name="ScreenSpaceReflections" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 815.808
+offset_right = 592.32
+offset_bottom = 879.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="ScreenSpaceReflections"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "SSR"
+vertical_alignment = 1
+
+[node name="ScreenSpaceReflectionsOption" type="OptionButton" parent="ScreenSpaceReflections"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 5
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_1/text = "Low (Fast)"
+popup/item_1/id = 1
+popup/item_2/text = "Medium (Average)"
+popup/item_2/id = 2
+popup/item_3/text = "High (Slow)"
+popup/item_3/id = 3
+popup/item_4/text = "Ultra (Very Slow)"
+popup/item_4/id = 5
+
+[node name="ScreenSpaceLighting" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.037
+anchor_top = 0.064
+anchor_right = 0.037
+anchor_bottom = 0.064
+offset_left = 0.32
+offset_top = 895.808
+offset_right = 592.32
+offset_bottom = 959.808
+theme = ExtResource("1_krm3w")
+
+[node name="OptionLabel" type="Label" parent="ScreenSpaceLighting"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 56.0
+theme = ExtResource("1_krm3w")
+theme_override_font_sizes/font_size = 28
+text = "SSL"
+vertical_alignment = 1
+
+[node name="ScreenSpaceLightingOption" type="OptionButton" parent="ScreenSpaceLighting"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.608
+anchor_top = 0.125
+anchor_right = 0.608
+anchor_bottom = 0.125
+offset_left = 0.0639648
+offset_right = 224.064
+offset_bottom = 48.0
+theme = ExtResource("1_krm3w")
+selected = 0
+item_count = 6
+popup/item_0/text = "Disabled (Fastest)"
+popup/item_1/text = "Very Low (Faster)"
+popup/item_1/id = 1
+popup/item_2/text = "Low (Fast)"
+popup/item_2/id = 2
+popup/item_3/text = "Medium (Average)"
+popup/item_3/id = 3
+popup/item_4/text = "High (Slow)"
+popup/item_4/id = 4
+popup/item_5/text = "Ultra (Very Slow)"
+popup/item_5/id = 5
+
+[connection signal="item_selected" from="Fullscreen/FullscreenOption" to="." method="_on_fullscreen_option_item_selected"]
+[connection signal="item_selected" from="VSync/VSyncOption" to="." method="_on_v_sync_option_item_selected"]
+[connection signal="item_selected" from="Upscaling/UpscalingOption" to="." method="_on_upscaling_option_item_selected"]
+[connection signal="item_selected" from="Anti-Aliasing/Anti-AliasingOption" to="." method="_on_anti_aliasing_option_item_selected"]
+[connection signal="item_selected" from="GlobalIllumination/GlobalIlluminationOption" to="." method="_on_global_illumination_option_item_selected"]
+[connection signal="item_selected" from="Bloom/BloomOption" to="." method="_on_bloom_option_item_selected"]
+[connection signal="item_selected" from="AmbientOcclusion/AmbientOcclusionOption" to="." method="_on_ambient_occlusion_option_item_selected"]
+[connection signal="item_selected" from="ScreenSpaceReflections/ScreenSpaceReflectionsOption" to="." method="_on_screen_space_reflections_option_item_selected"]
+[connection signal="item_selected" from="ScreenSpaceLighting/ScreenSpaceLightingOption" to="." method="_on_screen_space_lighting_option_item_selected"]
