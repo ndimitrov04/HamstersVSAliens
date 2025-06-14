@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dxvgqnw73i02v"]
+[gd_scene load_steps=17 format=3 uid="uid://dxvgqnw73i02v"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_1q3w7"]
 [ext_resource type="Script" path="res://Scripts/Projectiles/destroyer_bullet.gd" id="1_087kx"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b5non8anx6yo4" path="res://Scenes/Behaviors/shield.tscn" id="3_p15hn"]
 [ext_resource type="PackedScene" uid="uid://dts8twdr38f4g" path="res://Scenes/Behaviors/floating_rusher.tscn" id="4_ltd7a"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_vmwjv"]
+[ext_resource type="PackedScene" uid="uid://dh1h00j0adtir" path="res://Scenes/Behaviors/attractor.tscn" id="6_yuxmu"]
 [ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="7_qxft2"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tclv0"]
@@ -73,13 +74,14 @@ metadata/gold = 10
 metadata/targets = NodePath("../../Enemies")
 metadata/shield = 300
 metadata/not_followable = true
+metadata/attraction_radius = 10.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.558849, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.27794, -7.37385)
 light_color = Color(0.596078, 0.313726, 0.545098, 1)
-light_energy = 150.0
+light_energy = 16.0
 light_bake_mode = 0
-omni_range = 25.0
+omni_range = 18.2
 
 [node name="ShieldHitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(-30, 0, 4.52987e-06, 0, 30, 0, -4.52987e-06, 0, -30, -0.0320321, 0, -0.0864483)
@@ -88,14 +90,14 @@ shape = SubResource("SphereShape3D_bqih1")
 [node name="Shield" parent="." instance=ExtResource("3_p15hn")]
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(-30, 0, 4.52987e-06, 0, 30, 0, -4.52987e-06, 0, -30, -0.0320321, 0, -0.0864483)
+transform = Transform3D(-60, 0, 9.05975e-06, 0, 60, 0, -9.05975e-06, 0, -60, -0.0320321, 0, -0.0864483)
 shape = SubResource("ConvexPolygonShape3D_l4v8a")
 
 [node name="Model" parent="." instance=ExtResource("2_s06ev")]
 transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -2.03203, 0, -1.58645)
 
 [node name="craft_speederD" parent="Model/RootNode" index="0"]
-transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, -2, 0, -1.5)
+transform = Transform3D(60, 0, 0, 0, 60, 0, 0, 0, 60, -2, 0, -1.5)
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false
@@ -108,6 +110,8 @@ texture = ExtResource("4_vmwjv")
 [node name="LockTimeout" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="Attractor" parent="." instance=ExtResource("6_yuxmu")]
 
 [node name="FloatingRusher" parent="." instance=ExtResource("4_ltd7a")]
 

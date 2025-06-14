@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://ch7l4a7iegb8w"]
+[gd_scene load_steps=12 format=3 uid="uid://ch7l4a7iegb8w"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_iaybq"]
 [ext_resource type="PackedScene" uid="uid://f6fuvx7c2ywn" path="res://Scenes/Projectiles/light_bullet.tscn" id="1_ofp63"]
 [ext_resource type="PackedScene" uid="uid://bp1uey4204u3h" path="res://ImportedModels/Spaceships/S1/Spaceship-VSxUAFhzbA.glb" id="3_35yu1"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_nmbe7"]
+[ext_resource type="PackedScene" uid="uid://dh1h00j0adtir" path="res://Scenes/Behaviors/attractor.tscn" id="5_gacuw"]
 [ext_resource type="PackedScene" uid="uid://coo2loedmu4xs" path="res://Scenes/Behaviors/floating_seeker.tscn" id="5_hlm3t"]
 [ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_slrxw"]
 [ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="7_j2o3m"]
@@ -40,6 +41,7 @@ metadata/target_player = false
 metadata/bullet_siblings = false
 metadata/track_player = true
 metadata/gold = 0
+metadata/attraction_radius = 40.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.34965, 2.34743, 4.33591)
@@ -63,13 +65,14 @@ light_bake_mode = 0
 omni_range = 25.0
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(-100, 0, -1.50996e-05, 0, 100, 0, 1.50996e-05, 0, -100, 0, 0, 0)
+transform = Transform3D(-200, 0, -3.01992e-05, 0, 200, 0, 3.01992e-05, 0, -200, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_vyynd")
 
 [node name="Model" parent="." instance=ExtResource("3_35yu1")]
 transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 0)
 
 [node name="Spaceship_FinnTheFrog" parent="Model/RootNode" index="0"]
+transform = Transform3D(200, 0, 0, 0, 200, -8.74228e-06, 0, 8.74228e-06, 200, 0, 0, 0)
 surface_material_override/0 = SubResource("StandardMaterial3D_o86wn")
 
 [node name="LockMarker" type="Sprite3D" parent="."]
@@ -83,6 +86,8 @@ texture = ExtResource("4_nmbe7")
 [node name="LockTimeout" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="Attractor" parent="." instance=ExtResource("5_gacuw")]
 
 [node name="FloatingSeeker" parent="." instance=ExtResource("5_hlm3t")]
 

@@ -29,8 +29,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	#Keep enemy from going too high into the air
-	if get_parent().global_position.y >= get_parent().get_parent().get_parent().SKYBOUNDS[1] + 50:
-		get_parent().global_position.y = get_parent().get_parent().get_parent().SKYBOUNDS[1] + 50
+	if get_parent().global_position.y >= get_parent().get_parent().get_parent().SKYBOUNDS[1] + 30:
+		get_parent().global_position.y = get_parent().get_parent().get_parent().SKYBOUNDS[1] + 30
 	
 	if get_parent().global_position.x > get_parent().target.global_position.x:
 		input.x = -1

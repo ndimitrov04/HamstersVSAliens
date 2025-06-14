@@ -21,8 +21,8 @@ height = 32.0
 radial_segments = 16
 rings = 8
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2dugs"]
-points = PackedVector3Array(3.73365, 4.37645, 1.54593, -5.73403, -1.27224, -0.457232, -5.5797, -1.09552, -1.55665, 3.55135, -4.74087, -0.276232, 1.55005, 1.09572, -5.58094, -0.643953, -1.09655, 5.76084, -3.55744, 4.73817, 0.269128, -1.90944, -5.44215, -1.36456, 5.76231, -1.09683, 0.63604, -1.55197, 4.55328, -3.55485, -1.92172, -2.92078, -4.84272, -2.0974, 3.09263, 4.63615, -1.55353, -4.55678, 3.55035, 3.72848, -1.09135, 4.45746, 4.45422, -1.09056, -3.73384, 4.63651, 3.09326, -2.09593, -4.46023, -1.09005, 3.72517, -4.07403, 1.4466, -4.07403, 0.638325, 5.87761, 0.270128, 1.91567, 2.92439, 4.84261, 1.5443, -4.3719, -3.73779, -5.20654, 2.92015, -0.094105, 2.44134, -4.52914, 2.9845, -4.642, -3.63821, -0.0937904, 2.43918, 4.5251, -2.98995, 5.35695, 1.27113, 2.26679, 0.638321, -5.87762, 0.270126, -0.0940242, 5.28837, 2.63931, -5.35919, 1.26975, 2.26432, -1.55763, 1.09651, -5.57915, 1.55005, -1.09576, -5.58093, -3.70548, -3.0691, -3.52503)
+[sub_resource type="SphereShape3D" id="SphereShape3D_p3tei"]
+radius = 31.0
 
 [node name="Shield" type="Area3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
@@ -31,11 +31,12 @@ collision_mask = 133
 script = ExtResource("1_68ink")
 
 [node name="Model" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("SphereMesh_rav1d")
 skeleton = NodePath("../..")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_2dugs")
+shape = SubResource("SphereShape3D_p3tei")
 
 [node name="ShieldRegenTick" type="Timer" parent="."]
 wait_time = 0.5

@@ -1,6 +1,7 @@
 extends RigidBody3D
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
+@onready var EXPLOSION_HURT = preload("res://Scenes/Projectiles/explosion_hurt.tscn")
 
 @onready var damage = 40
 @onready var speed = 0.8
@@ -26,9 +27,11 @@ func _on_timer_timeout():
 	await get_tree().create_timer(0.2).timeout
 	queue_free()
 
-func explode(explosion = EXPLOSION.instantiate()):
+func explode(explosion = EXPLOSION.instantiate(), explosion_hurt = EXPLOSION_HURT.instantiate()):
 	add_sibling(explosion)
 	explosion.global_position = global_position
-	explosion.amount = 4096
+	explosion.amount = 2048
 	explosion.emitting = true
 	axis_lock_linear_y = false
+	add_sibling(explosion_hurt)
+	explosion_hurt.global_position = global_position

@@ -37,6 +37,8 @@ size = Vector2(0.3, 0.3)
 radius = 30.0
 
 [node name="Explosion" type="GPUParticles3D"]
+cast_shadow = 0
+ignore_occlusion_culling = true
 emitting = false
 lifetime = 3.0
 one_shot = true

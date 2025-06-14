@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh1h00j0adtir"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/attractor.gd" id="1_yi4vp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qck0c"]
+radius = 0.1
+
+[node name="Attractor" type="Node3D"]
+script = ExtResource("1_yi4vp")
+
+[node name="AttractionArea" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 128
+gravity_space_override = 1
+gravity_point = true
+gravity_point_unit_distance = 0.1
+gravity_point_center = Vector3(0, 0, 0)
+gravity_direction = Vector3(0, 0, 0)
+gravity = 14.0
+
+[node name="AttractionShape" type="CollisionShape3D" parent="AttractionArea"]
+shape = SubResource("SphereShape3D_qck0c")

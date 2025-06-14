@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=4 uid="uid://xs88ejbh7h1f"]
+[gd_scene load_steps=14 format=4 uid="uid://xs88ejbh7h1f"]
 
 [ext_resource type="PackedScene" uid="uid://bshg5dxiarc82" path="res://Scenes/Projectiles/destroyer_bullet.tscn" id="1_lr33d"]
+[ext_resource type="PackedScene" uid="uid://dh1h00j0adtir" path="res://Scenes/Behaviors/attractor.tscn" id="3_3k3k0"]
 [ext_resource type="PackedScene" uid="uid://vj8hgbebtbp" path="res://Scenes/Behaviors/floating_strafer.tscn" id="3_48ems"]
 [ext_resource type="Script" path="res://Scripts/Enemies/EnemyBehaviors/bombing.gd" id="4_ko1dv"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_t4g03"]
@@ -210,9 +211,10 @@ metadata/track_player = false
 metadata/gold = 20
 metadata/custom_targeting = true
 metadata/targets = NodePath("../../Friendlies")
+metadata/attraction_radius = 35.0
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(500, 0, 0, 0, -5.96047e-05, 500, 0, -500, -5.96047e-05, 7.21369e-07, 0, 0)
+transform = Transform3D(500, 0, 0, 0, -2.18557e-05, 500, 0, -500, -2.18557e-05, 7.21369e-07, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_uf03b")
 
 [node name="Model" type="Node3D" parent="."]
@@ -221,7 +223,7 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 [node name="RootNode" type="Node3D" parent="Model"]
 
 [node name="Spaceship3" type="MeshInstance3D" parent="Model/RootNode"]
-transform = Transform3D(100, 0, 0, 0, -1.19209e-05, 100, 0, -100, -1.19209e-05, 1.44274e-07, 0, 0)
+transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 100, 0, -100, -4.37114e-06, 1.44274e-07, 0, 0)
 mesh = SubResource("ArrayMesh_sbyx0")
 skeleton = NodePath("")
 
@@ -236,6 +238,8 @@ texture = ExtResource("4_t4g03")
 [node name="LockTimeout" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="Attractor" parent="." instance=ExtResource("3_3k3k0")]
 
 [node name="FloatingStrafer" parent="." instance=ExtResource("3_48ems")]
 

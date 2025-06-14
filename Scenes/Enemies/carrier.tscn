@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://b8bnvg37tfgo2"]
+[gd_scene load_steps=11 format=3 uid="uid://b8bnvg37tfgo2"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_vj3ff"]
 [ext_resource type="PackedScene" uid="uid://ch7l4a7iegb8w" path="res://Scenes/Enemies/carrier_minion.tscn" id="2_yf5xf"]
 [ext_resource type="PackedScene" uid="uid://cyhkr0ws7ha0l" path="res://Scenes/ModelScenes/carrier_model.tscn" id="3_f0spg"]
 [ext_resource type="Texture2D" uid="uid://bnfi1w5grtnm5" path="res://Textures/HUD/focus-points.png" id="4_4wgiv"]
+[ext_resource type="PackedScene" uid="uid://dh1h00j0adtir" path="res://Scenes/Behaviors/attractor.tscn" id="5_4pe2s"]
 [ext_resource type="PackedScene" uid="uid://coo2loedmu4xs" path="res://Scenes/Behaviors/floating_seeker.tscn" id="5_e3oy6"]
 [ext_resource type="PackedScene" uid="uid://c16gcrdhd1wk0" path="res://Scenes/Behaviors/non_predictive_shooting.tscn" id="6_5yrh6"]
 [ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="7_i3eg0"]
@@ -33,37 +34,38 @@ metadata/bullet_siblings = true
 metadata/track_player = false
 metadata/gold = 20
 metadata/max_bullets = 4
+metadata/attraction_radius = 45.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, -0.00288771, 8.66309, 13.1241)
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, -0.00288771, 14.6451, 13.1241)
 light_color = Color(0.596078, 0.313726, 0.545098, 1)
 light_energy = 100.0
 light_bake_mode = 0
-omni_range = 25.0
+omni_range = 35.0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, -11.9688, 0)
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, -19.7588, 0)
 light_color = Color(0.596078, 0.313726, 0.545098, 1)
 light_energy = 100.0
 light_bake_mode = 0
-omni_range = 25.0
+omni_range = 35.0
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, 0.976118, -24.3776)
+transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 0, 7.10543e-15, 0, 1, 0, 0.976118, -39.5643)
 light_color = Color(0.596078, 0.313726, 0.545098, 1)
 light_energy = 100.0
 light_bake_mode = 0
-omni_range = 25.0
+omni_range = 35.0
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(-350, 0, -5.28485e-05, 0, 350, 0, 5.28485e-05, 0, -350, 0, 0, 0)
+transform = Transform3D(-600, 0, -9.05975e-05, 0, 600, 0, 9.05975e-05, 0, -600, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_vcvwm")
 
 [node name="Model" parent="." instance=ExtResource("3_f0spg")]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 
 [node name="Spaceship_FernandoTheFlamingo" parent="Model/RootNode" index="0"]
-transform = Transform3D(-150, 0, -1.31134e-05, 0, 150, 0, 1.31134e-05, 0, -150, 0, 0, 0)
+transform = Transform3D(-300, 0, -4.52987e-05, 0, 300, 0, 4.52987e-05, 0, -300, 0, 0, 0)
 
 [node name="LockMarker" type="Sprite3D" parent="."]
 visible = false
@@ -76,6 +78,8 @@ texture = ExtResource("4_4wgiv")
 [node name="LockTimeout" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="Attractor" parent="." instance=ExtResource("5_4pe2s")]
 
 [node name="FloatingSeeker" parent="." instance=ExtResource("5_e3oy6")]
 
