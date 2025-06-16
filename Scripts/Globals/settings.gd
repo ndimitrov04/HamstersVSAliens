@@ -10,15 +10,20 @@ extends Node
 @onready var ssr		: int = 0
 @onready var ssl		: int = 0
 
+@onready var music_vol	: int = 0
+@onready var sfx_vol	: int = 0
+@onready var sens		: float = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var config_file = ConfigFile.new()
 	
 	# Load data from a config file
 	var err = config_file.load("user://hamstergame.save")
-
+	
 	# If the file didn't load, ignore it.
 	if err != OK:
+		print("Savefile not found!")
 		return
 	
 	# Iterate over all sections.
@@ -33,6 +38,10 @@ func _ready():
 		ao = config_file.get_value(section, "ao")
 		ssr = config_file.get_value(section, "ssr")
 		ssl = config_file.get_value(section, "ssl")
+		
+		music_vol = config_file.get_value(section, "music_vol")
+		sfx_vol = config_file.get_value(section, "sfx_vol")
+		sens = config_file.get_value(section, "sens")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -51,5 +60,9 @@ func save_settings():
 	config_file.set_value("s1", "ao", ao)
 	config_file.set_value("s1", "ssr", ssr)
 	config_file.set_value("s1", "ssl", ssl)
+	
+	config_file.set_value("s1", "music_vol", music_vol)
+	config_file.set_value("s1", "sfx_vol", sfx_vol)
+	config_file.set_value("s1", "sens", sens)
 	
 	config_file.save("user://hamstergame.save")

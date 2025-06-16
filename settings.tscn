@@ -1,0 +1,119 @@
+[gd_scene load_steps=3 format=3 uid="uid://ciqrkauwuo7fd"]
+
+[ext_resource type="Theme" uid="uid://cvujk8weshw6m" path="res://main_theme.tres" id="1_niecn"]
+[ext_resource type="Script" path="res://settings.gd" id="2_topeh"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_niecn")
+script = ExtResource("2_topeh")
+
+[node name="VolumeSliderLabel" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 72.0
+offset_top = 248.0
+offset_right = 181.0
+offset_bottom = 271.0
+theme = ExtResource("1_niecn")
+text = "Music Volume"
+
+[node name="VolumeSliderValue" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 24.0
+offset_top = 280.0
+offset_right = 49.0
+offset_bottom = 293.0
+theme = ExtResource("1_niecn")
+text = "16"
+
+[node name="VolumeSlider" type="HSlider" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.6
+anchor_top = 7.4
+anchor_right = 1.6
+anchor_bottom = 7.4
+offset_top = -24.0
+offset_right = 312.0
+offset_bottom = 8.0
+theme = ExtResource("1_niecn")
+min_value = -16.0
+max_value = 16.0
+
+[node name="SFXSliderLabel" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 72.0
+offset_top = 320.0
+offset_right = 181.0
+offset_bottom = 343.0
+theme = ExtResource("1_niecn")
+text = "SFX Volume"
+
+[node name="SFXSliderValue" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 24.0
+offset_top = 352.0
+offset_right = 49.0
+offset_bottom = 365.0
+theme = ExtResource("1_niecn")
+text = "16"
+
+[node name="SFXSlider" type="HSlider" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.6
+anchor_top = 7.4
+anchor_right = 1.6
+anchor_bottom = 7.4
+offset_top = 48.0
+offset_right = 312.0
+offset_bottom = 80.0
+theme = ExtResource("1_niecn")
+min_value = -16.0
+max_value = 16.0
+
+[node name="SensitivitySliderLabel" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 72.0
+offset_top = 392.0
+offset_right = 181.0
+offset_bottom = 415.0
+theme = ExtResource("1_niecn")
+text = "Sensitivity"
+
+[node name="SensSliderValue" type="Label" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 24.0
+offset_top = 424.0
+offset_right = 49.0
+offset_bottom = 437.0
+theme = ExtResource("1_niecn")
+text = "2"
+
+[node name="SensSlider" type="HSlider" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.6
+anchor_top = 10.0
+anchor_right = 1.6
+anchor_bottom = 10.0
+offset_top = 16.0
+offset_right = 312.0
+offset_bottom = 48.0
+theme = ExtResource("1_niecn")
+max_value = 8.0
+step = 0.01
+value = 2.0
+
+[connection signal="value_changed" from="VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="value_changed" from="SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="SensSlider" to="." method="_on_sens_slider_value_changed"]
