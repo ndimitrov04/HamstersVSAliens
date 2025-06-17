@@ -39,6 +39,11 @@ extends CanvasLayer
 
 @onready var combo_sfx = $ComboBar/ComboSFX
 
+@onready var comms = $Comms
+@onready var comm_pic = $Comms/CommPic
+@onready var comm_message = $Comms/CommMessage
+@onready var comm_notification = $Comms/CommNotification
+
 var dash_sfx_played = false
 var homing_sfx_played = false
 

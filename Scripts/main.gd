@@ -107,7 +107,7 @@ var waves = [
 	[ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
 	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
 	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
-	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
 
 	# Wave 15 (Boss)
 	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
@@ -154,6 +154,7 @@ func _process(_delta):
 				enemy.hp = 0
 
 func new_wave():
+	hud.comms.update_comms(current_wave)
 	level_up.initiate_upgrade_phase()
 	next_wave.start()
 	hud.next_wave.show()
@@ -177,6 +178,8 @@ func create_enemy(enemy_type: ENEMYTYPE):
 		return null
 
 func _on_next_wave_timeout():
+	if current_wave >= 15:
+		random_wave_gen = true
 	hud.next_wave.hide()
 	current_wave += 1
 	wave_notification.play()
@@ -201,7 +204,7 @@ func _on_next_wave_timeout():
 			# Spawn enemy and give it HP equal to base HP + current wave * 10
 			var currentEnemy = create_enemy(enemy_type)
 			enemies.add_child(currentEnemy)
-			currentEnemy.hp += current_wave * 10
+			currentEnemy.hp += current_wave * 20
 			currentEnemy.global_position = Vector3(
 				randf_range(-MAPRADIUS,MAPRADIUS),
 				randf_range(SKYBOUNDS[0],SKYBOUNDS[1]),
