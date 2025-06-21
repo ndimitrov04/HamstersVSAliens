@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cumnw8c3o8teh" path="res://SFX/Enemies/Generic/hover-engine-6391.mp3" id="7_gu1x7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fn527"]
+friction = 0.1
 bounce = 0.5
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jf6ft"]

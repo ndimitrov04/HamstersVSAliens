@@ -31,6 +31,8 @@ var SKYBOUNDS
 
 var random_wave_gen : bool = false
 var current_wave : int = 0
+var stage_mod : float = 1
+var stage_waves
 var enemy_pool
 var city_hp = 1
 
@@ -45,7 +47,7 @@ enum ENEMYTYPE {
 	bomber
 }
 
-var waves = [
+var waves_1 = [
 	[],  # Wave 0 (no enemies)
 
 	# Wave 1
@@ -115,10 +117,160 @@ var waves = [
 	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber]
 ]
 
+var waves_2 = [
+	[],  # Wave 0 (no enemies)
+
+	# Wave 1
+	[ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+
+	# Wave 2
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer],
+
+	# Wave 3
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.carrier],
+
+	# Wave 4
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 5
+	[ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 6
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 7
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder],
+
+	# Wave 8 (Boss)
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 9
+	[ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 10
+	[ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 11
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 12
+	[ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 13
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber],
+
+	# Wave 14
+	[ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 15 (Boss)
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber]
+]
+
+var waves_3 = [
+	[],  # Wave 0 (no enemies)
+
+	# Wave 1
+	[ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+
+	# Wave 2
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer],
+
+	# Wave 3
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.carrier],
+
+	# Wave 4
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 5
+	[ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 6
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 7
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder],
+
+	# Wave 8 (Boss)
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 9
+	[ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 10
+	[ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 11
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+
+	# Wave 12
+	[ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 13
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber],
+
+	# Wave 14
+	[ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+
+	# Wave 15 (Boss)
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber]
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	MusicPlayer.stream = MusicPlayer.stage1_music
 	MusicPlayer.play()
+	match get_meta("stage"):
+		1:
+			stage_mod = 1
+			stage_waves = waves_1
+		2:
+			stage_mod = 1.5
+			stage_waves = waves_2
+		3:
+			stage_mod = 2
+			stage_waves = waves_3
 	SKYBOUNDS = get_meta("skybounds")
 	print("START IN 1")
 	await get_tree().create_timer(1).timeout
@@ -189,7 +341,7 @@ func _on_next_wave_timeout():
 			# Spawn enemy and give it HP equal to base HP + current wave * 10
 			var currentEnemy = enemy_pool[randi_range(1,enemy_pool.size()-1)].instantiate()
 			enemies.add_child(currentEnemy)
-			currentEnemy.hp += current_wave * 10
+			currentEnemy.hp += current_wave * 10 * stage_mod
 			currentEnemy.global_position = Vector3(
 				randf_range(-MAPRADIUS,MAPRADIUS),
 				randf_range(SKYBOUNDS[0],SKYBOUNDS[1]),
@@ -197,14 +349,14 @@ func _on_next_wave_timeout():
 				)
 	else:
 		print("Current wave:")
-		print(waves[current_wave])
+		print(stage_waves[current_wave])
 		update_enemy_list()
 		# Random wave generation
-		for enemy_type in waves[current_wave]:
+		for enemy_type in stage_waves[current_wave]:
 			# Spawn enemy and give it HP equal to base HP + current wave * 10
 			var currentEnemy = create_enemy(enemy_type)
 			enemies.add_child(currentEnemy)
-			currentEnemy.hp += current_wave * 20
+			currentEnemy.hp += current_wave * 20 * stage_mod
 			currentEnemy.global_position = Vector3(
 				randf_range(-MAPRADIUS,MAPRADIUS),
 				randf_range(SKYBOUNDS[0],SKYBOUNDS[1]),
@@ -221,46 +373,47 @@ func calculate_city_hp() -> int:
 	return hp
 
 func update_enemy_list():
-	match current_wave:
-		2:
-			enemy_list.unlocked_enemies += 1
-			enemy_list.current_index = enemy_list.unlocked_enemies - 1
-			open_button.button_pressed = true
-			enemy_list.load_entry(enemy_list.current_index)
-			enemy_list.new_enemy_sfx.play()
-		3:
-			enemy_list.unlocked_enemies += 1
-			enemy_list.current_index = enemy_list.unlocked_enemies - 1
-			open_button.button_pressed = true
-			enemy_list.load_entry(enemy_list.current_index)
-			enemy_list.new_enemy_sfx.play()
-		5:
-			enemy_list.unlocked_enemies += 1
-			enemy_list.current_index = enemy_list.unlocked_enemies - 1
-			open_button.button_pressed = true
-			enemy_list.load_entry(enemy_list.current_index)
-			enemy_list.new_enemy_sfx.play()
-		7:
-			enemy_list.unlocked_enemies += 1
-			enemy_list.current_index = enemy_list.unlocked_enemies - 1
-			open_button.button_pressed = true
-			enemy_list.load_entry(enemy_list.current_index)
-			enemy_list.new_enemy_sfx.play()
-		9:
-			enemy_list.unlocked_enemies += 1
-			enemy_list.current_index = enemy_list.unlocked_enemies - 1
-			open_button.button_pressed = true
-			enemy_list.load_entry(enemy_list.current_index)
-			enemy_list.new_enemy_sfx.play()
-		10:
-			enemy_list.unlocked_enemies += 1
-			enemy_list.current_index = enemy_list.unlocked_enemies - 1
-			open_button.button_pressed = true
-			enemy_list.load_entry(enemy_list.current_index)
-			enemy_list.new_enemy_sfx.play()
-		12:
-			enemy_list.unlocked_enemies += 1
-			enemy_list.current_index = enemy_list.unlocked_enemies - 1
-			open_button.button_pressed = true
-			enemy_list.load_entry(enemy_list.current_index)
-			enemy_list.new_enemy_sfx.play()
+	if get_meta("stage") == 1:
+		match current_wave:
+			2:
+				enemy_list.unlocked_enemies += 1
+				enemy_list.current_index = enemy_list.unlocked_enemies - 1
+				open_button.button_pressed = true
+				enemy_list.load_entry(enemy_list.current_index)
+				enemy_list.new_enemy_sfx.play()
+			3:
+				enemy_list.unlocked_enemies += 1
+				enemy_list.current_index = enemy_list.unlocked_enemies - 1
+				open_button.button_pressed = true
+				enemy_list.load_entry(enemy_list.current_index)
+				enemy_list.new_enemy_sfx.play()
+			5:
+				enemy_list.unlocked_enemies += 1
+				enemy_list.current_index = enemy_list.unlocked_enemies - 1
+				open_button.button_pressed = true
+				enemy_list.load_entry(enemy_list.current_index)
+				enemy_list.new_enemy_sfx.play()
+			7:
+				enemy_list.unlocked_enemies += 1
+				enemy_list.current_index = enemy_list.unlocked_enemies - 1
+				open_button.button_pressed = true
+				enemy_list.load_entry(enemy_list.current_index)
+				enemy_list.new_enemy_sfx.play()
+			9:
+				enemy_list.unlocked_enemies += 1
+				enemy_list.current_index = enemy_list.unlocked_enemies - 1
+				open_button.button_pressed = true
+				enemy_list.load_entry(enemy_list.current_index)
+				enemy_list.new_enemy_sfx.play()
+			10:
+				enemy_list.unlocked_enemies += 1
+				enemy_list.current_index = enemy_list.unlocked_enemies - 1
+				open_button.button_pressed = true
+				enemy_list.load_entry(enemy_list.current_index)
+				enemy_list.new_enemy_sfx.play()
+			12:
+				enemy_list.unlocked_enemies += 1
+				enemy_list.current_index = enemy_list.unlocked_enemies - 1
+				open_button.button_pressed = true
+				enemy_list.load_entry(enemy_list.current_index)
+				enemy_list.new_enemy_sfx.play()

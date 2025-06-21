@@ -15,6 +15,9 @@ extends CanvasLayer
 @onready var shift_2_icon = $ComboBar/Shift2Icon
 @onready var rmb_icon = $ComboBar/RMBIcon
 
+@onready var animation_player = $GameOver/AnimationPlayer
+@onready var fade_out = $FadeOut
+
 @onready var player_data = $PlayerData
 @onready var level_data = $LevelData
 @onready var debug_data = $DebugData
@@ -33,7 +36,6 @@ extends CanvasLayer
 @onready var stats = $Stats
 @onready var next_wave = $NextWave
 @onready var game_over = $GameOver
-@onready var retry = $GameOver/Retry
 @onready var menu = $Menu
 @onready var weapon_list = $WeaponList
 

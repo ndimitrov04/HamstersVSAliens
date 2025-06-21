@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://b3ew72mqq17x2"]
+[gd_scene load_steps=17 format=3 uid="uid://b3ew72mqq17x2"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/Towers/NPC_Building.gd" id="1_3opeq"]
 [ext_resource type="Material" uid="uid://bdnweei7bh06j" path="res://Materials/Towers/glossy1.tres" id="2_p0k4n"]
@@ -20,6 +20,9 @@ absorbent = true
 [sub_resource type="BoxMesh" id="BoxMesh_bp3sq"]
 size = Vector3(3, 0.5, 3)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_y4hry"]
+size = Vector3(3, 0.5, 3)
+
 [sub_resource type="BoxMesh" id="BoxMesh_fwqsw"]
 size = Vector3(2.9, 10, 2.9)
 
@@ -38,8 +41,8 @@ emission = Color(1, 1, 1, 1)
 radius = 4.2
 height = 9.0
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gpenl"]
-points = PackedVector3Array(1.71429, 7.61905, 0.285155, -1.61905, -7.61905, -0.428432, -1.61905, -7.61905, 0.523343, -1.61905, 7.61905, -0.428432, 0.523343, -7.61905, -1.61905, 0.285155, -7.61905, 1.71429, -0.190243, 7.61905, 1.71429, -0.428432, 7.61905, -1.61905, 1.71429, -7.61905, 0.285155, 1.23758, 7.61905, -1.14234, 1.23758, 7.61905, 1.23758, -1.38086, 7.61905, 0.999394, -0.904482, -7.61905, -1.38086, -1.14234, -7.61905, 1.23758, 1.4761, -7.61905, -0.66662, 1.23758, -7.61905, 1.23758, 0.523343, 7.61905, -1.61905, -1.38086, 7.61905, -0.904482, 1.71429, 7.61905, -0.190243, 0.999394, -7.61905, -1.38086, -1.61905, 7.61905, 0.523343, -0.428432, -7.61905, -1.61905, 0.285155, 7.61905, 1.71429, -0.190243, -7.61905, 1.71429, -1.38086, -7.61905, -0.904482, -0.904482, 7.61905, -1.38086, 1.71429, -7.61905, -0.190243, -1.14234, 7.61905, 1.23758, 0.999394, 7.61905, -1.38086, -1.38086, -7.61905, 0.999394, 1.23758, -7.61905, -1.14234)
+[sub_resource type="BoxShape3D" id="BoxShape3D_3flwn"]
+size = Vector3(2.86328, 11.9402, 3.50824)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5hwtk"]
 radius = 13.0
@@ -47,8 +50,8 @@ radius = 13.0
 [node name="Tower" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32, 0)
 top_level = true
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 axis_lock_linear_x = true
 axis_lock_linear_y = true
 axis_lock_linear_z = true
@@ -67,12 +70,18 @@ shape = SubResource("ConvexPolygonShape3D_gpsnu")
 
 [node name="Platform" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.7249, 0)
+collision_layer = 7
+collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_0olku")
 
 [node name="Model" type="MeshInstance3D" parent="Platform"]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 1.44919, 0)
 mesh = SubResource("BoxMesh_bp3sq")
 surface_material_override/0 = ExtResource("2_p0k4n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0.0703125, 1.49062, 0)
+shape = SubResource("BoxShape3D_y4hry")
 
 [node name="Model" type="MeshInstance3D" parent="."]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -7.85579, 0)
@@ -104,8 +113,8 @@ texture_filter = 0
 texture = ExtResource("4_jfo35")
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -7.49799, 0)
-shape = SubResource("ConvexPolygonShape3D_gpenl")
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.0234375, -1.78547, -0.039093)
+shape = SubResource("BoxShape3D_3flwn")
 
 [node name="BaseHitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -29.4052, 0)

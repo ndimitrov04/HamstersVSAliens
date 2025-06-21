@@ -16,7 +16,7 @@ gravity_point = true
 gravity_point_unit_distance = 0.1
 gravity_point_center = Vector3(0, 0, 0)
 gravity_direction = Vector3(0, 0, 0)
-gravity = 14.0
+gravity = 12.0
 
 [node name="AttractionShape" type="CollisionShape3D" parent="AttractionArea"]
 shape = SubResource("SphereShape3D_qck0c")

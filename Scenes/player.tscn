@@ -253,12 +253,14 @@ light_bake_mode = 0
 
 [node name="SpeedParticles" type="GPUParticles3D" parent="Ship"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -2.00652, 3.1217)
+cast_shadow = 0
 amount = 128
 process_material = SubResource("ParticleProcessMaterial_50bm6")
 draw_pass_1 = SubResource("QuadMesh_fduuv")
 
 [node name="DashParticles" type="GPUParticles3D" parent="Ship"]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -2.75079, -3.26402)
+cast_shadow = 0
 emitting = false
 amount = 96
 lifetime = 0.3

@@ -16,8 +16,11 @@ func _process(_delta):
 func _on_hurtbox_body_entered(body):
 	if "type" in body:
 		if body.type == ObjectTypes.TYPE.ENEMY:
-			body.lasered = true
-			body.laser_force = player.laser_force + player.damage_buff
+			if "lasered" in body:
+				body.lasered = true
+				body.laser_force = player.laser_force + player.damage_buff
+			else:
+				print("Error: Enemy body cannot be lasered")
 
 func _on_hurtbox_body_exited(body):
 	if "type" in body:

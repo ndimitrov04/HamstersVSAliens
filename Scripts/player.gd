@@ -96,6 +96,9 @@ var tesla_objects = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_tree().paused = false
+	main.process_mode = ProcessMode.PROCESS_MODE_INHERIT
+	
 	#Capture mouse
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	await Engine.get_main_loop().process_frame
@@ -111,6 +114,11 @@ func _physics_process(delta):
 	
 	#Detect death
 	if hp <= 0:
+		hud.fade_out.show()
+		hud.game_over.show()
+		hud.animation_player.play("gameover")
+		MusicPlayer.stream = MusicPlayer.game_over_music
+		MusicPlayer.play()
 		if not exploded:
 			var explosion = EXPLOSION.instantiate()
 			add_sibling(explosion)
@@ -118,9 +126,11 @@ func _physics_process(delta):
 			explosion.amount = 512
 			explosion.emitting = true
 			exploded = true
+		linear_velocity.lerp(Vector3(0,0,0),8)
 		hide()
+		await get_tree().create_timer(1).timeout
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		hud.game_over.show()
+		main.process_mode = ProcessMode.PROCESS_MODE_DISABLED
 		return
 	
 	if hp > max_hp + hp_buff:
