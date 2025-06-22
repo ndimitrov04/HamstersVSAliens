@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://blul2ix751h0k" path="res://Scenes/Projectiles/light_bullet_friendly.tscn" id="13_0l6qr"]
 [ext_resource type="PackedScene" uid="uid://b0tvm6rfqqyky" path="res://Scenes/ModelScenes/fast_turret.tscn" id="14_rb2ob"]
 [ext_resource type="ArrayMesh" uid="uid://cacd44ot8cv3e" path="res://ImportedModels/Beacon/model.obj" id="15_53b0l"]
-[ext_resource type="PackedScene" uid="uid://cimcivaj14iob" path="res://Scenes/build_spot.tscn" id="15_xe12v"]
+[ext_resource type="PackedScene" uid="uid://cimcivaj14iob" path="res://Scenes/build_spot_1.tscn" id="15_xe12v"]
 [ext_resource type="PackedScene" uid="uid://bwveautos4a5q" path="res://ImportedModels/Antenna/Roof Antenna.glb" id="16_yvnsm"]
 [ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="17_gymeb"]
 [ext_resource type="Material" uid="uid://bdnweei7bh06j" path="res://Materials/Towers/glossy1.tres" id="17_mnhxs"]

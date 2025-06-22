@@ -345,7 +345,9 @@ func _physics_process(delta):
 		speed_lines.process_material.initial_velocity_max = current_speed / 5
 		#Make speed lines move according to player movement and camera location
 		var target_position = camera.global_position - linear_velocity.normalized()
-		particle_pivot.look_at(target_position, Vector3.UP, true)
+		#Check if UP and target are aligned before looking at target, prevent error spam (~40-200 errors)
+		if abs(target_position.normalized().y) < 0.99:
+			particle_pivot.look_at(target_position, Vector3.UP, true)
 		#Add screenshake on fast movement
 		if trauma_detector.trauma < 0.3:
 			trauma_detector.add_trauma(0.08)
@@ -487,15 +489,17 @@ func _on_boosted_timeout():
 func _on_hurtbox_body_entered(body):
 	if "type" in body:
 		if body.type == ObjectTypes.TYPE.ENEMY:
-			debug_laser_marker = true
-			body.lasered = true
-			body.laser_force = laser_force + damage_buff
+			if "lasered" in body:
+				body.lasered = true
+				body.laser_force = laser_force + damage_buff
+			else:
+				print("Error: Enemy body cannot be lasered")
 
 func _on_hurtbox_body_exited(body):
 	if "type" in body:
 		if body.type == ObjectTypes.TYPE.ENEMY:
-			debug_laser_marker = false
-			body.lasered = false
+			if "lasered" in body:
+				body.lasered = false
 
 func _on_tesla_lock_on_body_entered(body):
 	if "type" in body:

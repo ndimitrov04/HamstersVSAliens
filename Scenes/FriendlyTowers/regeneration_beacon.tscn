@@ -73,11 +73,13 @@ shape = SubResource("SphereShape3D_co83g")
 
 [node name="AreaViewer" type="Decal" parent="BoostArea"]
 sorting_offset = 1.0
-size = Vector3(550, 200, 550)
+size = Vector3(550, 500, 550)
 texture_albedo = SubResource("CompressedTexture2D_eyqg3")
-emission_energy = 0.5
+emission_energy = 2.0
 modulate = Color(0.325047, 0.733543, 0, 1)
 albedo_mix = 0.6
+upper_fade = 0.0
+lower_fade = 0.0
 cull_mask = 2
 
 [node name="ShieldRegenTick" type="Timer" parent="."]

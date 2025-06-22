@@ -10,7 +10,7 @@ func _ready():
 		attraction_area.gravity_point_unit_distance = get_parent().get_meta("attraction_radius")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if "alive" in get_parent():
 		if get_parent().alive == false:
 			queue_free()

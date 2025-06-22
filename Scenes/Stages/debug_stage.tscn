@@ -29,7 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://cvvx0it8w68ak" path="res://Textures/HUD/focus.png" id="14_j2f1x"]
 [ext_resource type="PackedScene" uid="uid://bmsn7elnqj675" path="res://Scenes/Enemies/ufo.tscn" id="14_qqokl"]
 [ext_resource type="Texture2D" uid="uid://cqifkij713en5" path="res://Textures/HUD/circle.png" id="15_qn8vp"]
-[ext_resource type="PackedScene" uid="uid://cimcivaj14iob" path="res://Scenes/build_spot.tscn" id="18_kf77m"]
+[ext_resource type="PackedScene" uid="uid://cimcivaj14iob" path="res://Scenes/build_spot_1.tscn" id="18_kf77m"]
 [ext_resource type="Script" path="res://Scripts/buy_menu.gd" id="19_dhi7y"]
 [ext_resource type="Script" path="res://Scripts/level_up.gd" id="21_j0725"]
 [ext_resource type="Script" path="res://Scripts/upgrade_panel.gd" id="22_vpbnl"]

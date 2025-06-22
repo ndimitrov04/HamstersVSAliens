@@ -63,11 +63,13 @@ shape = SubResource("SphereShape3D_ngg41")
 
 [node name="AreaViewer" type="Decal" parent="DebuffArea"]
 sorting_offset = 1.0
-size = Vector3(500, 200, 500)
+size = Vector3(500, 500, 500)
 texture_albedo = ExtResource("3_2m3xr")
-emission_energy = 0.5
+emission_energy = 2.0
 modulate = Color(0.978607, 0.442078, 0, 1)
 albedo_mix = 0.6
+upper_fade = 0.0
+lower_fade = 0.0
 cull_mask = 2
 
 [node name="ShieldRegenTick" type="Timer" parent="."]

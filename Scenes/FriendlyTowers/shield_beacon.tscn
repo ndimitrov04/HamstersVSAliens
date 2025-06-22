@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4hsokex3qax4"]
+[gd_scene load_steps=6 format=3 uid="uid://c4hsokex3qax4"]
 
 [ext_resource type="Script" path="res://Scripts/Friendlies/Beacons/shield_beacon.gd" id="1_1fq6a"]
 [ext_resource type="PackedScene" uid="uid://baljmjnje4wtv" path="res://Scenes/Behaviors/shieldf.tscn" id="2_60865"]
@@ -7,22 +7,6 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r5ov4"]
 rough = true
 absorbent = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j81de"]
-transparency = 1
-albedo_color = Color(0, 1, 1, 0.270588)
-metallic = 1.0
-roughness = 0.5
-emission_enabled = true
-emission = Color(0.41824, 0.601976, 1, 1)
-emission_energy_multiplier = 0.1
-
-[sub_resource type="SphereMesh" id="SphereMesh_e5qst"]
-material = SubResource("StandardMaterial3D_j81de")
-radius = 7.0
-height = 14.0
-radial_segments = 16
-rings = 8
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_f6v08"]
 points = PackedVector3Array(0.364698, 0.771721, 0.0329169, -0.54286, -0.385255, -0.0409439, -0.54286, -0.385255, 0.0600249, 0.444554, -0.739602, -0.0663423, 0.0647233, -0.385255, 0.541241, 0.0141347, 0.424796, -0.471467, -0.312335, 0.761461, 0.171609, -0.365592, -0.739602, -0.294199, -0.273412, 0.782942, -0.228888, -0.0617481, -0.739602, 0.439959, 0.039429, -0.739602, -0.446173, 0.444554, -0.385255, 0.31328, 0.176965, 0.77231, 0.315121, 0.44505, -0.26824, -0.25455, -0.26431, -0.258521, 0.490444, 0.199519, 0.768979, -0.318075, -0.239016, 0.424796, -0.420774, -0.41618, -0.739602, 0.16141, -0.0111595, 0.424796, 0.465254, 0.469848, 0.424796, -0.0156497, -0.466873, 0.424796, 0.0095405, -0.466873, -0.385255, 0.31328, -0.279866, -0.371086, -0.430234, -0.492167, -0.359876, -0.24361, 0.241991, 0.424796, 0.389163, 0.52054, -0.385255, 0.0854233, 0.276285, -0.698613, 0.320815, 0.267286, -0.258521, 0.490444, -0.173927, 0.76422, 0.311836, 0.325219, 0.78879, 0.177581, 0.22641, 0.399872, -0.394288, -0.0111595, 0.779451, -0.370181)
@@ -39,10 +23,6 @@ metadata/shield = 1000
 metadata/block_type = 2
 
 [node name="Shield2" parent="." instance=ExtResource("2_60865")]
-
-[node name="Shield" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79916, 0)
-mesh = SubResource("SphereMesh_e5qst")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.6699, 0)

@@ -59,18 +59,6 @@ func take_damage(damage : int, explosion = EXPLOSION.instantiate()):
 	explosion.global_position = global_position
 	shield_regen = false
 	shield_regen_timer.start()
-	if shield <= 0:
-		hp -= damage
-		explosion.amount = 256
-		explosion.emitting = true
-	else:
-		shield -= damage
-		explosion.amount = 64
-		explosion.emitting = true
-
-func _on_shield_regen_timer_timeout():
-	shield_regen = true
-
-func _on_shield_regen_tick_timeout():
-	if shield_regen:
-		shield += 10
+	hp -= damage
+	explosion.amount = 256
+	explosion.emitting = true

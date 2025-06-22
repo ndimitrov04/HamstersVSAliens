@@ -25,7 +25,8 @@ func _on_hurtbox_body_entered(body):
 func _on_hurtbox_body_exited(body):
 	if "type" in body:
 		if body.type == ObjectTypes.TYPE.ENEMY:
-			body.lasered = false
+			if "lasered" in body:
+				body.lasered = false
 	
 func _on_timeout_timeout():
 	queue_free()

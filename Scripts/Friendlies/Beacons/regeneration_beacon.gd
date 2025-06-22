@@ -10,7 +10,10 @@ extends RigidBody3D
 @onready var max_shield : int = get_meta("shield")
 @onready var shield : int = get_meta("shield")
 @onready var shield_regen : bool = false
+
 @onready var shield_regen_timer = $ShieldRegenTimer
+@onready var supportbox = $BoostArea/Supportbox
+@onready var area_viewer = $BoostArea/AreaViewer
 
 @onready var boost_area = $BoostArea
 
