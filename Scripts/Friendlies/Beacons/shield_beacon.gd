@@ -12,8 +12,6 @@ extends RigidBody3D
 @onready var shield_regen : bool = false
 @onready var shield_regen_timer = $ShieldRegenTimer
 
-@onready var boost_area = $BoostArea
-
 @onready var type : ObjectTypes.TYPE = ObjectTypes.TYPE.FRIENDLY
 @onready var build_spot = null
 

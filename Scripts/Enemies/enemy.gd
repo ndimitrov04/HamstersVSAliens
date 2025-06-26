@@ -8,7 +8,6 @@ extends RigidBody3D
 
 @onready var hitbox = $Hitbox
 @onready var lock_marker = $LockMarker
-@onready var model = $Model
 
 @onready var EXPLOSION = preload("res://Scenes/Particles/explosion.tscn")
 
@@ -60,7 +59,7 @@ func _on_body_entered(body):
 		die()
 	
 	if not alive:
-		if body.name == "HTerrain" or body.name == "WorldBorder":
+		if body.name == "HTerrain" or body.name == "WorldBorder" or hp < -100:
 			hit_ground = true
 			explosion = EXPLOSION.instantiate()
 			add_sibling(explosion)

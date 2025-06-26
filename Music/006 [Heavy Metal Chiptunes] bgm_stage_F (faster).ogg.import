@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://mdmmkspdyhkc"
+path="res://.godot/imported/006 [Heavy Metal Chiptunes] bgm_stage_F (faster).ogg-cc2676cd6ccd63272d8b89d6cc8e739e.oggvorbisstr"
+
+[deps]
+
+source_file="res://Music/006 [Heavy Metal Chiptunes] bgm_stage_F (faster).ogg"
+dest_files=["res://.godot/imported/006 [Heavy Metal Chiptunes] bgm_stage_F (faster).ogg-cc2676cd6ccd63272d8b89d6cc8e739e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

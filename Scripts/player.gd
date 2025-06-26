@@ -346,7 +346,7 @@ func _physics_process(delta):
 		#Make speed lines move according to player movement and camera location
 		var target_position = camera.global_position - linear_velocity.normalized()
 		#Check if UP and target are aligned before looking at target, prevent error spam (~40-200 errors)
-		if abs(target_position.normalized().y) < 0.99:
+		if abs(target_position.normalized().y) < 0.98:
 			particle_pivot.look_at(target_position, Vector3.UP, true)
 		#Add screenshake on fast movement
 		if trauma_detector.trauma < 0.3:

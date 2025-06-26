@@ -15,6 +15,7 @@ var next_scene = "res://initial_loader.tscn"
 @onready var options = $MenuPanel/Options
 @onready var quit = $MenuPanel/Quit
 
+@onready var stage_select = $StageSelect
 @onready var graphics_menu = $GraphicsMenu
 @onready var credits = $Credits
 
@@ -32,12 +33,6 @@ func _ready():
 func _process(_delta):
 	ResourceLoader.load_threaded_get_status(next_scene, progress)
 
-func _on_play_button_pressed():
-	if progress[0] == 1:
-		MusicPlayer.stop()
-		var packed_scene = ResourceLoader.load_threaded_get(next_scene)
-		get_tree().change_scene_to_packed(packed_scene)
-
 func _on_options_toggled(toggled_on):
 	if toggled_on:
 		graphics_menu.show()
@@ -52,3 +47,23 @@ func _on_credits_toggled(toggled_on):
 		credits.show()
 	else:
 		credits.hide()
+
+func _on_play_button_toggled(toggled_on):
+	if toggled_on:
+		stage_select.show()
+	else:
+		stage_select.hide()
+
+func _on_stage_1_pressed():
+	NextStage.next_stage = NextStage.stage_1
+	if progress[0] == 1:
+		MusicPlayer.stop()
+		var packed_scene = ResourceLoader.load_threaded_get(next_scene)
+		get_tree().change_scene_to_packed(packed_scene)
+
+func _on_stage_2_pressed():
+	NextStage.next_stage = NextStage.stage_2
+	if progress[0] == 1:
+		MusicPlayer.stop()
+		var packed_scene = ResourceLoader.load_threaded_get(next_scene)
+		get_tree().change_scene_to_packed(packed_scene)

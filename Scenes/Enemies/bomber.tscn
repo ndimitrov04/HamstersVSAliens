@@ -72,7 +72,7 @@ func _on_body_entered(body):
 		die()
 	
 	if not alive:
-		if body.name == \"HTerrain\" or body.name == \"WorldBorder\":
+		if body.name == \"HTerrain\" or body.name == \"WorldBorder\" or hp < -100:
 			hit_ground = true
 			explosion = EXPLOSION.instantiate()
 			add_sibling(explosion)
@@ -212,6 +212,7 @@ metadata/gold = 20
 metadata/custom_targeting = true
 metadata/targets = NodePath("../../Friendlies")
 metadata/attraction_radius = 35.0
+metadata/instant_death = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="."]
 transform = Transform3D(500, 0, 0, 0, -2.18557e-05, 500, 0, -500, -2.18557e-05, 7.21369e-07, 0, 0)

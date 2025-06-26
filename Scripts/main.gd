@@ -26,7 +26,7 @@ extends Node3D
 @onready var open_button = $HUD/EnemyList/OpenButton
 @onready var menu = $HUD/Menu
 
-const MAPRADIUS = 500
+var MAPRADIUS = 500
 var SKYBOUNDS
 
 var random_wave_gen : bool = false
@@ -46,6 +46,28 @@ enum ENEMYTYPE {
 	sphere_bot_r,  # rushbot
 	bomber
 }
+
+var waves_0 = [
+	[],  # Wave 0 (no enemies)
+
+	[ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.carrier],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker]
+]
 
 var waves_1 = [
 	[],  # Wave 0 (no enemies)
@@ -239,89 +261,138 @@ var waves_3 = [
 	[],  # Wave 0 (no enemies)
 
 	# Wave 1
-	[ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
 
 	# Wave 2
-	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer],
 
 	# Wave 3
-	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.carrier],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker,
+	 ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
 
 	# Wave 4
-	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s],
 
 	# Wave 5
-	[ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
-	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer],
 
 	# Wave 6
-	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
-	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber],
 
 	# Wave 7
-	[ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	[ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
 	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
-	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder],
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer],
 
-	# Wave 8 (Boss)
-	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
-	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
-	 ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+	# Wave 8
+	[ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder],
 
 	# Wave 9
-	[ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
-	 ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
-	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer],
 
 	# Wave 10
-	[ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
-	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
-	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.seeker, ENEMYTYPE.seeker],
 
 	# Wave 11
-	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
-	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
-	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
+	[ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
 
 	# Wave 12
 	[ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber,
-	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
-	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer, ENEMYTYPE.destroyer,
+	 ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker,
+	 ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker],
 
 	# Wave 13
-	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
 	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
-	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber],
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
 
 	# Wave 14
-	[ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
-	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber,
+	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
 	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
-	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier],
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher],
 
-	# Wave 15 (Boss)
-	[ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
-	 ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier, ENEMYTYPE.carrier,
-	 ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber, ENEMYTYPE.bomber]
+	# Wave 15 (Finale)
+	[ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder, ENEMYTYPE.shielder,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r, ENEMYTYPE.sphere_bot_r,
+	 ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s, ENEMYTYPE.sphere_bot_s,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher, ENEMYTYPE.rusher,
+	 ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker, ENEMYTYPE.seeker]
 ]
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	match get_meta("stage"):
+		0:
+			stage_mod = 1
+			stage_waves = waves_0
+			MusicPlayer.stage = 1
+			#MusicPlayer.stream = MusicPlayer.stage1_music
 		1:
 			stage_mod = 1
 			stage_waves = waves_1
-			MusicPlayer.stream = MusicPlayer.stage1_music
+			MusicPlayer.stage = 1
+			#MusicPlayer.stream = MusicPlayer.stage1_music
 		2:
 			stage_mod = 1.5
 			stage_waves = waves_2
-			MusicPlayer.stream = MusicPlayer.stage2_music
+			MusicPlayer.stage = 2
+			#MusicPlayer.stream = MusicPlayer.stage2_music
+			hud.enemy_list.unlocked_enemies = 9
 		3:
+			# Supercharge hamster ball
+			player.MAXVELOCITY += 20
+			player.thrust_power += 30000
+			player.gold += 100
 			stage_mod = 2
 			stage_waves = waves_3
-			MusicPlayer.stream = MusicPlayer.stage1_music
+			MusicPlayer.stage = 3
+			#MusicPlayer.stream = MusicPlayer.stage3_music
+			hud.enemy_list.unlocked_enemies = 9
 	MusicPlayer.play()
 	SKYBOUNDS = get_meta("skybounds")
+	MAPRADIUS = get_meta("mapradius")
 	print("START IN 1")
 	await get_tree().create_timer(1).timeout
 	print("START")

@@ -5,7 +5,6 @@ extends Area3D
 @onready var model = $Model
 @onready var model_inside = $ModelInside
 
-@onready var hitbox = $Hitbox
 @onready var shield_regen_tick = $ShieldRegenTick
 @onready var shield_regen_timer = $ShieldRegenTimer
 

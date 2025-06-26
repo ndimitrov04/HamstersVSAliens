@@ -18,7 +18,6 @@ extends Control
 @onready var new_enemy_sfx = $NewEnemySFX
 @onready var open_sfx = $OpenSFX
 
-
 class EnemyEntry:
 	var ename
 	var picture

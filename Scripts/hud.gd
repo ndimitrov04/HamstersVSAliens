@@ -39,6 +39,8 @@ extends CanvasLayer
 @onready var menu = $Menu
 @onready var weapon_list = $WeaponList
 
+@onready var enemy_list = $EnemyList
+
 @onready var combo_sfx = $ComboBar/ComboSFX
 
 @onready var comms = $Comms

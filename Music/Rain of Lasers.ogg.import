@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/Rain of Lasers.ogg-e8edee371a24a33a37cd5906c0
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0.0
 bpm=0.0
 beat_count=0

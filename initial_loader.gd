@@ -27,7 +27,6 @@ const HEALTH_PARTICLE = preload("res://Scenes/Particles/health_particle.tscn")
 const DESTROYER_BULLET = preload("res://Scenes/Projectiles/destroyer_bullet.tscn")
 const LIGHT_BULLET = preload("res://Scenes/Projectiles/light_bullet.tscn")
 const LIGHT_BULLET_FRIENDLY = preload("res://Scenes/Projectiles/light_bullet_friendly.tscn")
-const BUILD_SPOT = preload("res://Scenes/build_spot.tscn")
 const PLAYER = preload("res://Scenes/player.tscn")
 
 var resources = [
@@ -56,11 +55,10 @@ var resources = [
 	DESTROYER_BULLET,
 	LIGHT_BULLET,
 	LIGHT_BULLET_FRIENDLY,
-	BUILD_SPOT,
 	PLAYER
 ]
 
-var next_scene = "res://Scenes/Stages/stage_grasslands.tscn"
+var next_scene = NextStage.next_stage
 
 @onready var color_rect = $CanvasLayer/LoadingScreen/ColorRect
 @onready var screen_bg_1 = $CanvasLayer/LoadingScreen/ScreenBG1

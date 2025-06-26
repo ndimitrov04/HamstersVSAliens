@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dtxu7awryfgve"
+path="res://.godot/imported/DeathMatch (Boss Theme).ogg-09e67a71073000346083694e8b3f0b6b.oggvorbisstr"
+
+[deps]
+
+source_file="res://Music/DeathMatch (Boss Theme).ogg"
+dest_files=["res://.godot/imported/DeathMatch (Boss Theme).ogg-09e67a71073000346083694e8b3f0b6b.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

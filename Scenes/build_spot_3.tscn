@@ -1,16 +1,16 @@
 [gd_scene load_steps=7 format=3 uid="uid://ddmhiooijh034"]
 
 [ext_resource type="Script" path="res://Scripts/build_spot.gd" id="1_6wbia"]
-[ext_resource type="Texture2D" uid="uid://cljf22e7es47q" path="res://Textures/Terrain/tiny_treats_grass_texture.png" id="2_fs8f6"]
+[ext_resource type="Texture2D" uid="uid://cmclyose5rjxg" path="res://Textures/Terrain/Terrain3/O5NY920.png" id="2_ikpwv"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_0iddw"]
 points = PackedVector3Array(-0.0145469, 0.34499, 0.350406, -0.0453285, 0.000915129, -0.483378, -0.0445841, 0.109046, -0.47544, 0.483396, 0.000905596, -0.0452356, -0.360212, 0.00244596, 0.33021, -0.0723526, 0.45988, -0.173628, -0.42975, 0.242759, -0.0296219, 0.305874, 0.373865, -0.116437, 0.3482, 0.000335667, 0.3482, -0.360212, 0.00244596, -0.33021, 0.274165, 0.387195, 0.144226, 0.29427, 0.228077, -0.323586, -0.187151, 0.415709, 0.187241, -0.0453285, 0.000915129, 0.483378, -0.293022, 0.257373, -0.30771, 0.3482, 0.000335667, -0.3482, -0.293019, 0.257373, 0.307706, -0.483396, 0.000905596, 0.0452356, 0.16426, 0.242608, 0.403073, 0.401182, 0.227859, 0.178293, 0.0725706, 0.475329, 0.116277, 0.0436182, 0.373865, -0.320384, -0.289989, 0.387792, -0.116014, 0.414324, 0.198365, -0.177541, -0.397543, 0.257409, 0.147245, 0.191846, 0.10994, -0.44268, -0.191769, 0.109977, 0.442715, -0.442662, 0.109993, -0.191839, 0.173619, 0.459915, -0.072258, -0.173628, 0.45988, 0.0723526, 0.429803, 0.242662, 0.0295327, -0.147245, 0.257409, -0.397543)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frsfx"]
-albedo_texture = ExtResource("2_fs8f6")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vv57v"]
+albedo_texture = ExtResource("2_ikpwv")
 
-[sub_resource type="SphereMesh" id="SphereMesh_7o6wb"]
-material = SubResource("StandardMaterial3D_frsfx")
+[sub_resource type="SphereMesh" id="SphereMesh_or0d1"]
+material = SubResource("StandardMaterial3D_vv57v")
 height = 0.5
 radial_segments = 16
 rings = 8
@@ -31,7 +31,7 @@ shape = SubResource("ConvexPolygonShape3D_0iddw")
 
 [node name="GroundBump" type="MeshInstance3D" parent="."]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
-mesh = SubResource("SphereMesh_7o6wb")
+mesh = SubResource("SphereMesh_or0d1")
 
 [node name="BuildText" type="Label3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.24933, 0)

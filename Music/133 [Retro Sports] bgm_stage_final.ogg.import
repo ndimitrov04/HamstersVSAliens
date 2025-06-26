@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bgombs72qob0c"
+path="res://.godot/imported/133 [Retro Sports] bgm_stage_final.ogg-e40286f3c173ea52befa5d792e3b7941.oggvorbisstr"
+
+[deps]
+
+source_file="res://Music/133 [Retro Sports] bgm_stage_final.ogg"
+dest_files=["res://.godot/imported/133 [Retro Sports] bgm_stage_final.ogg-e40286f3c173ea52befa5d792e3b7941.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
